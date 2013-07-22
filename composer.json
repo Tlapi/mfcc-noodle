@@ -22,7 +22,7 @@
 		"zf-commons/zfc-user-doctrine-orm" : "0.*",
 		"smottt/wideimage" : "dev-master",
 		"zendframework/zendframework" : ">2.2.0rc1",
-		"evandotpro/edp-module-layouts": "v1.0"
+		"evandotpro/edp-module-layouts": "dev-master"
     },
     "autoload": {
         "psr-0": {
