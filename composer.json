@@ -15,14 +15,14 @@
     ],
     "require": {
     		"doctrine/doctrine-orm-module" : "0.*",
-    		"evandotpro/edp-module-layouts": "dev-master",
 		"webino/webino-image-thumb" : "1.*",
 		"joacub/file-bank" : "dev-master",
 		"php" : ">=5.3.3",
 		"zf-commons/zfc-user" : "0.*",
 		"zf-commons/zfc-user-doctrine-orm" : "0.*",
 		"smottt/wideimage" : "dev-master",
-		"zendframework/zendframework" : ">2.2.0rc1"
+		"zendframework/zendframework" : ">2.2.0rc1",
+		"evandotpro/edp-module-layouts": "v1.0"
     },
     "autoload": {
         "psr-0": {
