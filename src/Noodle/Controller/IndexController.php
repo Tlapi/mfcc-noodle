@@ -18,6 +18,8 @@ class IndexController extends AbstractActionController
     {
     	//$modules = $this->getServiceLocator()->get('modulesService')->getModules();
 
+    	$this->getEventManager()->trigger('dashboard.load', $this);
+    	
         return new ViewModel(array(
 			//'modules' => $modules
         ));

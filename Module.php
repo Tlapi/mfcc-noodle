@@ -30,9 +30,9 @@
 
 namespace Noodle;
 
-use Zend\ModuleManager\ModuleManager,
-    Zend\EventManager\StaticEventManager,
-	Zend\Mvc\ModuleRouteListener;
+//use Zend\ModuleManager\ModuleManager;
+//use Zend\EventManager\StaticEventManager;
+use	Zend\Mvc\ModuleRouteListener;
 
 use Zend\Mvc\MvcEvent;
 
@@ -50,6 +50,12 @@ class Module
     	$eventManager        = $e->getApplication()->getEventManager();
         //$eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'redirectUnauthedUsersEvent'));
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'));
+        
+        $sem = $eventManager->getSharedManager();
+        // listen to 'dashboard.load' when triggered by the IndexController
+        $sem->attach('Noodle\Controller\IndexController', 'dashboard.load', function($e) {
+        	// load dashboard
+        });
 
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
