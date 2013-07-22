@@ -1,0 +1,137 @@
+<h1>Edit repository</h1>
+
+<form>
+
+	<fieldset>
+		<legend>Basic repository info</legend>
+
+		<label>Repository title</label>
+		<input type="text" value="<?php echo $this->entity['name']?>" disabled>
+
+		<label>MySQL table name</label>
+		<input type="text" value="<?php echo $this->metadata->getTableName()?>" disabled>
+	</fieldset>
+
+	<fieldset>
+		<legend>Current custom fields</legend>
+
+		<!--
+		<div class="well well-small muted">
+			Note: Changes are saved upon editing
+		</div>
+		-->
+
+		<div class="customfields">
+			<ol class="sortable">
+			<?php foreach($this->entity['elements'] as $element){?>
+			<li>
+				<div class="customField well">
+
+					<div class="move-handle"><i class="icon-align-justify"></i></div>
+
+					<div class="form-inline">
+						<input type="text" value="<?php echo $element['spec']['options']['label']?>">
+						<input type="text" value="<?php echo $element['spec']['name']?>" disabled>
+						<select name="" id="">
+							<option value="">Select field type</option>
+							<?php foreach($this->fieldTypes as $key => $fieldType){?>
+								<option value="<?php echo $fieldType?>" <?php if($element['spec']['type']==$fieldType){?>selected<?php }?>><?php echo $key?></option>
+							<?php }?>
+						</select>
+					</div>
+					<div class="form-inline">
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Listed
+						</label>
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Required
+						</label>
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Table filter
+						</label>
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Unique
+						</label>
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Disabled for editing
+						</label>
+						<label class="checkbox inline">
+						  <input type="checkbox" id="inlineCheckbox1" value="option1"> Hidden
+						</label>
+					</div>
+				</div>
+			</li>
+			<?php }?>
+			</ol>
+			<a href="#" class="btn btn-primary btn-small save-order">Save order</a>
+		</div>
+		<br />
+	</fieldset>
+
+	<fieldset>
+		<legend>Add custom fields</legend>
+
+		<div class="well well-small muted">
+			Reserved names are: id, parent_entity, parent_row_id, timestamp
+		</div>
+
+		<div class="customfieldsnew">
+			<div class="customField">
+				<div class="form-inline">
+					<input type="text" placeholder="Field title">
+					<input type="text" placeholder="MySQL column name">
+					<select name="" id="">
+						<option value="">Select field type</option>
+						<?php foreach($this->fieldTypes as $key => $fieldType){?>
+							<option value="<?php echo $fieldType?>"><?php echo $key?></option>
+						<?php }?>
+					</select>
+					<button class="btn btn-primary" style="float: right">Save new field</button>
+				</div>
+				<div class="form-inline">
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Listed
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Required
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Table filter
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Unique
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Disabled for editing
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> Hidden
+					</label>
+				</div>
+				<br />
+			</div>
+		</div>
+		<br />
+		<button class="btn btn-small add_another"><i class="icon-plus"></i> Add another field</button>
+		<br /><br /><br />
+	</fieldset>
+
+</form>
+
+<script>
+$('.add_another').click(function(){
+	$('.customfieldsnew .customField').first().clone().appendTo('.customfieldsnew');
+	return false;
+});
+
+$("ol.sortable").sortable({
+	handle: 'i.icon-align-justify',
+	onDrop: function (item, container, _super) {
+		_super(item, container);
+    	$('.save-order').show();
+  	},
+});
+$('.save-order').click(function(){
+	$(this).hide();
+});
+</script>

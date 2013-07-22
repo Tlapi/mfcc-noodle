@@ -1,0 +1,99 @@
+<div class="span8">
+
+	<h1><?php echo $this->form->getName()?></h1>
+
+	    <ul class="nav nav-pills">
+			<li class="active">
+				<a href="#">Main sheet</a>
+			</li>
+			<?php foreach($this->form->getOption('sheets') as $sheet){?>
+		    	<li><a href="<?php echo $this->url('modules/edit/sheet', array('name' => $this->name, 'id' => $this->id, 'sheet_name' => $sheet->getName()))?>"><?php echo $sheet->getLabel()?></a></li>
+		    <?php }?>
+		</ul>
+
+	    <?php
+	    $form = $this->form;
+	    $form->prepare();
+	    ?>
+
+	    <?php echo $this->form()->openTag($form);?>
+			<fieldset>
+				<legend><?php echo $form->getName()?></legend>
+
+				<?php foreach ($form as $element) {?>
+					<label><?php echo $element->getLabel()?></label>
+					<?php echo $this->formElement($element)?>
+					<?php if($element->getOption('blockHelp')){?>
+						<span class="help-block"><?php echo $element->getOption('blockHelp')?></span>
+					<?php }?>
+				<?php }?>
+
+				<br /><br />
+				<button type="submit" class="btn btn-primary">Save</button>
+				<a href="#myModal" class="btn" role="button" data-toggle="modal">Delete</a>
+
+		  </fieldset>
+		<?php echo $this->form()->closeTag();?>
+
+	    <?php
+	    /*
+	    $form = $this->form;
+	    $form->setAttribute('action', $this->url('modules'));
+	    $form->prepare();
+
+	    echo $this->form()->openTag($form);
+	    echo $this->formCollection($form);
+	    echo $this->form()->closeTag();*/
+	    ?>
+
+</div>
+
+<div class="span2 offset1">
+	<h3>Related to:</h3>
+	<?php foreach($this->inversedModulesData as $module => $data){?>
+		<h4><?php echo $module?></h4>
+		<ul>
+		<?php foreach($data as $row){?>
+			<li><a href=""><?php echo $row->id?></a></li>
+		<?php }?>
+		</ul>
+	<?php }?>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form action="<?php echo $this->url('modules/delete', array('id' => $this->id, 'name' => $this->name))?>" method="post">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Do you really want to delete this item?</h3>
+	  </div>
+	  <div class="modal-body">
+	    <?php if(count($data)){?>
+	    <div class="alert alert-block">
+			<h4>Warning!</h4>
+			This item is related to another <?php echo count($data)?> items
+		</div>
+		<div class="well well-large">
+  			<label class="radio">
+				<input type="radio" name="relationHandle" id="optionsRadios1" value="setnull" checked>
+				Set these to NULL
+			</label>
+  			<label class="radio">
+				<input type="radio" name="relationHandle" id="optionsRadios1" value="delete">
+				Delete all <?php echo count($data)?> related items
+			</label>
+			<!--
+			<label class="radio">
+				<input type="radio" name="relationHandle" id="optionsRadios2" value="option2">
+				Change these for: TODO (load options by ajax)
+			</label>
+			 -->
+		</div>
+		<?php }?>
+	  </div>
+	  <div class="modal-footer">
+	    	<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    	<button class="btn btn-danger" type="submit">Delete this item</button>
+	  </div>
+	</form>
+</div>

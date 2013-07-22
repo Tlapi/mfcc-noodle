@@ -1,0 +1,70 @@
+<h1>List</h1>
+
+<a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn btn-info btn-small"><i class="icon-plus"></i> Add new record</a>
+
+<br /><br />
+
+<?php if(count($this->flashMessages)) : ?>
+<div class="alert alert-success">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<?php foreach ($this->flashMessages as $msg) : ?>
+    	<strong>Well done!</strong> <?php echo $msg; ?><br />
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+<table class="table table-bordered">
+
+	<thead>
+		<tr>
+			<?php foreach($this->listed as $listed){?>
+				<th><a href="?page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
+			<?php }?>
+			<th colspan="2"></th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<?php foreach($this->paginator as $row){?>
+		<tr>
+			<?php foreach($this->listed as $listed){?>
+				<td>
+					<?php //echo $row->$listed?>
+					<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }else{ echo $row->{$listed->getName()};}?>
+				</td>
+			<?php }?>
+			<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->id))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
+			<td style="width: 62px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+		</tr>
+		<?php }?>
+
+	</tbody>
+
+</table>
+
+<div class="pagination pagination-small">
+  <ul>
+    <li <?php if(1==$this->page){?>class="disabled"<?php }?>><a href="?page=1">&laquo;</a></li>
+    <?php for($i=1; $i<=$this->paginator->count(); $i++){?>
+    <li <?php if($this->page==$i){?>class="active"<?php }?>><a href="?page=<?php echo $i?>"><?php echo $i?></a></li>
+    <?php }?>
+    <li <?php if($this->paginator->count()==$this->page){?>class="disabled"<?php }?>><a href="?page=<?php echo $this->paginator->count()?>">&raquo;</a></li>
+  </ul>
+</div>
+
+<a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn btn-info btn-small"><i class="icon-plus"></i> Add new record</a>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Do you really want to delete this item?</h3>
+  </div>
+  <div class="modal-body">
+    <p>Confirm this action (TODO)</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-danger" data-dismiss="modal">Delete this item</button>
+  </div>
+</div>

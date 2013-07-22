@@ -1,0 +1,74 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.iframe-transport.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/vendor/jquery.ui.widget.js')
+                                      ->prependFile($this->basePath() . '/js/noodle.js')
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="<?php echo $this->url('noodle') ?>"><?php echo $this->translate('Home') ?></a></li>
+                            <li class="active"><a href="<?php echo $this->url('noodle/modules-manager') ?>"><?php echo $this->translate('Modules') ?></a></li>
+                            <li class="active"><a href="<?php echo $this->url('noodle') ?>"><?php echo $this->translate('Users') ?></a></li>
+                            <li class="active"><a href="<?php echo $this->url('noodle/settings') ?>"><?php echo $this->translate('Settings') ?></a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+        	<div class="row-fluid">
+			    <div class="span3">
+			      	<!--Sidebar content-->
+			      	<ul class="nav nav-tabs nav-stacked">
+			      		<?php foreach($this->moduleList() as $module){?>
+							<li><a href="<?php echo $this->url('noodle/modules/show', array('name' => $module->entity))?>"><?php echo $module->module_name?></a></li>
+			      		<?php }?>
+					</ul>
+			    </div>
+			    <div class="span9">
+			      <!--Body content-->
+
+			      <?php echo $this->content; ?>
+
+			    </div>
+			  </div>
+            <hr>
+            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?></p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

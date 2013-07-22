@@ -1,0 +1,79 @@
+<h1>Add repository</h1>
+
+<form method="POST">
+
+	<fieldset>
+		<legend>Basic repository info</legend>
+
+		<label>Repository title</label>
+		<input type="text" name="name">
+
+		<label>MySQL table name</label>
+		<input type="text" name="table_name">
+	</fieldset>
+
+	<fieldset>
+		<legend>Custom repository fields</legend>
+
+		<div class="well well-small muted">
+			Reserved names are: id, parent_entity, parent_row_id, timestamp
+		</div>
+
+		<div class="customfields">
+			<div class="customField">
+				<div class="form-inline">
+					<input type="text" placeholder="Field title" name="field_title[]">
+					<input type="text" placeholder="MySQL column name" name="column_name[]">
+					<select name="field_type[]" id="">
+						<option value="">Select field type</option>
+						<?php foreach($this->fieldTypes as $key => $fieldType){?>
+							<option value="<?php echo $key?>"><?php echo $fieldType['field_type_name']?></option>
+						<?php }?>
+					</select>
+				</div>
+				<div class="form-inline">
+					<input type="text" placeholder="Default value" name="default_value[]">
+					<input type="text" placeholder="Placeholder" name="placeholder[]">
+					<input type="text" placeholder="Block help" name="block_help[]">
+				</div>
+				<div class="form-inline">
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="listed[]"> Listed
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="required[]"> Required
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="filter[]"> Table filter
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="unique[]"> Unique
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="disabled[]"> Disabled for editing
+					</label>
+					<label class="checkbox inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="true" name="hidden[]"> Hidden
+					</label>
+				</div>
+				<br />
+			</div>
+		</div>
+		<br />
+		<button class="btn btn-small add_another"><i class="icon-plus"></i> Add another field</button>
+		<br /><br /><br />
+	</fieldset>
+
+	<fieldset>
+		<button type="submit" class="btn btn-primary">Save & Generate table</button>
+		<!-- <button type="submit" class="btn">Just save for now</button> -->
+	</fieldset>
+</form>
+
+<script>
+$('.add_another').click(function(){
+	$('.customField').first().clone().appendTo('.customfields');
+	return false;
+});
+
+</script>

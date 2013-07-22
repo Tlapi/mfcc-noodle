@@ -1,0 +1,32 @@
+<?php
+return array(
+    'MfccZendeskContact' => array(
+    		'zendesk' => array(
+    				'apiKey' => 'YOUR API KEY',
+    				'user' => 'ZENDESK USER EMAIL',
+    				'url' => 'ZENDESK API URL',
+    		),
+    		'ticket' => array(
+    				'default_locale' => 78,
+    				'default_priority' => 'urgent',
+    				'default_type' => 'question',
+    				'default_status' => 'new',
+    				'default_group_id' => group_id,
+    				'default_assignee_id' => assignee_id,
+    				'default_subject' => 'Zendesk ticket subject',
+					/*
+    				'default_collaborators' => array(
+    						collaborator_id,
+    				),*/
+    				'default_tags' => array(
+    						'web', 
+    						'contact', 
+    						'form'
+    				),
+					/*
+    				'default_custom_fields' => array(
+    						field_id => 'Field value',
+    				),*/
+    		),
+    ),
+);
