@@ -7,7 +7,7 @@
 				<a href="#">Main sheet</a>
 			</li>
 			<?php foreach($this->form->getOption('sheets') as $sheet){?>
-		    	<li><a href="<?php echo $this->url('modules/edit/sheet', array('name' => $this->name, 'id' => $this->id, 'sheet_name' => $sheet->getName()))?>"><?php echo $sheet->getLabel()?></a></li>
+		    	<li><a href="<?php echo $this->url('noodle/modules/edit/sheet', array('name' => $this->name, 'id' => $this->id, 'sheet_name' => $sheet->getName()))?>"><?php echo $sheet->getLabel()?></a></li>
 		    <?php }?>
 		</ul>
 
@@ -62,13 +62,13 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<form action="<?php echo $this->url('modules/delete', array('id' => $this->id, 'name' => $this->name))?>" method="post">
+	<form action="<?php echo $this->url('noodle/modules/delete', array('id' => $this->id, 'name' => $this->name))?>" method="post">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	    <h3 id="myModalLabel">Do you really want to delete this item?</h3>
 	  </div>
 	  <div class="modal-body">
-	    <?php if(count($data)){?>
+	    <?php if(isset($data) && count($data)){?>
 	    <div class="alert alert-block">
 			<h4>Warning!</h4>
 			This item is related to another <?php echo count($data)?> items

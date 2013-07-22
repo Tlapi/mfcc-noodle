@@ -17,6 +17,7 @@
 
 	<thead>
 		<tr>
+			<th></th>
 			<?php foreach($this->listed as $listed){?>
 				<th><a href="?page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
 			<?php }?>
@@ -26,7 +27,8 @@
 	<tbody>
 
 		<?php foreach($this->paginator as $row){?>
-		<tr>
+		<tr rel="<?php echo $row->id?>">
+			<td><input type="checkbox" value="<?php echo $row->id?>" name="mass_checked[]" class="mass_checked" /></td>
 			<?php foreach($this->listed as $listed){?>
 				<td>
 					<?php //echo $row->$listed?>
@@ -34,13 +36,17 @@
 				</td>
 			<?php }?>
 			<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->id))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
-			<td style="width: 62px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+			<td style="width: 62px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 		</tr>
 		<?php }?>
 
 	</tbody>
 
 </table>
+
+<div id="massOperations" style="display: none">
+	<a href="#" rel="<?php echo $this->url('noodle/modules/delete', array('id' => 'ID_PLACEHOLDER', 'name' => $this->name))?>?mass" class="btn btn-danger btn-mini mass-delete">Delete selected</a>
+</div>
 
 <div class="pagination pagination-small">
   <ul>
@@ -61,10 +67,10 @@
     <h3 id="myModalLabel">Do you really want to delete this item?</h3>
   </div>
   <div class="modal-body">
-    <p>Confirm this action (TODO)</p>
+    <p>Confirm this action</p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-danger" data-dismiss="modal">Delete this item</button>
+    <a href="" rel="<?php echo $this->url('noodle/modules/delete', array('id' => 'ID_PLACEHOLDER', 'name' => $this->name))?>" class="btn btn-danger confirm-delete">Delete this item</a>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Service;
+namespace Noodle\Service;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

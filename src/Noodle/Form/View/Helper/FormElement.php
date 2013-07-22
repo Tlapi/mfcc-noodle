@@ -1,7 +1,6 @@
 <?php
 namespace Noodle\Form\View\Helper;
 
-use Application\Form\Element;
 use Zend\Form\View\Helper\FormElement as BaseFormElement;
 use Zend\Form\ElementInterface;
 
@@ -17,7 +16,7 @@ class FormElement extends BaseFormElement
 			return '';
 		}
 
-		if ($element instanceof Element\Picture) {
+		if ($element instanceof \Noodle\Form\Element\Picture) {
 			$helper = $renderer->plugin('formPicture');
 			return $helper($element);
 		}

@@ -99,9 +99,9 @@ class ModulesController extends AbstractActionController
 		$id = (string) $this->params()->fromRoute('id', 0);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Modules\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Modules\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
 
 		// Get entity
 		$entity = $module->find($id);
@@ -111,7 +111,7 @@ class ModulesController extends AbstractActionController
 		// get inversed to rows
 		$cmf = $this->getEntityManager()->getMetadataFactory();
 		$inversedModulesData = array();
-		foreach($cmf->getMetadataFor('Modules\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+		foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
 			if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
 				//echo $module['targetEntity'];
 				//$inversedModulesData[]
@@ -139,7 +139,7 @@ class ModulesController extends AbstractActionController
 
 				// redirect
 				$this->flashMessenger()->addMessage('Changes saved!');
-				return $this->redirect()->toRoute('modules/show', array('name' => $name));
+				return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
 			} else {
 				//die('invalid');
 			}
@@ -270,9 +270,9 @@ class ModulesController extends AbstractActionController
 		$id = (string) $this->params()->fromRoute('id', 0);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Modules\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Modules\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
 
 		// Get entity
 		$entity = $module->find($id);
@@ -285,7 +285,7 @@ class ModulesController extends AbstractActionController
 		// get inversed to rows
 		$cmf = $this->getEntityManager()->getMetadataFactory();
 		$inversedModulesData = array();
-		foreach($cmf->getMetadataFor('Modules\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+		foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
 			if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
 				//echo $module['targetEntity'];
 				//$inversedModulesData[]
@@ -306,7 +306,7 @@ class ModulesController extends AbstractActionController
 
 		// redirect
 		$this->flashMessenger()->addMessage('Entity deleted!');
-		return $this->redirect()->toRoute('modules/show', array('name' => $name));
+		return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
 	}
 
 	public function setEntityManager(EntityManager $em)

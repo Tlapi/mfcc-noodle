@@ -19,7 +19,8 @@ return array(
 			'Noodle\Controller\IndexController' => 'Noodle\Controller\IndexController',
 			'Noodle\Controller\Settings' => 'Noodle\Controller\SettingsController',
 			'Noodle\Controller\ModulesManager' => 'Noodle\Controller\ModulesManagerController',
-			'Noodle\Controller\Modules' => 'Noodle\Controller\ModulesController'
+			'Noodle\Controller\Modules' => 'Noodle\Controller\ModulesController',
+			'Noodle\Controller\Filesystem' => 'Noodle\Controller\FilesystemController',
 		),
 	),
 	'view_manager' => array(
@@ -189,6 +190,31 @@ return array(
 
                 				),
                 		),
+                		/* FILESYSTEM */
+                		'filesystem' => array(
+                				'type'    => 'literal',
+                				'options' => array(
+                						'route'    => '/filesystem',
+                						'defaults' => array(
+                								'controller' => 'Noodle\Controller\Filesystem',
+                								'action'     => 'index',
+                						),
+                				),
+                				'may_terminate' => true,
+                				'child_routes' => array(
+                						'upload' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/upload',
+                										'constraints' => array(
+                										),
+                										'defaults' => array(
+                												'action' => 'upload'
+                										)
+                								)
+                						),
+                				)
+                		),
                 ),
             ),
         ),
@@ -219,4 +245,11 @@ return array(
 					),
 			),
 	),
+	'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                'Noodle' => __DIR__ . '/../public',
+            ),
+        ),
+    ),
 );

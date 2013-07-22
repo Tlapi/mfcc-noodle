@@ -22,7 +22,8 @@
 		"zf-commons/zfc-user-doctrine-orm" : "0.*",
 		"smottt/wideimage" : "dev-master",
 		"zendframework/zendframework" : ">2.2.0rc1",
-		"evandotpro/edp-module-layouts": "dev-master"
+		"evandotpro/edp-module-layouts": "dev-master",
+               "rwoverdijk/assetmanager": "*"
     },
     "autoload": {
         "psr-0": {

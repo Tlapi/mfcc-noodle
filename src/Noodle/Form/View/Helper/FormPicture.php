@@ -30,7 +30,7 @@ class FormPicture extends AbstractHelper implements ServiceLocatorAwareInterface
 							<a href="#" class="remove">Remove picture</a>
 							<input type="hidden" name="'.$element->getName().'" value="'.$element->getValue().'" />
 						</div>
-						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('filesystem/upload').'" multiple style="display: none">
+						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple style="display: none">
 						<div class="progress" style="width: 300px">
 							<div class="bar bar-success" style="width: 0%;"></div>
 						</div>
@@ -42,7 +42,7 @@ class FormPicture extends AbstractHelper implements ServiceLocatorAwareInterface
 							<a href="#" class="remove">Remove picture</a>
 							<input type="hidden" name="'.$element->getName().'" value="" />
 						</div>
-						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('filesystem/upload').'" multiple>
+						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple>
 						<div class="progress" style="width: 300px">
 							<div class="bar bar-success" style="width: 0%;"></div>
 						</div>

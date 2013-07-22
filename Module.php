@@ -82,6 +82,10 @@ class Module
     						$form->setServiceLocator($sm);
     						return $form;
     					},
+    					'fileUploadHandlerService' => function ($serviceManager) {
+    						$service = new \Noodle\Service\UploadHandler($serviceManager->get('FileBank'));
+    						return $service;
+    					},
     			),
     			'invokables' => array(
     					'modulesService' => '\Noodle\Service\ModulesService',
