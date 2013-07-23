@@ -52,14 +52,13 @@ $(function() {
 	$('input.mass_checked').click(function(){
 		if($('input.mass_checked:checked').length > 0){
 			var checkedArray = [];
+			$('#massDelete input[name="ids[]"]').remove();
 			$('input.mass_checked:checked').each(function( index ) {
-				checkedArray.push($(this).val());
+				$('#massDelete').append('<input type="hidden" name="ids[]" value="'+$(this).val()+'" />')
 			});
-			//alert(checkedArray.serializeArray());
 			$('#massOperations').show();
 		} else {
 			$('#massOperations').hide();
-			$('#massOperations a.mass-delete').attr('href', '#');
 		}
 
 	});

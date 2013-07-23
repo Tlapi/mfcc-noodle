@@ -309,6 +309,51 @@ class ModulesController extends AbstractActionController
 		return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
 	}
 
+	/**
+	 * Mass delete action
+	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
+	 */
+	public function massDeleteAction()
+	{
+		$name = (string) $this->params()->fromRoute('name', 0);
+
+		// Get entity repository
+		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+
+		// Get entities
+		$post = $this->request->getPost();
+
+		foreach($post['ids'] as $id){
+			// Get entity
+			$entity = $module->find($id);
+
+			// delete
+			$this->getEntityManager()->remove($entity);
+
+			// Handle related entities
+			// get inversed to rows
+			$cmf = $this->getEntityManager()->getMetadataFactory();
+			$inversedModulesData = array();
+			foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+				if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
+					$inversedModuleEntity = $this->getEntityManager()->getRepository($inversedModule['targetEntity']);
+					$inversedModuleRows = $inversedModuleEntity->findModuleItems(null, null, 'u.'.$inversedModule['joinTable']["inverseJoinColumns"][0]['referencedColumnName'].' = '.$id)->getResult();
+					foreach($inversedModuleRows as $row){
+						$row->{$inversedModule['joinTable']["inverseJoinColumns"][0]['referencedColumnName']} = null;
+					}
+				}
+			}
+		}
+
+		$this->getEntityManager()->flush();
+
+		// redirect
+		$this->flashMessenger()->addMessage('Entities deleted!');
+		return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
+	}
+
 	public function setEntityManager(EntityManager $em)
 	{
 		$this->em = $em;

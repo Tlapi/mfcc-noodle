@@ -173,6 +173,19 @@ return array(
                 								),
                 								'may_terminate' => true,
                 						),
+                						'mass-delete' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/mass-delete/:name',
+                										'constraints' => array(
+                												'name'     => '[a-zA-Z0-9_-]+'
+                										),
+                										'defaults' => array(
+                												'action' => 'mass-delete'
+                										)
+                								),
+                								'may_terminate' => true,
+                						),
                 				),
                 		),
                 		/* NOODLE SETTINGS */
