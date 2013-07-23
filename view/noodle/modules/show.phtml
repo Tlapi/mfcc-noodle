@@ -28,7 +28,7 @@
 
 		<?php foreach($this->paginator as $row){?>
 		<tr rel="<?php echo $row->id?>">
-			<td><input type="checkbox" value="<?php echo $row->id?>" name="mass_checked[]" class="mass_checked" /></td>
+			<td style="width: 10px;"><input type="checkbox" value="<?php echo $row->id?>" name="mass_checked[]" class="mass_checked" /></td>
 			<?php foreach($this->listed as $listed){?>
 				<td>
 					<?php //echo $row->$listed?>
@@ -36,7 +36,7 @@
 				</td>
 			<?php }?>
 			<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->id))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
-			<td style="width: 62px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+			<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 		</tr>
 		<?php }?>
 

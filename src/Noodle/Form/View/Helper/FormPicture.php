@@ -14,25 +14,23 @@ class FormPicture extends AbstractHelper implements ServiceLocatorAwareInterface
 
 		if($element->getValue()){
 			$fileBank = $this->getServiceLocator()->get('FileBank');
+			$thumbnailer = $this->getServiceLocator()->getServiceLocator()->get('thumbnailerService');
+			$basePath = $this->getServiceLocator()->get('basePath');
 
-			/*
-			$thumbnailer = $this->getServiceLocator()->getServiceLocator()->get('WebinoImageThumb');
-			$thumb = $thumbnailer->create($fileBank->getFileById($element->getValue())->getAbsolutePath(), $options = array());
-			$thumb->resize(100, 100);
+			$file = $fileBank->getFileById($element->getValue());
 
-			$thumb->save('public/_data/resized.jpg');
-			*/
-
-			return '<div class="form_picture_container">
-						<div class="form_picture">
-							<img src="'.$fileBank->getFileById($element->getValue())->getUrl().'" alt="" />
-							#'.$element->getValue().'
-							<a href="#" class="remove">Remove picture</a>
+			return '<div class="form_picture_container media">
+						<a class="pull-left form_picture" href="#">
+							<img src="'.$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($file, 100, 100, true).'" alt="" />
 							<input type="hidden" name="'.$element->getName().'" value="'.$element->getValue().'" />
-						</div>
-						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple style="display: none">
-						<div class="progress" style="width: 300px">
-							<div class="bar bar-success" style="width: 0%;"></div>
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">'.$file->getName().'</h4>
+							<a href="#" class="remove">Remove picture</a>
+							<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple style="display: none">
+							<div class="progress" style="width: 300px; display:none;">
+								<div class="bar bar-success" style="width: 0%;"></div>
+							</div>
 						</div>
 					</div>';
 		} else {

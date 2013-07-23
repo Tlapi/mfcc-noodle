@@ -42,7 +42,7 @@ class Test extends Base
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
-	* @Annotation\Options({"label":"Name:", "listed":true, "placeholder":"Nice placeholder...", "blockHelp":"Nice block help text"})
+	* @Annotation\Options({"label":"Name", "listed":true, "placeholder":"Nice placeholder...", "blockHelp":"Nice block help text"})
 	* @Annotation\Required(true)
 	*/
 	public $name;
@@ -57,14 +57,14 @@ class Test extends Base
 	* @ORM\OneToOne(targetEntity="\Noodle\Entity\Tables\Relation")
 	* @Annotation\Type("Noodle\Form\Element\Relation")
 	* @Annotation\Required(true)
-	* @Annotation\Options({"label":"Select text:", "relationColumn":"title", "targetEntity":"\Noodle\Entity\Tables\Relation", "listed":true})
+	* @Annotation\Options({"label":"Select text", "relationColumn":"title", "targetEntity":"\Noodle\Entity\Tables\Relation", "listed":true})
 	*/
 	public $select;
 
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
-	* @Annotation\Options({"label":"Title:"})
+	* @Annotation\Options({"label":"Title"})
 	* @Annotation\Required(false)
 	*/
 	public $title;
@@ -72,7 +72,7 @@ class Test extends Base
 	/**
 	* @ORM\Column(type="integer");
 	* @Annotation\Type("Noodle\Form\Element\Picture")
-	* @Annotation\Options({"label":"Picture:"})
+	* @Annotation\Options({"label":"Picture", "listed":true})
 	* @Annotation\Required(false)
 	*/
 	public $picture;

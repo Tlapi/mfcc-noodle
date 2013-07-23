@@ -45,12 +45,58 @@ class Module
 
 	private $changedLayout;
 
+	public function init($moduleManager)
+	{
+		// Remember to keep the init() method as lightweight as possible
+		// Check system
+		$events = $moduleManager->getEventManager();
+		$events->attach('loadModules.post', array($this, 'modulesLoaded'));
+	}
+
+	public function modulesLoaded($e)
+    {
+        // This method is called once all modules are loaded.
+        $moduleManager = $e->getTarget();
+        $loadModules = $moduleManager->getModules();
+        // check var_dump($loadedModules);
+        // TODO move this somewhere
+        $DIModules = array(
+        	'EdpModuleLayouts',
+        	'ZfcBase',
+        	'ZfcUser',
+        	'ZfcUserDoctrineORM',
+        	'DoctrineModule',
+        	'DoctrineORMModule',
+        	'FileBank',
+        	'WebinoImageThumb',
+        	'AssetManager',
+        );
+        foreach($DIModules as $module){
+        	if(!in_array($module, $loadModules)){
+        		die('Module '.$module.' is not loaded!');
+        	}
+        }
+
+        // check writeables
+        // TODO from config
+        $dirs = array(
+        		'public/_cache',
+        		'public/_data',
+        		'data',
+        );
+        foreach($dirs as $dir){
+	        if (!is_writable($dir)) {
+	        	die($dir.' is not writeable!');
+	        }
+        }
+    }
+
     public function onBootstrap($e)
     {
     	$eventManager        = $e->getApplication()->getEventManager();
         //$eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'redirectUnauthedUsersEvent'));
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'));
-        
+
         $sem = $eventManager->getSharedManager();
         // listen to 'dashboard.load' when triggered by the IndexController
         $sem->attach('Noodle\Controller\IndexController', 'dashboard.load', function($e) {
@@ -99,6 +145,7 @@ class Module
     					'fileProcessingService' => '\Noodle\Service\FileProcessing',
     					'repositoriesService' => '\Noodle\Service\Repositories',
     					'entityGeneratorService' => '\Noodle\Service\EntityGenerator',
+    					'thumbnailerService' => '\Noodle\Service\Thumbnailer',
     			),
     	);
     }

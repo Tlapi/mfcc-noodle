@@ -28,7 +28,17 @@ class Picture extends Number implements ServiceLocatorAwareInterface
 
 	public function getListedValue($row)
 	{
-		return $row->{$this->getName()}->{$this->getOption('relationColumn')};
+		$value = $row->{$this->getName()};
+
+		$thumbnailer = $this->getServiceLocator()->get('thumbnailerService');
+		$basePath = $this->getServiceLocator()->get('viewhelpermanager')->get('basePath');
+
+		if($value){
+			$fileBank = $this->getServiceLocator()->get('FileBank');
+			return '<img src="'.$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($fileBank->getFileById($value), 50, 50, true).'" alt="" />';
+		} else {
+			return null;
+		}
 	}
 
 	public function setServiceLocator(ServiceLocatorInterface $sl)
