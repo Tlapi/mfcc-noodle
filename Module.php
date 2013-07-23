@@ -157,6 +157,7 @@ class Module
     					'formelement'       => 'Noodle\Form\View\Helper\FormElement',
     					'formPicture'     => 'Noodle\Form\View\Helper\FormPicture',
     					'moduleList'     => 'Noodle\View\Helper\ModuleList',
+    					'noodlePicture'     => 'Noodle\View\Helper\NoodlePicture',
     			),
     	);
 
