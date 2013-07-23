@@ -1,0 +1,101 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+	background-color: #23252b;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.zf-green {
+    color: #68b604;
+}
+
+.btn-success {
+  background-color: #57a900;
+  background-image: -moz-linear-gradient(top, #70d900, #57a900);
+  background-image: -ms-linear-gradient(top, #70d900, #57a900);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+  background-image: -o-linear-gradient(top, #70d900, #57a900);
+  background-image: linear-gradient(top, #70d900, #57a900);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  background-color: #57a900;
+}
+
+.btn-success:active, .btn-success.active {
+  background-color: #57a900;
+}
+
+div.container a.brand {
+    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 40px;
+}
+
+.move-handle{
+	opacity: 1;
+	visibility: visible;
+	cursor: move;
+	float: left;
+	color: #cccccc;
+	padding-right: 20px;
+	height: 50px;
+	line-height: 28px;
+	-webkit-transition: all 0.25s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+	-moz-transition: all 0.25s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+	-o-transition: all 0.25s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+	-ms-transition: all 0.25s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+	transition: all 0.25s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+}
+.move-handle i{
+	color: #cccccc;
+}
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+ol.sortable{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+ol.sortable li.placeholder {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #f4f3bc;
+  margin-bottom: 15px;
+  /** More li styles **/
+}
+ol.sortable li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
+.save-order{
+	display: none;
+}
+
+/* NOODLE */
+.main-container{
+	background-color: #fff;
+}
+.module-menu .nav-tabs.nav-stacked li a{
+	border: 0;
+	border-radius: 0;
+	-moz-border-radius: 0
+	-webkit-border-radius: 0;
+	color: #67aeea;
+	font-size: 12px;
+	font-weight: bold;
+}
+.row-fluid.top-bar{
+	background: url('../img/bottom-shadow.png') repeat-x bottom left;
+	height: 64px;
+}
