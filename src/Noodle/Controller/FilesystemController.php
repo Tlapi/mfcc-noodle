@@ -29,6 +29,12 @@ class FilesystemController extends AbstractActionController
 	 */
 	public function uploadAction()
 	{
+		if(!isset($_FILES['files']) && isset($_FILES['file'])){
+			foreach($_FILES['file'] as $key => $value){
+				$_FILES['files'][$key][] = $value;
+			}
+			unset($_FILES['file']);
+		}
 		/*
 		$result = new JsonModel(array(
 					'result' => array(

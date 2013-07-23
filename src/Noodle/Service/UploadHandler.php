@@ -968,10 +968,20 @@ class UploadHandler implements ServiceLocatorAwareInterface
                 $content_range
             );
         }
-        return $this->generate_response(
-            array($this->options['param_name'] => $files),
-            $print_response
-        );
+        if(isset($_GET['redactor'])){
+
+        	$array = array(
+        			'filelink' => '../../../_data/'.$this->filebankService->getFileById($files[0]->name)->getSavePath()
+        	);
+
+        	echo stripslashes(json_encode($array));
+        	return;
+        } else {
+	        return $this->generate_response(
+	            array($this->options['param_name'] => $files),
+	            $print_response
+	        );
+        }
     }
 
     public function delete($print_response = true) {

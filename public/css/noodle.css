@@ -99,3 +99,14 @@ ol.sortable li.placeholder:before {
 	background: url('../img/bottom-shadow.png') repeat-x bottom left;
 	height: 64px;
 }
+
+footer{
+	text-align: center;
+	font-size: 12px;
+	padding-bottom: 10px;
+}
+
+.showModule .btn.add-top{
+	float: right;
+	margin-top: 10px;
+}

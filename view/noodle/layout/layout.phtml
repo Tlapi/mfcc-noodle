@@ -11,12 +11,14 @@
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                         ->prependStylesheet($this->basePath() . '/css/noodle.css')
+                        ->prependStylesheet($this->basePath() . '/css/redactor/redactor.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                                       ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
                                       ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
+                                      ->prependFile($this->basePath() . '/js/redactor.min.js')
                                       ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.iframe-transport.js')
                                       ->prependFile($this->basePath() . '/js/jquery-file-upload/vendor/jquery.ui.widget.js')
                                       ->prependFile($this->basePath() . '/js/noodle.js')
@@ -48,9 +50,12 @@
 
         <div class="container main-container">
 
+        	<!--
         	<div class="row-fluid top-bar">
         		Top bar
         	</div>
+        	 -->
+        	 <br />
 
         	<div class="row-fluid">
 			    <div class="span2 module-menu">

@@ -63,4 +63,10 @@ $(function() {
 
 	});
 
+	// Redactor
+	$('textarea').redactor({
+		focus: true,
+		imageUpload: '../../filesystem/upload?redactor'
+	});
+
 });

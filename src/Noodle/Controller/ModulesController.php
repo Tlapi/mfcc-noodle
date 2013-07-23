@@ -43,6 +43,9 @@ class ModulesController extends AbstractActionController
 		// Get name of entity
 		$name = (string) $this->params()->fromRoute('name', 0);
 
+		// Get module name
+		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
+
 		// Get entity repository
 		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
 
@@ -84,6 +87,7 @@ class ModulesController extends AbstractActionController
 				'form' => $form,
 				'page' => $page,
 				'dir' => $orderDirection,
+				'moduleName' => $moduleName[0],
 				'flashMessages' => $this->flashMessenger()->getMessages()
 		));
 

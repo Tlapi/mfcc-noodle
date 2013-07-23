@@ -26,6 +26,11 @@ class ModulesService implements ServiceLocatorAwareInterface
 		return $this->getEntityManager()->getRepository('Noodle\Entity\Module')->findAll();
 	}
 
+	public function getModule($name)
+	{
+		return $this->getEntityManager()->getRepository('Noodle\Entity\Module')->findBy(array('entity' => $name));
+	}
+
 	/**
 	 * Interface methods
 	 * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()

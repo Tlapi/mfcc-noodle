@@ -34,15 +34,18 @@ class FormPicture extends AbstractHelper implements ServiceLocatorAwareInterface
 						</div>
 					</div>';
 		} else {
-			return '<div class="form_picture_container">
-						<div class="form_picture" style="display: none">
+			return '<div class="form_picture_container media">
+						<a class="pull-left form_picture" href="#" style="display: none">
 							<img src="" alt="" />
-							<a href="#" class="remove">Remove picture</a>
 							<input type="hidden" name="'.$element->getName().'" value="" />
-						</div>
-						<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple>
-						<div class="progress" style="width: 300px">
-							<div class="bar bar-success" style="width: 0%;"></div>
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading"></h4>
+							<a href="#" class="remove" style="display: none">Remove picture</a>
+							<input id="fileupload" type="file" name="files[]" data-url="'.$this->getServiceLocator()->get('url')->__invoke('noodle/filesystem/upload').'" multiple>
+							<div class="progress" style="width: 300px; display:none;">
+								<div class="bar bar-success" style="width: 0%;"></div>
+							</div>
 						</div>
 					</div>';
 		}
