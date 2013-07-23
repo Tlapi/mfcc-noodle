@@ -80,8 +80,8 @@ class Module
         // check writeables
         // TODO from config
         $dirs = array(
-        		'public/_cache',
-        		'public/_data',
+        		'www_root/_cache',
+        		'www_root/_data',
         		'data',
         );
         foreach($dirs as $dir){

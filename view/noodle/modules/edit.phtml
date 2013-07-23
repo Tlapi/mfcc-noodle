@@ -49,14 +49,16 @@
 </div>
 
 <div class="span2 offset1">
-	<h3>Related to:</h3>
-	<?php foreach($this->inversedModulesData as $module => $data){?>
-		<h4><?php echo $module?></h4>
-		<ul>
-		<?php foreach($data as $row){?>
-			<li><a href=""><?php echo $row->id?></a></li>
+	<?php if($this->inversedModulesData){?>
+		<h5>Related to:</h5>
+		<?php foreach($this->inversedModulesData as $module => $data){?>
+			<h6><?php echo $module?></h6>
+			<ul>
+			<?php foreach($data as $row){?>
+				<li><a href=""><?php echo $row->id?></a></li>
+			<?php }?>
+			</ul>
 		<?php }?>
-		</ul>
 	<?php }?>
 </div>
 

@@ -110,3 +110,9 @@ footer{
 	float: right;
 	margin-top: 10px;
 }
+.redactor_editor{
+	height: 350px;
+}
+.redactor_box{
+	margin-bottom: 15px;
+}
