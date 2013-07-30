@@ -63,8 +63,8 @@ class Module
         $DIModules = array(
         	'EdpModuleLayouts',
         	'ZfcBase',
-        	'ZfcUser',
-        	'ZfcUserDoctrineORM',
+        	//'ZfcUser',
+        	//'ZfcUserDoctrineORM',
         	'DoctrineModule',
         	'DoctrineORMModule',
         	'FileBank',
@@ -94,7 +94,7 @@ class Module
     public function onBootstrap($e)
     {
     	$eventManager        = $e->getApplication()->getEventManager();
-        //$eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'redirectUnauthedUsersEvent'));
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'redirectUnauthedUsersEvent'));
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'));
 
         $sem = $eventManager->getSharedManager();
@@ -138,6 +138,13 @@ class Module
     						$service = new \Noodle\Service\UploadHandler($serviceManager->get('FileBank'));
     						return $service;
     					},
+    					'Zend\Authentication\AuthenticationService' => function($serviceManager) {
+		                    // If you are using DoctrineORMModule:
+		                    return $serviceManager->get('doctrine.authenticationservice.orm_default');
+
+		                    // If you are using DoctrineODMModule:
+		                    //return $serviceManager->get('doctrine.authenticationservice.odm_default');
+		                }
     			),
     			'invokables' => array(
     					'modulesService' => '\Noodle\Service\ModulesService',
@@ -175,5 +182,105 @@ class Module
     	} else {
     		//$currentController->layout('layout/layout.phtml');
     	}
+    }
+
+    /**
+     * Redirect if the user is not authentificated
+     * @param MvcEvent $e
+     */
+    public function redirectUnauthedUsersEvent(MvcEvent $e)
+    {
+    	// Check if user is logged in
+    	$sm = $e->getApplication()->getServiceManager();
+
+    	// Get our route match
+    	$matches = $e->getRouteMatch();
+    	$controller = $matches->getParam('controller');
+    	$action = $matches->getParam('action');
+
+    	if(strncmp($controller, 'Noodle\\', strlen('Noodle\\'))===-1){
+    		return;
+    	}
+    	
+    	if($action=='login'){
+    		return;
+    	}
+
+    	$authenticationService = $sm->get('Zend\Authentication\AuthenticationService');
+    	$loggedUser = $authenticationService->getIdentity();
+
+    	if($loggedUser){
+    		return;
+    	}
+
+    	$url = $e->getRouter()->assemble(
+    			array(),
+    			array(
+    					'name' => 'noodle/user/login',
+    					'force_canonical' => true,
+    			)
+    	);
+
+    	$response = $e->getResponse();
+    	if ($response instanceof \Zend\Http\Response) {
+    		$response->getHeaders()->addHeaderLine('Location', $url.'?redirect='.urlencode($_SERVER['REDIRECT_URL']));
+    		$response->setStatusCode(307);
+    	}
+
+    	return $response;
+    	/*
+    	$auth = $sm->get('zfcuser_auth_service');
+    	if ($auth->hasIdentity()) {
+    		// user is logged id, return nothing
+    		if(($controller == 'ScnSocialAuth-User' && $action == 'register')) {
+    			$url = $e->getRouter()->assemble(array(), array('name' => 'homefeed'));
+    			$response=$e->getResponse();
+    			$response->getHeaders()->addHeaderLine('Location', $url);
+    			$response->setStatusCode(302);
+    			$response->sendHeaders();
+    			//  When an MvcEvent Listener returns a Response object,
+    			// It automatically short-circuit the Application running
+    			return $response;
+    		}
+    		return;
+    	}
+
+    	//die($action);
+    	//die($controller);
+
+    	// Change layout
+    	if(($controller == 'ScnSocialAuth-User' && $action == 'login')) {
+    		$this->changedLayout = 'layout/layout-login.phtml';
+    	}
+    	if(($controller == 'ScnSocialAuth-User' && $action == 'register') || ($controller == 'User\Controller\User' && $action == 'signup')) {
+    		$this->changedLayout = 'layout/layout-register.phtml';
+    	}
+
+    	// Get config for allowed paths for guest
+    	$config = $sm->get('Config');
+
+    	// Check if guest can see this path
+    	if (isset($config['moviatic']['user']['allowedPathsForGuest'][$controller][$action])) {
+    		return null;
+    	}
+
+    	// Guest is not allowed to see this path, redirect guest to login page
+    	// assemble redirect url
+    	$url = $e->getRouter()->assemble(
+    			array(),
+    			array(
+    					'name' => 'zfcuser/login',
+    					'force_canonical' => true,
+    			)
+    	);
+
+    	// redirect
+    	$response = $e->getResponse();
+    	if ($response instanceof \Zend\Http\Response) {
+    		$response->getHeaders()->addHeaderLine('Location', $url.'?redirect='.urlencode($_SERVER['REDIRECT_URL']));
+    		$response->setStatusCode(307);
+    	}
+
+    	return $response;*/
     }
 }

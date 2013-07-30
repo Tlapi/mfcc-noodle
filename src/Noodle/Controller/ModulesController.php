@@ -80,6 +80,10 @@ class ModulesController extends AbstractActionController
 			$page = 1;
 		}
 
+		// Layout variables
+		$this->layout()->header = $moduleName[0]->module_name;
+		$this->layout()->moduleName = $name;
+
 		return new ViewModel(array(
 				'listed' => $listed,
 				'name' => $name,
@@ -101,6 +105,9 @@ class ModulesController extends AbstractActionController
 	{
 		$name = (string) $this->params()->fromRoute('name', 0);
 		$id = (string) $this->params()->fromRoute('id', 0);
+
+		// Get module name
+		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
 
 		// Get entity repository
 		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
@@ -150,6 +157,10 @@ class ModulesController extends AbstractActionController
 
 		}
 
+		// Layout variables
+		$this->layout()->header = $moduleName[0]->module_name . ' - edit';
+		$this->layout()->moduleName = $name;
+
 		return new ViewModel(array(
 				'form' => $form,
 				'name' => $name,
@@ -172,9 +183,10 @@ class ModulesController extends AbstractActionController
 		$formParent = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Modules\Entity\Tables\\'.$parentEntityName);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository($formParent->getOption('sheets')[$sheetName]->getOption('targetEntity'));
+		$sheets = $formParent->getOption('sheets');
+		$module = $this->getEntityManager()->getRepository($sheets[$sheetName]->getOption('targetEntity'));
 
-		$entityClassname = $formParent->getOption('sheets')[$sheetName]->getOption('targetEntity');
+		$entityClassname = $sheets[$sheetName]->getOption('targetEntity');
 		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($entityClassname);
 
 		// Process post request
@@ -229,6 +241,9 @@ class ModulesController extends AbstractActionController
 		$name = (string) $this->params()->fromRoute('name', 0);
 		$entityClassname = '\Noodle\Entity\Tables\\'.$name;
 
+		// Get module name
+		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
+
 		// Get entity repository
 		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
 
@@ -258,6 +273,10 @@ class ModulesController extends AbstractActionController
 			}
 
 		}
+
+		// Layout variables
+		$this->layout()->header = $moduleName[0]->module_name . ' - add';
+		$this->layout()->moduleName = $name;
 
 		return new ViewModel(array(
 				'form' => $form

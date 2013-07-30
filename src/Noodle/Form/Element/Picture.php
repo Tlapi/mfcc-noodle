@@ -2,12 +2,12 @@
 
 namespace Noodle\Form\Element;
 
-use Zend\Form\Element\Number;
+use Zend\Form\Element\Text;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Picture extends Number implements ServiceLocatorAwareInterface
+class Picture extends Text implements ServiceLocatorAwareInterface
 {
 
 	protected $serviceLocator;

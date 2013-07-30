@@ -1,11 +1,42 @@
-<h1>Settings</h1>
+<div class="span8">
 
-<ul>
-	<li>Project name</li>
-	<li>Project logo</li>
-	<li>Project styles</li>
-	<li>Admin version / development / production</li>
-	<li>Google analytics settings - to dashboard</li>
-	<li>Facebook integration</li>
-	<li>Other integrations</li>
-</ul>
+	<?php if(count($this->flashMessages)) : ?>
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?php foreach ($this->flashMessages as $msg) : ?>
+	    	<strong>Well done!</strong> <?php echo $msg; ?><br />
+	    <?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+	
+	    <?php
+	    $form = $this->form;
+	    $form->prepare();
+	    ?>
+
+	    <?php echo $this->form()->openTag($form);?>
+			<fieldset>
+
+				<?php foreach ($form as $element) {?>
+					<label><?php echo $element->getLabel()?></label>
+					<?php echo $this->formElement($element)?>
+					<?php if($element->getOption('blockHelp')){?>
+						<span class="help-block"><?php echo $element->getOption('blockHelp')?></span>
+					<?php }?>
+				<?php }?>
+
+				<br /><br />
+				<button type="submit" class="btn btn-primary">Save</button>
+
+		  </fieldset>
+		<?php echo $this->form()->closeTag();?>
+		
+		<h4>TODO</h4>
+		<ul>
+			<li>Project logo</li>
+			<li>Project styles</li>
+			<li>Admin version / development / production</li>
+			<li>Other integrations</li>
+		</ul>
+
+</div>

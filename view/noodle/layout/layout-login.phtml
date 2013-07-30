@@ -10,46 +10,68 @@
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle.css')
+                        ->prependStylesheet($this->basePath() . '/css/redactor/redactor.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
+                                      ->prependFile($this->basePath() . '/js/redactor.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.iframe-transport.js')
+                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/vendor/jquery.ui.widget.js')
+                                      ->prependFile($this->basePath() . '/js/noodle.js')
                                       ->prependFile($this->basePath() . '/js/bootstrap.min.js')
                                       ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
 
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
 
+		<div id="login">
 
-
-                </div>
-            </div>
-        </div>
-
-        <!-- Subhead ================================================== -->
-		<header class="jumbotron subhead" id="overview" style="text-align: center">
-		  <div class="container">
-		    <h1>Noodle</h1>
-		    <p class="lead">Your delicious CMS pasta!</p>
-		  </div>
-		</header>
-
-        <div class="container">
-
-    	   	<div class="row-fluid">
-
-			      <?php echo $this->content; ?>
-
+			<?php //echo $this->content?>
+			<h1>NOODLE</h1>
+			<h3>Login</h3>
+			<form action="<?php echo $this->url('noodle/user/login')?>" method="post">
+				<fieldset>
+					<!--
+				    <div class="alert alert-danger">
+					    <a class="close" data-dismiss="alert">×</a>
+					    Your Message Here
+				    </div>
+				     -->
+					<div class="control-group">
+						<label class="control-label" for="user_name">E-mail</label>
+						<div class="controls">
+							<input type="text" class="input-large" id="user_name" name="email">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="pass_word">Password</label>
+						<div class="controls">
+							<input type="password" class="input-large" id="pass_word" name="password">
+						</div>
+					</div>
+				</fieldset>
+				<a href="forgot_password.html">Forgot Password ?</a>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-warning">
+						Login
+					</button>
+				</div>
+			</form>
+			&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?>
+			<!--
+			<div class="pull-right">
+				<a href="register.html">Sign In</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Need Help</a>
 			</div>
-            <hr>
-            <footer style="text-align: center">
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
+			 -->
+		</div>
+		<!-- Le javascript ================================================== -->
+		<!--
+		Placed at the end of the document so the pages load faster -->
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
 </html>

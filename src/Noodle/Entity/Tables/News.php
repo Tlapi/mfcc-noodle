@@ -80,12 +80,6 @@ class News extends Base
 	public $picture;
 
 	/**
-	 * @Annotation\Options({"label":"My sheet", "sheetType": "cyclic", "targetEntity":"\Noodle\Entity\Tables\Relation"})
-	 * @Annotation\Required(false)
-	 */
-	public $sheet;
-
-	/**
 	* Magic getter to expose protected properties.
 	*
 	* @param DateTime $property

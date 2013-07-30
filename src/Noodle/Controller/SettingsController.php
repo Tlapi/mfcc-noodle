@@ -27,7 +27,49 @@ class SettingsController extends AbstractActionController
 	 */
 	public function indexAction()
 	{
-
+		// Get entity repository
+		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Settings');
+		
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Settings');
+		
+		// Get entity
+		$entity = $module->find(1);
+		
+		$form->bind($entity);
+		
+		// Process post request
+		if ($this->request->isPost()) {
+		
+			// process files first
+			//$post = $this->getServiceLocator()->get('fileProcessingService')->processFiles($this->request);
+		
+			$form->setData($this->request->getPost());
+			if ($form->isValid()) {
+		
+				// map data to entity
+				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, $entity);
+		
+				// persist entity
+				$this->getEntityManager()->persist($entity);
+				$this->getEntityManager()->flush();
+		
+				// redirect
+				$this->flashMessenger()->addMessage('Changes saved!');
+				return $this->redirect()->toRoute('noodle/settings');
+			} else {
+				//die('invalid');
+			}
+		
+		}
+		
+		// layout variables
+		$this->layout()->header = 'Settings';
+		
+		return new ViewModel(array(
+				'form' => $form,
+				'id' => 1,
+				'flashMessages' => $this->flashMessenger()->getMessages()
+		));
 	}
 
 	public function setEntityManager(EntityManager $em)

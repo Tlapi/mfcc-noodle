@@ -1,0 +1,37 @@
+<?php if(count($this->flashMessages)) : ?>
+<div class="alert alert-success">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<?php foreach ($this->flashMessages as $msg) : ?>
+    	<strong>Well done!</strong> <?php echo $msg; ?><br />
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+<table class="table table-striped table-hover">
+
+	<thead>
+		<tr>
+			<th>User e-mail</th>
+			<th>Roles</th>
+			
+			<th colspan="2"></th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<?php foreach($this->users as $user){?>
+			<tr rel="<?php echo $row->id?>">
+				<td><?php echo $user->getEmail()?></td>
+				<td>
+					<?php foreach($user->getRoles() as $role){?>
+						<?php echo $role->getRoleId()?>
+					<?php }?>
+				</td>
+				<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/user/edit', array('id' => $user->getId()))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
+				<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+			</tr>
+			<?php }?>
+
+	</tbody>
+
+</table>

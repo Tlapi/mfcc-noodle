@@ -20,6 +20,7 @@ return array(
 			'Noodle\Controller\Settings' => 'Noodle\Controller\SettingsController',
 			'Noodle\Controller\ModulesManager' => 'Noodle\Controller\ModulesManagerController',
 			'Noodle\Controller\Modules' => 'Noodle\Controller\ModulesController',
+			'Noodle\Controller\User' => 'Noodle\Controller\UserController',
 			'Noodle\Controller\Filesystem' => 'Noodle\Controller\FilesystemController',
 		),
 	),
@@ -47,6 +48,57 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                		/* USER */
+                		'user' => array(
+                				'type'    => 'literal',
+                				'options' => array(
+                						'route'    => '/user',
+                						'defaults' => array(
+                								'controller' => 'Noodle\Controller\User',
+                								'action'     => 'index',
+                						),
+                				),
+                				'may_terminate' => true,
+                				'child_routes' => array(
+                						'login' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/login',
+                										'defaults' => array(
+                												'action' => 'login'
+                										)
+                								)
+                						),
+                						'logout' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/logout',
+                										'defaults' => array(
+                												'action' => 'logout'
+                										)
+                								)
+                						),
+                						'manage' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/manage',
+                										'defaults' => array(
+                												'action' => 'manage'
+                										)
+                								)
+                						),
+                						'edit' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/edit/:id',
+                										'defaults' => array(
+                												'action' => 'edit',
+                												'id'     => '[0-9]+'
+                										)
+                								)
+                						),
+                				)
+                		),
                 		/* MODULES MANAGER */
                 		'modules-manager' => array(
                 				'type'    => 'literal',
@@ -255,6 +307,25 @@ return array(
 							'drivers' => array(
 									__NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver',
 							),
+					),
+			),
+			'authentication' => array(
+					'orm_default' => array(
+							'object_manager' => 'Doctrine\ORM\EntityManager',
+							'identity_class' => 'Noodle\Entity\User',
+							'identity_property' => 'email',
+							'credential_property' => 'password',
+							/*
+							'credential_callable' => function(\Noodle\Entity\User $user, $passwordGiven) {
+								/*
+								return my_awesome_check_test($user->getPassword(), $passwordGiven);
+								echo $user->getPassword();
+								if($user->getPassword() != md5($passwordGiven)) {
+									return false;
+								} else {
+									return true;
+								}
+							},*/
 					),
 			),
 	),
