@@ -42,7 +42,7 @@ class News extends Base
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
-	* @Annotation\Options({"label":"Nadpis", "listed":true})
+	* @Annotation\Options({"label":"Header", "listed":true})
 	* @Annotation\Required(true)
 	*/
 	public $title;
@@ -50,7 +50,7 @@ class News extends Base
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
-	* @Annotation\Options({"label":"Štítek", "listed":true})
+	* @Annotation\Options({"label":"Label", "listed":true})
 	* @Annotation\Required(true)
 	*/
 	public $label;
@@ -58,8 +58,8 @@ class News extends Base
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Select")
-	* @Annotation\Options({"label":"Místo", "listed":true})
-	* @Annotation\Attributes({"options":{"1":"Bajkazyl","2":"Náplavka","3":"Žižkov","4":"Meetfactory"}})
+	* @Annotation\Options({"label":"Place", "listed":true})
+	* @Annotation\Attributes({"options":{"1":"Option 1","2":"Option 2","3":"Option 3","4":"Option 4"}})
 	*/
 	public $place;
 
@@ -74,7 +74,7 @@ class News extends Base
 	/**
 	* @ORM\Column(type="integer");
 	* @Annotation\Type("Noodle\Form\Element\Picture")
-	* @Annotation\Options({"label":"Obrázek"})
+	* @Annotation\Options({"label":"Picture"})
 	* @Annotation\Required(false)
 	*/
 	public $picture;

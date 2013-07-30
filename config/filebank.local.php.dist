@@ -1,0 +1,13 @@
+<?php
+
+namespace FileBank;
+
+return array(
+    __NAMESPACE__ => array(
+        'params' => array(
+            'filebank_folder'  => '/mnt/data/accounts/p/potentus/data/www/bajkazyl.cz/www_root/_data',
+            'default_is_active' => true,
+            'chmod'           => 0755,
+        ),
+    ),
+);
