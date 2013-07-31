@@ -1,7 +1,7 @@
 mfcc-noodle
 ===========
 
-Mfcc Noodle CMS ZF2 module
+Easy to use, easy to implement, superflexibile and modular Content Management system base on Zend Framework 2 and Twitter Bootstrap.
 
 How to create your own module:
 ==============================
