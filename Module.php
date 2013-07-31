@@ -159,6 +159,7 @@ class Module
     					'repositoriesService' => '\Noodle\Service\Repositories',
     					'entityGeneratorService' => '\Noodle\Service\EntityGenerator',
     					'thumbnailerService' => '\Noodle\Service\Thumbnailer',
+    					'noodleOptions' => '\Noodle\Options\NoodleOptions',
     			),
     	);
     }
