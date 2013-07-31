@@ -9,9 +9,27 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class ModuleList extends AbstractHelper implements ServiceLocatorAwareInterface
 {
 
+	private $tableModules;
+	private $vendorModules;
+
 	public function __invoke()
     {
-    	return $this->getServiceLocator()->getServiceLocator()->get('modulesService')->getModules();
+    	if(!isset($this->tableModules))
+    		$this->tableModules = $this->getServiceLocator()->getServiceLocator()->get('modulesService')->getModules();
+    	if(!isset($this->vendorModules))
+    		$this->vendorModules = $this->getServiceLocator()->getServiceLocator()->get('modulesService')->getVendorModules();
+
+    	return $this;
+    }
+
+    public function getTableModules()
+    {
+    	return $this->tableModules;
+    }
+
+    public function getVendorModules()
+    {
+    	return $this->vendorModules;
     }
 
     /**

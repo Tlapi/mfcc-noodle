@@ -49,7 +49,7 @@
 							<li>
 								<a href="<?php echo $this->url('noodle/settings') ?>"><?php echo $this->translate('Settings') ?></a>
 							</li>
-							 
+
 						</ul>
 						<ul class="nav pull-right">
 							<!--
@@ -126,8 +126,11 @@
 					<div class="row-fluid">
 						<div class="span3">
 							<ul class="nav nav-tabs nav-stacked">
-								<?php foreach($this->moduleList() as $module){?>
+								<?php foreach($this->moduleList()->getTableModules() as $module){?>
 									<li><a href="<?php echo $this->url('noodle/modules/show', array('name' => $module->entity))?>"><?php echo $module->module_name?></a></li>
+					      		<?php }?>
+								<?php foreach($this->moduleList()->getVendorModules() as $module){?>
+									<li>Vendor module</li>
 					      		<?php }?>
 					      		<!--
 								<li>

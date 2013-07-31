@@ -3,13 +3,20 @@ namespace Noodle\Service;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventManager;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 
 //use Zend\Form\Annotation\AnnotationBuilder;
 
-class ModulesService implements ServiceLocatorAwareInterface
+class ModulesService implements ServiceLocatorAwareInterface, EventManagerAwareInterface
 {
 
 	protected $serviceLocator;
+
+	protected $events;
+
+	private $vendorModules = array();
 
 	/**
 	 * @var Doctrine\ORM\EntityManager
@@ -26,9 +33,20 @@ class ModulesService implements ServiceLocatorAwareInterface
 		return $this->getEntityManager()->getRepository('Noodle\Entity\Module')->findAll();
 	}
 
+	public function getVendorModules()
+	{
+		$this->getEventManager()->trigger('vendorModules.load', $this);
+		return $this->vendorModules;
+	}
+
 	public function getModule($name)
 	{
 		return $this->getEntityManager()->getRepository('Noodle\Entity\Module')->findBy(array('entity' => $name));
+	}
+
+	public function addVendorModule($module)
+	{
+		$this->vendorModules[] = $module;
 	}
 
 	/**
@@ -41,6 +59,20 @@ class ModulesService implements ServiceLocatorAwareInterface
 
 	public function getServiceLocator() {
 		return $this->serviceLocator;
+	}
+
+	public function setEventManager(EventManagerInterface $events)
+	{
+		$this->events = $events;
+		return $this;
+	}
+
+	public function getEventManager()
+	{
+		if (!$this->events) {
+			$this->setEventManager(new EventManager(__CLASS__));
+		}
+		return $this->events;
 	}
 
 	public function setEntityManager(EntityManager $em)
