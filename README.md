@@ -10,12 +10,27 @@ How to create your own module:
 2. Create corresponding table for your entity.
 3. Add your entity to modules table
 
+Bundled datatypes and options
+==============================
+
+TBS
+
 How to create your own datatype:
 ==============================
 
 1. Create your own form element base on one of Zend Form Elements
 2. Implement ``prepare()``, ``treatValueBeforeSave()`` and ``getListedValue()`` if needed.
-3. Use data type in your entity
+3. Use data type in your entity like that:
+
+```sh
+/**
+  * @ORM\Column(type="string");
+	* @Annotation\Type("Your\Datatype\Namespace")
+	* @Annotation\Options({"label":"Your label"})
+	* @Annotation\Required(true)
+	*/
+	public $title;
+```
 
 How to create your own custom module:
 ====================================
