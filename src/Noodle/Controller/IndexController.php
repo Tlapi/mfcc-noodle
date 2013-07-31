@@ -12,14 +12,35 @@ namespace Noodle\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractActionController
 {
+	
+	/**
+	 * @var Modules for dashboard
+	 */
+	protected $dashboardModules = array();
+	
     public function indexAction()
     {
-    	$this->getEventManager()->trigger('dashboard.load', $this);
+    	$this->getEventManager()->trigger('dashboard', $this);
+    	
+    	//$this->dashboardModules = 'ahoj';
+    	//exit();
 
         return new ViewModel(array(
 			//'modules' => $modules
+			'dashboardModules' => $this->dashboardModules
         ));
     }
+    
+    public function addDashboardModule($module)
+    {
+    	$this->dashboardModules[] = $module;
+    }
+    
+    public function getDashboardModules()
+    {
+    	return $this->dashboardModules;
+    }
+    
 }

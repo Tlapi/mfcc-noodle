@@ -51,6 +51,9 @@ class Module
 		// Check system
 		$events = $moduleManager->getEventManager();
 		$events->attach('loadModules.post', array($this, 'modulesLoaded'));
+		$events->getSharedManager()->attach('Noodle\Controller\IndexController', 'dashboard', function ($e) {
+			$e->getTarget()->addDashboardModule('GoogleAnalytics');
+		});
 	}
 
 	public function modulesLoaded($e)
@@ -62,7 +65,7 @@ class Module
         // TODO move this somewhere
         $DIModules = array(
         	'EdpModuleLayouts',
-        	'ZfcBase',
+        	//'ZfcBase',
         	//'ZfcUser',
         	//'ZfcUserDoctrineORM',
         	'DoctrineModule',
@@ -115,6 +118,9 @@ class Module
     public function getAutoloaderConfig()
     {
     	return array(
+    			'Zend\Loader\ClassMapAutoloader' => array(
+    					__DIR__ . '/autoload_classmap.php',
+    			),
     			'Zend\Loader\StandardAutoloader' => array(
     					'namespaces' => array(
     							__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
@@ -165,6 +171,7 @@ class Module
     					'formPicture'     => 'Noodle\Form\View\Helper\FormPicture',
     					'moduleList'     => 'Noodle\View\Helper\ModuleList',
     					'noodlePicture'     => 'Noodle\View\Helper\NoodlePicture',
+    					'GoogleAnalytics'     => 'Noodle\View\Helper\Dashboard\GoogleAnalytics',
     			),
     	);
 
@@ -201,7 +208,7 @@ class Module
     	if(strncmp($controller, 'Noodle\\', strlen('Noodle\\'))===-1){
     		return;
     	}
-    	
+
     	if($action=='login'){
     		return;
     	}
