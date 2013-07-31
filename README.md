@@ -57,6 +57,17 @@ Widget will be rendered via your helper ``public function __invoke(){}`` method
 
 Please see ``Noodle\View\Helper\Dashboard\GoogleAnalytics`` as a reference.
 
+Option settings
+===============
+
+You can set and get noodle options settings wherever you want using:
+
+```sh
+$optionService = $this->getServiceLocator()->getServiceLocator()->get('noodleOptions');
+$optionService->setOption('your_widget_namespace.your_option_key', option_value);
+$optionService->getOption('your_widget_namespace.your_option_key');
+```
+
 TODOS
 =====
 1. Create tables automatically from entities
