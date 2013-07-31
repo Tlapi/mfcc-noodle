@@ -49,3 +49,4 @@ TODOS
 1. Create tables automatically from entities
 2. Manage tables in gui
 3. Clean code and provide interfaces
+4. Add user role management
