@@ -17,6 +17,19 @@ How to create your own datatype:
 2. Implement ``prepare()``, ``treatValueBeforeSave()`` and ``getListedValue()`` if needed.
 3. Use data type in your entity
 
+How to create your own custom module:
+====================================
+
+Noodle is prepared for vendor modules. Just listen for this event:
+
+```sh
+$events->getSharedManager()->attach('Noodle\Service\ModulesService', 'vendorModules.load', function ($e) {
+  		$e->getTarget()->addVendorModule('your_module_service');
+});
+```
+
+Vendor module must implement ``TODO``.
+
 How to create dashboard widget:
 ==============================
 
