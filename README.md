@@ -6,7 +6,9 @@ Mfcc Noodle CMS ZF2 module
 How to create your own module:
 ==============================
 
-TBS
+1. Create you own entity in ``Noodle\Entity\Tables``
+2. Create corresponding table for your entity.
+3. Add your entity to modules table
 
 How to create dashboard widget:
 ==============================
