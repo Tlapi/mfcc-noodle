@@ -1,6 +1,8 @@
 mfcc-noodle
 ===========
 
+NOTE: This is still under heavy-development. Use at your own risk.
+
 Easy to use, easy to implement, superflexibile and modular Content Management system base on Zend Framework 2 and Twitter Bootstrap.
 
 How to create your own module:
