@@ -15,6 +15,7 @@ How to create your own datatype:
 
 1. Create your own form element base on one of Zend Form Elements
 2. Implement ``prepare()``, ``treatValueBeforeSave()`` and ``getListedValue()`` if needed.
+3. Use data type in your entity
 
 How to create dashboard widget:
 ==============================
