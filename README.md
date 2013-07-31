@@ -50,4 +50,4 @@ TODOS
 2. Manage tables in gui
 3. Clean code and provide interfaces
 4. Add user role management
-5. Set absolute namespace path for Noodle\Entity\Tables
+5. Set absolute namespace path for Noodle\Entity\Tables and set base table to extend from
