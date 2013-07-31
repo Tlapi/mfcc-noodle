@@ -79,8 +79,8 @@ You can set and get noodle options settings wherever you want using:
 
 ```sh
 $optionService = $this->getServiceLocator()->getServiceLocator()->get('noodleOptions');
-$optionService->setOption('your_widget_namespace.your_option_key', option_value);
-$optionService->getOption('your_widget_namespace.your_option_key');
+$optionService->setOption('some_widget_namespace.some_option_key', option_value);
+$optionService->getOption('some_option_key');
 ```
 
 TODOS
