@@ -10,6 +10,12 @@ How to create your own module:
 2. Create corresponding table for your entity.
 3. Add your entity to modules table
 
+How to create your own datatype:
+==============================
+
+1. Create your own form element base on one of Zend Form Elements
+2. Implement ``prepare()``, ``treatValueBeforeSave()`` and ``getListedValue()`` if needed.
+
 How to create dashboard widget:
 ==============================
 
