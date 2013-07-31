@@ -43,3 +43,9 @@ $optionService->getOption('your_widget_namespace.your_option_key');
 Widget will be rendered via your helper ``public function __invoke(){}`` method
 
 Please see ``Noodle\View\Helper\Dashboard\GoogleAnalytics`` as a reference.
+
+TODOS
+=====
+1. Create tables automatically from entities
+2. Manage tables in gui
+3. Clean code and provide interfaces
