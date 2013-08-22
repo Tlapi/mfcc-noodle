@@ -4,3 +4,5 @@ php:
 before_script:
   - php composer.phar self-update
   - php composer.phar install
+notifications:
+    email: false
