@@ -82,6 +82,7 @@ class Module
 
         // check writeables
         // TODO from config
+        /*
         $dirs = array(
         		'www_root/_cache',
         		'www_root/_data',
@@ -91,7 +92,7 @@ class Module
 	        if (!is_writable($dir)) {
 	        	die($dir.' is not writeable!');
 	        }
-        }
+        }*/
     }
 
     public function onBootstrap($e)
