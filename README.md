@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Tlapi/mfcc-noodle.png?branch=master)](https://travis-ci.org/Tlapi/mfcc-noodle)
+[![Build Status](https://travis-ci.org/Tlapi/mfcc-noodle.png?branch=master)](https://travis-ci.org/Tlapi/mfcc-noodle) [![Dependency Status](https://www.versioneye.com/user/projects/52167869632bac7749010ca8/badge.png)](https://www.versioneye.com/user/projects/52167869632bac7749010ca8)
 -----------------
 mfcc-noodle
 ===========
