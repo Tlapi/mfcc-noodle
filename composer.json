@@ -21,7 +21,8 @@
 		"smottt/wideimage" : "dev-master",
 		"zendframework/zendframework" : ">2.2.0rc1",
 		"evandotpro/edp-module-layouts": "dev-master",
-               "rwoverdijk/assetmanager": "*"
+               "rwoverdijk/assetmanager": "*",
+               "bjyoungblood/bjy-authorize": "1.4.*"
     },
     "autoload": {
         "psr-0": {
