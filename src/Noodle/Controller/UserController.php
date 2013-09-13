@@ -40,6 +40,12 @@ class UserController extends AbstractActionController
 			die('No db connection');
 		}
 		
+		// Check if user table is not empty, if so create new admin user
+		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		if(!$users->findAll()){
+			die('No admins found!');
+		}
+		
 		$data = $this->getRequest()->getPost();
 
 		if(sizeof($data)){
