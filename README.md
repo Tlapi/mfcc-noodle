@@ -12,7 +12,7 @@ Famous 8 step installation to create new website with admin
 
 1. Install Zend Skeleton App (optional)
 2. Require mfcc-noodle in composer ``"mfcc-noodle": "dev-master"``
-3. run composer-update
+3. There is no step 3
 4. Copy config.dist files from ``vendor/mfcc/noodle/config`` to ``config/autoload`` and setup
 5. Setup you doctrine connection driver if not present
 6. Run ``php vendor/bin/doctrine orm:schema-tool:update --force`` to create db
