@@ -17,7 +17,7 @@ Famous 8 step installation to create new website with admin
 5. Setup you doctrine connection driver if not present
 6. Run ``php vendor/bin/doctrine orm:schema-tool:update --force`` to create db
 7. Set default admin user
-8. Create your entities !
+8. Create your entities ! And run ``php vendor/bin/doctrine orm:schema-tool:update --force`` after every update
 
 
 How to create your own module:
