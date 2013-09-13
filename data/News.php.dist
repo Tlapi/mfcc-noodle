@@ -9,7 +9,7 @@ use Noodle\Entity\Base;
 /**
  * A movie
  *
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\Reflection")
  * @Annotation\Name("Test")
  * @ORM\Entity(repositoryClass="\Noodle\Repository\Base")
  * @ORM\Table(name="noodle_news")

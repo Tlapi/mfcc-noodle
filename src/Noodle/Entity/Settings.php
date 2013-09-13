@@ -9,7 +9,7 @@ use Zend\Form\Annotation;
 /**
  * A movie
  *
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\Reflection")
  * @Annotation\Name("Settings")
  * @ORM\Entity(repositoryClass="\Noodle\Repository\Base")
  * @ORM\Table(name="settings")
@@ -38,7 +38,7 @@ class Settings
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
-	* @Annotation\Options({"label":"Google analytics"})
+	* @Annotation\Options({"label":"Google analytics ID"})
 	*/
 	private $ga_code;
 
