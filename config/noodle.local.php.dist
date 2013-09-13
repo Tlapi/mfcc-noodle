@@ -1,0 +1,8 @@
+<?php
+return array(
+	'noodle' => array(
+        'cache_folder' => 'public/_cache',
+        'login_bg_image' => 'adbfkbasd.jpg',
+        'entity_namespace' => '\Application\Entity',
+    ),
+);
