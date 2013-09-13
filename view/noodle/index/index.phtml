@@ -1,5 +1,5 @@
-		<!-- upper main stats -->
-        <div id="main-stats">
+<!-- upper main stats -->
+<div id="main-stats">
             <div class="row stats-row">
                 <div class="col-md-6 col-sm-6 stat">
                     <div class="data">
@@ -32,13 +32,19 @@
                 </div>
                  -->
             </div>
-        </div>
-        <!-- end upper main stats -->
+</div>
+<!-- end upper main stats -->
             		        
-		<div id="pad-wrapper">
+<div id="pad-wrapper">
 		
-			Widgets
-			<br />
-			Check writeable filebank_folder and _data and _cache
+	Widgets
+	<br />
+	Check writeable filebank_folder and _data and _cache
 		
-		</div>
+</div>
+
+<?php foreach($this->dashboardModules as $module){?>
+	<?php echo $this->$module()?>
+<?php }?>
+		
+		
