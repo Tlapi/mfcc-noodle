@@ -207,7 +207,7 @@ class Module
     	$controller = $matches->getParam('controller');
     	$action = $matches->getParam('action');
 
-    	if(strncmp($controller, 'Noodle\\', strlen('Noodle\\'))===-1){
+    	if(strncmp($controller, 'Noodle\\', strlen('Noodle\\'))<0){
     		return;
     	}
 
