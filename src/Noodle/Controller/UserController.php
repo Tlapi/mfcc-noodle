@@ -34,7 +34,7 @@ class UserController extends AbstractActionController
 		//var_dump($this->zfcUserAuthentication()->hasIdentity());
 
 		try {
-			$this->getEntityManager->getConnection()->connect();
+			$this->getEntityManager()->getConnection()->connect();
 		} catch (\Exception $e) {
 			// failed to connect
 			die('No db connection');
