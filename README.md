@@ -7,7 +7,7 @@ NOTE: This is still under heavy-development. Use at your own risk.
 
 Easy to use, easy to implement, superflexibile and modular Content Management system base on Zend Framework 2 and Twitter Bootstrap.
 
-Famous 8 step installation
+Famous 8 step installation to create new website with admin
 ===========
 
 1. Install Zend Skeleton App (optional)
