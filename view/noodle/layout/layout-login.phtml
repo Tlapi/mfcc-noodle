@@ -1,6 +1,6 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="en">
+<html lang="en" class="login-bg">
     <head>
         <meta charset="utf-8">
         <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -9,69 +9,71 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/noodle.css')
-                        ->prependStylesheet($this->basePath() . '/css/redactor/redactor.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        //->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/signin.css')
+                        ->prependStylesheet($this->basePath() . '/css/font-awesome.css')
+                        ->prependStylesheet($this->basePath() . '/css/icons.css')
+                        ->prependStylesheet($this->basePath() . '/css/elements.css')
+                        ->prependStylesheet($this->basePath() . '/css/layout.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-overrides.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.css') ?>
 
+         <!-- open sans font -->
+    	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
-                                      ->prependFile($this->basePath() . '/js/redactor.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.iframe-transport.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/vendor/jquery.ui.widget.js')
-                                      ->prependFile($this->basePath() . '/js/noodle.js')
+                                      ->prependFile($this->basePath() . '/js/theme.js')
                                       ->prependFile($this->basePath() . '/js/bootstrap.min.js')
                                       ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
 
+        <!--[if lt IE 9]>
+      		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    	<![endif]-->
+    
     </head>
     <body>
 
-		<div id="login">
-
-			<?php //echo $this->content?>
-			<h1>NOODLE</h1>
-			<h3>Login</h3>
-			<form action="<?php echo $this->url('noodle/user/login')?>" method="post">
-				<fieldset>
-					<!--
-				    <div class="alert alert-danger">
+		<div class="login-wrapper">
+	        <a href="index.html">
+	            <img class="logo" src="<?php echo $this->basePath()?>/img/logo-white.png">
+	        </a>
+	
+	        <div class="box">
+	            <div class="content-wrap">
+	                <h6>Log in</h6>
+	                <?php if(sizeof($this->flashMessages)){?>
+	                <div class="alert alert-danger">
 					    <a class="close" data-dismiss="alert">×</a>
-					    Your Message Here
+					    <?php echo join($this->flashMessages, '<br />')?>
 				    </div>
-				     -->
-					<div class="control-group">
-						<label class="control-label" for="user_name">E-mail</label>
-						<div class="controls">
-							<input type="text" class="input-large" id="user_name" name="email">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="pass_word">Password</label>
-						<div class="controls">
-							<input type="password" class="input-large" id="pass_word" name="password">
-						</div>
-					</div>
-				</fieldset>
-				<a href="forgot_password.html">Forgot Password ?</a>
-				<div class="pull-right">
-					<button type="submit" class="btn btn-warning">
-						Login
-					</button>
-				</div>
-			</form>
-			&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?>
-			<!--
-			<div class="pull-right">
-				<a href="register.html">Sign In</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Need Help</a>
-			</div>
-			 -->
-		</div>
-		<!-- Le javascript ================================================== -->
-		<!--
-		Placed at the end of the document so the pages load faster -->
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+				    <?php }?>
+	                <form action="<?php echo $this->url('noodle/user/login')?>" method="post">
+		                <input class="form-control" type="text" placeholder="E-mail address" name="email">
+		                <input class="form-control" type="password" placeholder="Your password" name="password">
+		                <!-- 
+		                <a href="#" class="forgot">Forgot password?</a>
+		                <div class="remember">
+		                    <input id="remember-me" type="checkbox">
+		                    <label for="remember-me">Remember me</label>
+		                </div>
+		                 -->
+		                <button class="btn-glow primary login">Log in</button>
+					</form>
+	            </div>
+	        </div>
+	
+			
+	        <div class="no-account">
+	        	<!-- 
+	            <p>Don't have an account?</p>
+	            <a href="signup.html">Sign up</a>
+	             -->
+	             <p>
+	             	Created by Massimo Filippi s.r.o &copy; 2012 - <?php echo date('Y')?>
+	             </p>
+	        </div>
+	        
+	    </div>
 	</body>
 </html>

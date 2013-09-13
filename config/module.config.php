@@ -162,7 +162,7 @@ return array(
                 						'add' => array(
                 								'type' => 'segment',
                 								'options' => array(
-                										'route' => '/add/[:name]',
+                										'route' => '/add/:name',
                 										'constraints' => array(
                 												'name'     => '[a-zA-Z0-9_-]+'
                 										),
@@ -285,18 +285,6 @@ return array(
         ),
     ),
 	'doctrine' => array(
-			'connection' => array(
-					'orm_default' => array(
-							'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-							'params' => array(
-									'host'     => 'localhost',
-									'port'     => '3306',
-									'user'     => 'username',
-									'password' => 'password',
-									'dbname'   => 'database_name',
-							)
-					)
-			),
 			'driver' => array(
 					__NAMESPACE__ . '_driver' => array(
 							'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -315,17 +303,6 @@ return array(
 							'identity_class' => 'Noodle\Entity\User',
 							'identity_property' => 'email',
 							'credential_property' => 'password',
-							/*
-							'credential_callable' => function(\Noodle\Entity\User $user, $passwordGiven) {
-								/*
-								return my_awesome_check_test($user->getPassword(), $passwordGiven);
-								echo $user->getPassword();
-								if($user->getPassword() != md5($passwordGiven)) {
-									return false;
-								} else {
-									return true;
-								}
-							},*/
 					),
 			),
 	),

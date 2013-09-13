@@ -49,8 +49,8 @@ class Thumbnailer implements ServiceLocatorAwareInterface
 	 * @param string $crop
 	 */
 	public function buildCacheName(\FileBank\Entity\File $file, $maxWidth = null, $maxHeight = null, $crop = false) {
-		// TODO to config
-		$name = 'www_root/_cache/'.$file->getId()."_".$maxWidth."_".$maxHeight;
+		$config = $this->getServiceLocator()->get('config');
+		$name = $config['noodle']['cache_folder'].'/'.$file->getId()."_".$maxWidth."_".$maxHeight;		
 
 		if($crop){
 			$name .= '_crop';

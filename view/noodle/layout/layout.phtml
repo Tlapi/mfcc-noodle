@@ -7,15 +7,28 @@
 
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-        <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/noodle.css')
-                        ->prependStylesheet($this->basePath() . '/css/redactor/redactor.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath() . '/css/jquery.dataTables.css')
+                        ->prependStylesheet($this->basePath() . '/css/tables.css')
+                        ->prependStylesheet($this->basePath() . '/css/index.css')
+                        ->prependStylesheet($this->basePath() . '/css/font-awesome.css')
+                        ->prependStylesheet($this->basePath() . '/css/icons.css')
+                        ->prependStylesheet($this->basePath() . '/css/elements.css')
+                        ->prependStylesheet($this->basePath() . '/css/layout.css')
+                        ->prependStylesheet($this->basePath() . '/css/form-showcase.css')
+                        ->prependStylesheet($this->basePath() . '/css/redactor.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-overrides.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.css') ?>
 
+        <!-- open sans font -->
+    	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    
+    	<!-- lato font -->
+    	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    	
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/theme.js')
                                       ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
                                       ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
                                       ->prependFile($this->basePath() . '/js/redactor.min.js')
@@ -25,66 +38,139 @@
                                       ->prependFile($this->basePath() . '/js/bootstrap.min.js')
                                       ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
 
+        <!--[if lt IE 9]>
+      		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    	<![endif]-->
+
     </head>
     <body>
+    
+    	<!-- navbar -->
+	    <header class="navbar navbar-inverse" role="banner">
+	        <div class="navbar-header">
+	            <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="<?php echo $this->url('noodle') ?>"><img src="<?php echo $this->basePath()?>/img/logo.png"></a>
+	        </div>
+	        <ul class="nav navbar-nav pull-right hidden-xs">
+	            <li class="hidden-xs hidden-sm">
+	                <input class="search" type="text" />
+	            </li>
+	            <!-- 
+	            <li class="notification-dropdown hidden-xs hidden-sm">
+	                <a href="#" class="trigger">
+	                    <i class="icon-warning-sign"></i>
+	                    <span class="count">8</span>
+	                </a>
+	                <div class="pop-dialog">
+	                    <div class="pointer right">
+	                        <div class="arrow"></div>
+	                        <div class="arrow_border"></div>
+	                    </div>
+	                    <div class="body">
+	                        <a href="#" class="close-icon"><i class="icon-remove-sign"></i></a>
+	                        <div class="notifications">
+	                            <h3>You have 6 new notifications</h3>
+	                            <a href="#" class="item">
+	                                <i class="icon-signin"></i> New user registration
+	                                <span class="time"><i class="icon-time"></i> 13 min.</span>
+	                            </a>
+	                            <a href="#" class="item">
+	                                <i class="icon-signin"></i> New user registration
+	                                <span class="time"><i class="icon-time"></i> 18 min.</span>
+	                            </a>
+	                            <a href="#" class="item">
+	                                <i class="icon-envelope-alt"></i> New message from Alejandra
+	                                <span class="time"><i class="icon-time"></i> 28 min.</span>
+	                            </a>
+	                            <a href="#" class="item">
+	                                <i class="icon-signin"></i> New user registration
+	                                <span class="time"><i class="icon-time"></i> 49 min.</span>
+	                            </a>
+	                            <a href="#" class="item">
+	                                <i class="icon-download-alt"></i> New order placed
+	                                <span class="time"><i class="icon-time"></i> 1 day.</span>
+	                            </a>
+	                            <div class="footer">
+	                                <a href="#" class="logout">View all notifications</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </li>
+	             -->
+	            <li class="dropdown">
+	                <a href="#" class="dropdown-toggle hidden-xs hidden-sm" data-toggle="dropdown">
+	                    <?php echo $this->identity()->getEmail()?>
+	                    <b class="caret"></b>
+	                </a>
+	                <ul class="dropdown-menu">
+	                    <li><a href="personal-info.html">Personal info</a></li>
+	                    <li><a href="#">Account settings</a></li>
+	                    <!-- 
+	                    <li><a href="#">Billing</a></li>
+	                    <li><a href="#">Export your data</a></li>
+	                    <li><a href="#">Send feedback</a></li>
+	                     -->
+	                </ul>
+	            </li>
+	            <li class="settings hidden-xs hidden-sm">
+	                <a href="personal-info.html" role="button">
+	                    <i class="icon-cog"></i>
+	                </a>
+	            </li>
+	            <li class="settings hidden-xs hidden-sm">
+	                <a href="<?php echo $this->url('noodle/user/logout')?>" role="button">
+	                    <i class="icon-share-alt"></i>
+	                </a>
+	            </li>
+	        </ul>
+	    </header>
+	    <!-- end navbar -->
+	    
+	    <!-- sidebar -->
+	    <div id="sidebar-nav">
+	        <ul id="dashboard-menu">  
+	            <?php foreach($this->moduleList()->getTableModules() as $module){?>
+					<li>
+						<a href="<?php echo $this->url('noodle/modules/show', array('name' => $module->entity))?>">
+							<i class="icon-edit"></i>
+							<span><?php echo $module->module_name?></span>
+						</a>
+					</li>
+	      		<?php }?>
+				<?php foreach($this->moduleList()->getVendorModules() as $module){?>
+					<li>Vendor module</li>
+	      		<?php }?>    
+	            <li>
+	                <a href="<?php echo $this->url('noodle/user/manage') ?>">
+	                    <i class="icon-group"></i>
+	                    <span>Users</span>
+	                </a>
+	            </li>
+	            <li>
+	                <a href="<?php echo $this->url('noodle/settings') ?>">
+	                    <i class="icon-cog"></i>
+	                    <span>Settings</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </div>
+	    <!-- end sidebar -->
+	    
+	    <!-- main container -->
+    	<div class="content">
+    		
+    		<?php echo $this->content; ?>
+    		
+    	</div>
 
-    	<div class="navbar navbar-fixed-top navbar-inverse">
-			<div class="navbar-inner">
-				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-					<a class="brand" href="<?php echo $this->url('noodle') ?>">NOODLE</a>
-					<div class="nav-collapse">
-						<ul class="nav">
-							<li class="active">
-								<a href="<?php echo $this->url('noodle') ?>">Dashboard</a>
-							</li>
-							<!--
-							<li>
-								<a href="<a href="<?php echo $this->url('noodle/modules-manager') ?>">Modules manager</a>
-							</li>
-							-->
-							<li>
-								<a href="<?php echo $this->url('noodle/user/manage') ?>"><?php echo $this->translate('Users') ?></a>
-							</li>
-							<li>
-								<a href="<?php echo $this->url('noodle/settings') ?>"><?php echo $this->translate('Settings') ?></a>
-							</li>
-
-						</ul>
-						<ul class="nav pull-right">
-							<!--
-							<li>
-								<a href="#"><span class="badge badge-warning">23</span></a>
-							</li>
-							 -->
-							<li class="divider-vertical"></li>
-							<li>
-								<a><?php echo date('M')?> <?php echo date('d')?>, <?php echo date('Y')?></a>
-							</li>
-							<li class="divider-vertical"></li>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle " href="#">Hello <?php echo $this->identity()->getEmail()?> <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-								<!--
-									<li>
-										<a href="./account.html"><i class="icon-user"></i> Account Setting  </a>
-									</li>
-									<li>
-										<a href="./change_password.html"><i class="icon-lock"></i> Change Password</a>
-									</li>
-									<li class="divider"></li>
-									 -->
-									<li>
-										<a href="<?php echo $this->url('noodle/user/logout')?>"><i class="icon-off"></i> Logout</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
+    <!-- 
+    	
 		<div class="container">
 			<div class="row-fluid">
 				<div class="span12">
@@ -132,33 +218,11 @@
 								<?php foreach($this->moduleList()->getVendorModules() as $module){?>
 									<li>Vendor module</li>
 					      		<?php }?>
-					      		<!--
-								<li>
-									<a href="./dash.html" >Dashboard <span class="label label-warning pull-right">1</span></a>
-								</li>
-								<li class="active">
-									<a href="./table.html">Table</a>
-								</li>
-								 -->
 							</ul>
-							<!--
-							<ul class="nav nav-tabs nav-stacked">
-
-								<li>
-									<a href="#">User Account</a>
-								</li>
-								<li>
-									<a href="#">Change Password</a>
-								</li>
-							</ul>
-						    <form class="well form-search">
-							    <input type="text" class="search-query" style="width:200px" placeholder="Search whole system...">
-						    </form>
-						     -->
 						</div>
 						<div class="span9">
 
-							<?php echo $this->content; ?>
+							<?php //echo $this->content; ?>
 
 						</div>
 					</div>
@@ -169,7 +233,7 @@
 				 <p>&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?></p>
 			</footer>
 		</div>
-
+		 -->
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

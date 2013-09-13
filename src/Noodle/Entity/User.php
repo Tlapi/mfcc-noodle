@@ -31,6 +31,12 @@ class User
      * @var string
      */
     protected $username;
+    
+    /**
+     * @ORM\Column(type="string");
+     * @var string
+     */
+    protected $display_name;
 
     /**
      * @ORM\Column(type="string");

@@ -25,7 +25,7 @@ class Settings
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @Annotation\Exclude()
 	 */
-	public $id;
+	private $id;
 	
 	/**
 	* @ORM\Column(type="string");
@@ -33,21 +33,21 @@ class Settings
 	* @Annotation\Options({"label":"Project name"})
 	* @Annotation\Required(true)
 	*/
-	public $project_name;
+	private $project_name;
 
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
 	* @Annotation\Options({"label":"Google analytics"})
 	*/
-	public $ga_code;
+	private $ga_code;
 
 	/**
 	* @ORM\Column(type="string");
 	* @Annotation\Type("Zend\Form\Element\Text")
 	* @Annotation\Options({"label":"Facebook ID"})
 	*/
-	public $facebook_id;
+	private $facebook_id;
 
 	/**
 	* Magic getter to expose protected properties.

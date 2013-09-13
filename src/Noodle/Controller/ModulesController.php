@@ -17,6 +17,8 @@ use Doctrine\ORM\Tools\SchemaTool;
 
 use Zend\Form\Annotation\AnnotationBuilder;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+
 class ModulesController extends AbstractActionController
 {
 
@@ -45,11 +47,13 @@ class ModulesController extends AbstractActionController
 
 		// Get module name
 		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
+		
+		$config = $this->getServiceLocator()->get('config');
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
 		$listed = array();
 
@@ -105,24 +109,28 @@ class ModulesController extends AbstractActionController
 	{
 		$name = (string) $this->params()->fromRoute('name', 0);
 		$id = (string) $this->params()->fromRoute('id', 0);
+		
+		$config = $this->getServiceLocator()->get('config');
 
 		// Get module name
 		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
 		// Get entity
 		$entity = $module->find($id);
 
 		$form->bind($entity);
-
+		//var_dump($entity->title);
+		//var_dump($form->get('title')->getValue());
+		
 		// get inversed to rows
 		$cmf = $this->getEntityManager()->getMetadataFactory();
 		$inversedModulesData = array();
-		foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+		foreach($cmf->getMetadataFor($config['noodle']['entity_namespace'].'\\'.$name)->associationMappings as $inversedModule){
 			if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
 				//echo $module['targetEntity'];
 				//$inversedModulesData[]
@@ -153,6 +161,7 @@ class ModulesController extends AbstractActionController
 				return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
 			} else {
 				//die('invalid');
+				var_dump($form->getMessages());
 			}
 
 		}
@@ -178,9 +187,11 @@ class ModulesController extends AbstractActionController
 		$parentEntityName = (string) $this->params()->fromRoute('name', 0);
 		$sheetName = (string) $this->params()->fromRoute('sheet_name', 0);
 		$id = (string) $this->params()->fromRoute('id', 0);
+		
+		$config = $this->getServiceLocator()->get('config');
 
 		// Get parent form
-		$formParent = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Modules\Entity\Tables\\'.$parentEntityName);
+		$formParent = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$parentEntityName);
 
 		// Get entity repository
 		$sheets = $formParent->getOption('sheets');
@@ -202,8 +213,8 @@ class ModulesController extends AbstractActionController
 				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, $entity);
 
 				// sheet spicific parameters
-				$entity->parent_entity = 'Modules\Entity\\'.$parentEntityName;
-				$entity->parent_row_id = $id;
+				$entity->setParentEntity('Modules\Entity\\'.$parentEntityName);
+				$entity->setParentRowId($id);
 
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
@@ -217,7 +228,7 @@ class ModulesController extends AbstractActionController
 
 		}
 
-		$data = $module->findBy(array('parent_entity' => 'Modules\Entity\Tables\\'.$parentEntityName, 'parent_row_id' => $id));
+		$data = $module->findBy(array('parent_entity' => $config['noodle']['entity_namespace'].'\\'.$parentEntityName, 'parent_row_id' => $id));
 
 		return new ViewModel(array(
 				'formParent' => $formParent,
@@ -237,18 +248,20 @@ class ModulesController extends AbstractActionController
 	 */
 	public function addAction()
 	{
+		$config = $this->getServiceLocator()->get('config');
+		
 		// Get name of entity
 		$name = (string) $this->params()->fromRoute('name', 0);
-		$entityClassname = '\Noodle\Entity\Tables\\'.$name;
+		$entityClassname = $config['noodle']['entity_namespace'].'\\'.$name;
 
 		// Get module name
 		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
 		// Setup entity form
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
 		if ($this->request->isPost()) {
 
@@ -289,13 +302,15 @@ class ModulesController extends AbstractActionController
 	 */
 	public function deleteAction()
 	{
+		$config = $this->getServiceLocator()->get('config');
+		
 		$name = (string) $this->params()->fromRoute('name', 0);
 		$id = (string) $this->params()->fromRoute('id', 0);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
 		// Get entity
 		$entity = $module->find($id);
@@ -338,12 +353,14 @@ class ModulesController extends AbstractActionController
 	 */
 	public function massDeleteAction()
 	{
+		$config = $this->getServiceLocator()->get('config');
+		
 		$name = (string) $this->params()->fromRoute('name', 0);
 
 		// Get entity repository
-		$module = $this->getEntityManager()->getRepository('Noodle\Entity\Tables\\'.$name);
+		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Tables\\'.$name);
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
 		// Get entities
 		$post = $this->request->getPost();
@@ -359,7 +376,7 @@ class ModulesController extends AbstractActionController
 			// get inversed to rows
 			$cmf = $this->getEntityManager()->getMetadataFactory();
 			$inversedModulesData = array();
-			foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+			foreach($cmf->getMetadataFor($config['noodle']['entity_namespace'].'\\'.$name)->associationMappings as $inversedModule){
 				if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
 					$inversedModuleEntity = $this->getEntityManager()->getRepository($inversedModule['targetEntity']);
 					$inversedModuleRows = $inversedModuleEntity->findModuleItems(null, null, 'u.'.$inversedModule['joinTable']["inverseJoinColumns"][0]['referencedColumnName'].' = '.$id)->getResult();

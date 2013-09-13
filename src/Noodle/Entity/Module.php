@@ -24,7 +24,7 @@ class Module
 	* @ORM\GeneratedValue(strategy="AUTO")
 	* @Annotation\Exclude()
 	*/
-	public $id;
+	private $id;
 
 	/**
 	* @ORM\Column(type="string");
@@ -32,7 +32,7 @@ class Module
 	* @Annotation\Options({"label":"Module name:", "listed":true})
 	* @Annotation\Required(true)
 	*/
-	public $module_name;
+	private $module_name;
 
 
 	/**
@@ -41,7 +41,7 @@ class Module
 	* @Annotation\Required(true)
 	* @Annotation\Options({"label":"Select text:", "listed":true})
 	*/
-	public $entity;
+	private $entity;
 
 	/**
 	* Magic getter to expose protected properties.

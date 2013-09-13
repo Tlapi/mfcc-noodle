@@ -1,57 +1,92 @@
+<div id="pad-wrapper">
+            
+            <?php if(count($this->flashMessages)) : ?>
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<?php foreach ($this->flashMessages as $msg) : ?>
+			    	<strong>Well done!</strong> <?php echo $msg; ?><br />
+			    <?php endforeach; ?>
+			</div>
+			<?php endif; ?>
+			
+            <!-- entity table-->
+            <!-- the script for the toggle all checkboxes from header is located in js/theme.js -->
+            <div class="table-wrapper products-table">
+                <div class="row head pull-left">
+                    <div class="col-md-12">
+                        <h4><?php echo $this->moduleName->module_name?></h4>
+                    </div>
+                </div>
+
+                <div class="filter-block">
+                    <div class="pull-right">
+                    	<!-- 
+                        <div class="ui-select">
+                            <select>
+                              <option>Filter users</option>
+                              <option>Signed last 30 days</option>
+                              <option>Active users</option>
+                            </select>
+                        </div>
+                        <input type="text" class="search">
+                         -->
+                        <a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn-flat success new-product">+ Add item</a>
+                    </div>
+                </div>
+
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            	<th></th>
+								<?php foreach($this->listed as $listed){?>
+									<th><a href="?page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
+								<?php }?>
+								<th colspan="2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- row -->
+                            <?php foreach($this->paginator as $row){?>
+							<tr rel="<?php echo $row->getId()?>">
+								<td style="width: 10px;"><input type="checkbox" value="<?php echo $row->getId()?>" name="mass_checked[]" class="mass_checked" /></td>
+								<?php foreach($this->listed as $listed){?>
+									<td>
+										<?php //echo $row->$listed?>
+										<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }else{ echo $row->{$listed->getName()};}?>
+									</td>
+								<?php }?>
+								<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-pencil"></i> Edit</a></td>
+								<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-sm list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+							</tr>
+							<?php }?>
+                        </tbody>
+                    </table>
+                    
+                    <div class="dataTables_info" id="example_info">Showing <?php echo ($this->page-1)*10+1?> to <?php echo ($this->page-1)*10+1+$this->paginator->count()?> of <?php echo $this->paginator->getTotalItemCount()?> entries</div>
+		            
+		            <div class="dataTables_paginate paging_full_numbers" id="example_paginate">
+		            	<a href="?page=1" tabindex="0" class="first paginate_button <?php if(1==$this->page){?>paginate_button_disabled<?php }?>" id="example_first">First</a>
+		            	<!-- <a tabindex="0" class="previous paginate_button paginate_button_disabled" id="example_previous">Previous</a> -->
+		            	<span>
+		            		<?php for($i=1; $i<=$this->paginator->count(); $i++){?>
+		            			<a href="?page=<?php echo $i?>" tabindex="0" <?php if($this->page==$i){?>class="paginate_active"<?php }?>><?php echo $i?></a>
+		            		<?php }?>
+		            	</span>
+		            	<!-- <a tabindex="0" class="next paginate_button" id="example_next">Next</a> -->
+		            	<a href="?page=<?php echo $this->paginator->count()?>" tabindex="0" class="last paginate_button <?php if($this->paginator->count()==$this->page){?>paginate_button_disabled<?php }?>" id="example_last">Last</a>
+		            </div>
+		            
+                </div>
+            </div>
+            <!-- end entity table -->
+
+</div>
+
 <form>	
-	
-	<?php if(count($this->flashMessages)) : ?>
-	<div class="alert alert-success">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<?php foreach ($this->flashMessages as $msg) : ?>
-	    	<strong>Well done!</strong> <?php echo $msg; ?><br />
-	    <?php endforeach; ?>
-	</div>
-	<?php endif; ?>
-	
-	<table class="table table-striped table-hover">
-
-		<thead>
-			<tr>
-				<th></th>
-				<?php foreach($this->listed as $listed){?>
-					<th><a href="?page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
-				<?php }?>
-				<th colspan="2"></th>
-			</tr>
-		</thead>
-		<tbody>
-
-			<?php foreach($this->paginator as $row){?>
-			<tr rel="<?php echo $row->id?>">
-				<td style="width: 10px;"><input type="checkbox" value="<?php echo $row->id?>" name="mass_checked[]" class="mass_checked" /></td>
-				<?php foreach($this->listed as $listed){?>
-					<td>
-						<?php //echo $row->$listed?>
-						<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }else{ echo $row->{$listed->getName()};}?>
-					</td>
-				<?php }?>
-				<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->id))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
-				<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
-			</tr>
-			<?php }?>
-
-		</tbody>
-
-	</table>
 	
 	<div id="massOperations" style="display: none">
 		<a href="#myModal2" class="btn btn-danger btn-mini mass-delete" role="button" data-toggle="modal">Delete selected</a>
-	</div>
-
-	<div class="pagination pagination-small">
-	  <ul>
-	    <li <?php if(1==$this->page){?>class="disabled"<?php }?>><a href="?page=1">&laquo;</a></li>
-	    <?php for($i=1; $i<=$this->paginator->count(); $i++){?>
-	    <li <?php if($this->page==$i){?>class="active"<?php }?>><a href="?page=<?php echo $i?>"><?php echo $i?></a></li>
-	    <?php }?>
-	    <li <?php if($this->paginator->count()==$this->page){?>class="disabled"<?php }?>><a href="?page=<?php echo $this->paginator->count()?>">&raquo;</a></li>
-	  </ul>
 	</div>
 
 	<!-- Modal -->

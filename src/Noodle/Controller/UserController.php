@@ -43,12 +43,16 @@ class UserController extends AbstractActionController
 			$adapter->setIdentityValue($data->email);
 			$adapter->setCredentialValue(md5($data->password));
 			$authResult = $authService->authenticate();
+			
+			
 
 			if ($authResult->isValid()) {
 				return $this->redirect()->toRoute('noodle');
 			}
 		}
 		$this->layout('noodle/layout/layout-login');
+		if(isset($authResult))
+			$this->layout()->setVariable('flashMessages', $authResult->getMessages());
 	}
 
 	/**
@@ -74,6 +78,20 @@ class UserController extends AbstractActionController
 	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
 	 */
 	public function manageAction()
+	{
+		// Get entity repository
+		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		
+		return new ViewModel(array(
+				'users' => $users->findAll()
+		));
+	}
+	
+	/**
+	 * Edit user
+	 * @see Zend\Mvc\Controller.AbstractActionController::editAction()
+	 */
+	public function editAction()
 	{
 		// Get entity repository
 		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
