@@ -1,1 +1,20 @@
-user login
+<h6>Log in</h6>
+<?php if(sizeof($this->errors)){?>
+	<div class="alert alert-danger">
+		<a class="close" data-dismiss="alert">×</a>
+		<?php echo join($this->errors, '<br />')?>
+    </div>
+<?php }?>
+
+<form action="<?php echo $this->url('noodle/user/login')?>" method="post">
+	<input class="form-control" type="text" placeholder="E-mail address" name="email">
+	<input class="form-control" type="password" placeholder="Your password" name="password">
+                <!-- 
+                <a href="#" class="forgot">Forgot password?</a>
+                <div class="remember">
+                    <input id="remember-me" type="checkbox">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                 -->
+	<button class="btn-glow primary login">Log in</button>
+</form>

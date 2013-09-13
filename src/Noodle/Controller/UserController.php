@@ -32,6 +32,7 @@ class UserController extends AbstractActionController
 	{
 
 		//var_dump($this->zfcUserAuthentication()->hasIdentity());
+		$this->layout('noodle/layout/layout-login');
 
 		try {
 			$this->getEntityManager()->getConnection()->connect();
@@ -43,11 +44,13 @@ class UserController extends AbstractActionController
 		// Check if user table is not empty, if so create new admin user
 		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
 		if(!$users->findAll()){
-			die('No admins found!');
+			//die('No admins found!');
+			return $this->redirect()->toRoute('noodle/user/create-admin');
 		}
 		
 		$data = $this->getRequest()->getPost();
 
+		$errors = null;
 		if(sizeof($data)){
 
 			$authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
@@ -56,18 +59,60 @@ class UserController extends AbstractActionController
 			$adapter->setIdentityValue($data->email);
 			$adapter->setCredentialValue(md5($data->password));
 			$authResult = $authService->authenticate();
-			
-			
 
 			if ($authResult->isValid()) {
 				return $this->redirect()->toRoute('noodle');
 			}
+			$errors = $authResult->getMessages();
 		}
-		$this->layout('noodle/layout/layout-login');
-		if(isset($authResult))
-			$this->layout()->setVariable('flashMessages', $authResult->getMessages());
+		
+		return new ViewModel(array(
+				'errors' => $errors
+		));
 	}
 
+	/**
+	 * Create user action
+	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
+	 */
+	public function createAdminAction()
+	{
+		$this->layout('noodle/layout/layout-login');
+		
+		// Check if user table is not empty, if so redirect to login page
+		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		if($users->findAll()){
+			$this->redirect()->toRoute('noodle/user/login');
+		}
+		
+		$form = new \Noodle\Forms\User();
+		$form->prepareElements();
+		$form->setInputFilter(new \Noodle\Forms\UserFilter());
+		
+		$messages = null;
+		$request = $this->getRequest();
+		if ($request->isPost()){
+			$newAdmin = new \Noodle\Entity\User();
+			$form->bind($newAdmin);
+			$data = $request->getPost();
+		
+			$form->setData($data);
+			if ($form->isValid()) {
+				$this->getEntityManager()->persist($newAdmin);
+				$this->getEntityManager()->flush();
+		
+				$this->redirect()->toRoute('noodle/user/login');
+			} else {
+				$messages = $form->getMessages();
+			}
+		}
+		
+		return new ViewModel(array(
+				'form' => $form,
+				'messages' => $messages,
+		));
+	}
+	
 	/**
 	 * Login user action
 	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()

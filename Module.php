@@ -211,7 +211,7 @@ class Module
     		return;
     	}
 
-    	if($action=='login'){
+    	if($action=='login' || $action=='create-admin'){
     		return;
     	}
 

@@ -25,12 +25,6 @@ class User
      * @var string
      */
     protected $email;
-
-    /**
-     * @ORM\Column(type="string");
-     * @var string
-     */
-    protected $username;
     
     /**
      * @ORM\Column(type="string");
@@ -206,5 +200,17 @@ class User
     public function addRole($role)
     {
     	$this->roles[] = $role;
+    }
+    
+    public function getArrayCopy()
+    {
+    	return get_object_vars($this);
+    }
+    
+    public function exchangeArray($data)
+    {
+    	$this->email = (isset($data['email']))     ? $data['email']     : null;
+    	$this->display_name = (isset($data['display_name']))     ? $data['display_name']     : null;
+    	$this->password = (isset($data['password']))     ? md5($data['password'])     : null;
     }
 }

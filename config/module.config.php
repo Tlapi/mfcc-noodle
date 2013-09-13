@@ -69,6 +69,15 @@ return array(
                 										)
                 								)
                 						),
+                						'create-admin' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/create-admin',
+                										'defaults' => array(
+                												'action' => 'create-admin'
+                										)
+                								)
+                						),
                 						'logout' => array(
                 								'type' => 'segment',
                 								'options' => array(

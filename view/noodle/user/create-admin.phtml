@@ -1,0 +1,25 @@
+<h6>Setup new admin account</h6>
+
+<?php if(sizeof($this->messages)){?>
+	<div class="alert alert-danger" style="text-align: left">
+		<a class="close" data-dismiss="alert">×</a>
+		<?php foreach($this->messages as $element => $errors){?>
+			<b style="display: block"><?php echo $element?></b>
+			<?php echo join('<br />', $errors)?>
+		<?php }?>
+    </div>
+<?php }?>
+
+<?php
+$form = $this->form;
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form);?>
+
+	<?php echo $this->formElement($form->get('email')->setAttribute('class', 'form-control')->setAttribute('placeholder', 'E-mail address'))?>
+	<?php echo $this->formElement($form->get('display_name')->setAttribute('class', 'form-control')->setAttribute('placeholder', 'Name'))?>
+	<?php echo $this->formElement($form->get('password')->setAttribute('class', 'form-control')->setAttribute('placeholder', 'Your password'))?>
+	
+	<?php echo $this->formElement($form->get('submit')->setAttribute('class', 'btn-glow primary login')->setValue('Add admin'))?>
+
+<?php echo $this->form()->closeTag();?>
