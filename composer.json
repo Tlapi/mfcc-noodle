@@ -16,9 +16,9 @@
     "require": {
     		"doctrine/doctrine-orm-module" : "0.7.*",
 		"webino/webino-image-thumb" : "1.*",
-		"joacub/file-bank" : "dev-master@dev",
+		"joacub/file-bank" : "*",
 		"php" : ">=5.3.3",
-		"smottt/wideimage" : "*@dev",
+		"smottt/wideimage" : "*",
 		"zendframework/zendframework" : ">2.2.0",
 		"evandotpro/edp-module-layouts": "*",
                "rwoverdijk/assetmanager": "*",
