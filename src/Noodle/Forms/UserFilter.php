@@ -31,6 +31,11 @@ class UserFilter extends InputFilter
 				'required'   => true,
 				'filters'   => array(
 						array('name' => 'StringTrim'),
+				),
+				'validators' => array(
+						array(
+								'name' => 'not_empty',
+						),
 				)
 		));
 		
@@ -41,6 +46,9 @@ class UserFilter extends InputFilter
 						array('name' => 'StringTrim'),
 				),
 				'validators' => array(
+					array(
+						'name' => 'not_empty',
+					),
 					array(
 						'name' => 'StringLength',
 						'options' => array(

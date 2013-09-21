@@ -57,4 +57,15 @@ class User extends Form
 		// We could also define the input filter here, or
 		// lazy-create it in the getInputFilter() method.
 	}
+	
+	public function addGenerateAndSendPasswordField()
+	{
+		$this->add(array(
+				'name' => 'generate',
+				'options' => array(
+						'label' => 'Generate and send new password'
+				),
+				'type' => 'Zend\Form\Element\Checkbox'
+		));
+	}
 }

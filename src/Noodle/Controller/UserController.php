@@ -146,16 +146,72 @@ class UserController extends AbstractActionController
 	}
 	
 	/**
+	 * Add user
+	 * @see Zend\Mvc\Controller.AbstractActionController::editAction()
+	 */
+	public function addAction()
+	{
+		// Get entity repository
+		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		
+		$form = new \Noodle\Forms\User();
+		$form->prepareElements();
+		$form->addGenerateAndSendPasswordField();
+		
+		$request = $this->getRequest();
+		if ($request->isPost()){
+			$newAdmin = new \Noodle\Entity\User();
+			$form->bind($newAdmin);
+			$data = $request->getPost();
+			
+			$form->setData($data);
+			if ($form->isValid()) {
+				$this->getEntityManager()->persist($newAdmin);
+				$this->getEntityManager()->flush();
+			
+				$this->redirect()->toRoute('noodle/user/manage');
+			} else {
+				$messages = $form->getMessages();
+			}
+		}
+		
+		return new ViewModel(array(
+				'form' => $form
+		));
+	}
+	
+	/**
 	 * Edit user
 	 * @see Zend\Mvc\Controller.AbstractActionController::editAction()
 	 */
 	public function editAction()
 	{
+		$id = (string) $this->params()->fromRoute('id', 0);
+		
 		// Get entity repository
 		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		$user = $users->find($id);
+		$form = new \Noodle\Forms\User();
+		$form->prepareElements();
+		
+		$form->bind($user);
+		
+		$request = $this->getRequest();
+		if ($request->isPost()){
+				
+			$form->setData($this->request->getPost());
+			if ($form->isValid()) {
+				$this->getEntityManager()->persist($user);
+				$this->getEntityManager()->flush();
+					
+				$this->redirect()->toRoute('noodle/user/manage');
+			} else {
+				$messages = $form->getMessages();
+			}
+		}
 		
 		return new ViewModel(array(
-				'users' => $users->findAll()
+				'form' => $form
 		));
 	}
 

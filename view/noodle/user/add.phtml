@@ -31,6 +31,9 @@
                             <div class="col-md-8">
                                 <?php echo $this->formElement($form->get('password'))?>
                                 <?php echo $this->formElementErrors($form->get('password'));?>
+                                <?php echo $this->formElement($form->get('generate'))?>
+                                <br />
+                                <?php echo $form->get('generate')->getLabel()?>
                             </div>                            
                         </div>
                         

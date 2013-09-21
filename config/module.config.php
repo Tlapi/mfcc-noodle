@@ -96,6 +96,15 @@ return array(
                 										)
                 								)
                 						),
+                						'add' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/add',
+                										'defaults' => array(
+                												'action' => 'add'
+                										)
+                								)
+                						),
                 						'edit' => array(
                 								'type' => 'segment',
                 								'options' => array(

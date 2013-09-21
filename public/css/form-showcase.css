@@ -15,6 +15,11 @@
 	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+.form-page form input[name="generate"] {
+	width: 30px;
+	float: left;
+	margin-top: 8px;
+}
 .form-page .form-wrapper {
   margin-bottom: 40px;
 }
