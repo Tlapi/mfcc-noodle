@@ -20,7 +20,7 @@
 		"php" : ">=5.3.3",
 		"smottt/wideimage" : "*@dev",
 		"zendframework/zendframework" : ">2.2.0",
-		"evandotpro/edp-module-layouts": "*@dev",
+		"evandotpro/edp-module-layouts": "*",
                "rwoverdijk/assetmanager": "*",
                "bjyoungblood/bjy-authorize": "1.4.*"
     },
