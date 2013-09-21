@@ -174,6 +174,7 @@ class Module
     					'moduleList'     => 'Noodle\View\Helper\ModuleList',
     					'noodlePicture'     => 'Noodle\View\Helper\NoodlePicture',
     					'GoogleAnalytics'     => 'Noodle\View\Helper\Dashboard\GoogleAnalytics',
+    					'GoogleAnalyticsHeader'     => 'Noodle\View\Helper\Dashboard\GoogleAnalyticsHeader',
     			),
     	);
 
