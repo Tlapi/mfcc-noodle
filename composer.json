@@ -16,7 +16,7 @@
     "require": {
     		"doctrine/doctrine-orm-module" : "0.7.*",
 		"webino/webino-image-thumb" : "1.*",
-		"joacub/file-bank" : ">=0.0.1-dev@dev",
+		"joacub/file-bank" : "dev-master@dev",
 		"php" : ">=5.3.3",
 		"smottt/wideimage" : "dev-master@dev",
 		"zendframework/zendframework" : ">2.2.0rc1",
