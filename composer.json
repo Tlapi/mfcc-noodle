@@ -18,7 +18,7 @@
 		"webino/webino-image-thumb" : "1.*",
 		"joacub/file-bank" : "dev-master@dev",
 		"php" : ">=5.3.3",
-		"smottt/wideimage" : "master-dev@dev",
+		"smottt/wideimage" : "*@dev",
 		"zendframework/zendframework" : ">2.2.0",
 		"evandotpro/edp-module-layouts": "dev-master@dev",
                "rwoverdijk/assetmanager": "*",
