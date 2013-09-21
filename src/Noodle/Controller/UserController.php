@@ -141,7 +141,8 @@ class UserController extends AbstractActionController
 		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
 		
 		return new ViewModel(array(
-				'users' => $users->findAll()
+				'users' => $users->findAll(),
+				'flashMessages' => $this->flashMessenger()->getMessages()
 		));
 	}
 	
@@ -213,6 +214,26 @@ class UserController extends AbstractActionController
 		return new ViewModel(array(
 				'form' => $form
 		));
+	}
+	
+	/**
+	 * Delete user
+	 * @see Zend\Mvc\Controller.AbstractActionController::editAction()
+	 */
+	public function deleteAction()
+	{
+		$id = (string) $this->params()->fromRoute('id', 0);
+		
+		// Get entity repository
+		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+		$user = $users->find($id);
+		
+		$this->getEntityManager()->remove($user);
+		$this->getEntityManager()->flush();
+		
+		// redirect
+		$this->flashMessenger()->addMessage('User deleted!');
+		return $this->redirect()->toRoute('noodle/user/manage');
 	}
 
 	public function setEntityManager(EntityManager $em)

@@ -36,7 +36,7 @@
 		<tbody>
 	
 			<?php foreach($this->users as $user){?>
-				<tr rel="<?php echo $row->id?>">
+				<tr rel="<?php echo $user->getId()?>">
 					<td><?php echo $user->getEmail()?></td>
 					<td>
 						<?php foreach($user->getRoles() as $role){?>
@@ -66,7 +66,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <a href="" rel="#url" class="btn btn-danger confirm-delete">Delete this item</a>
+          <a href="" rel="<?php echo $this->url('noodle/user/delete', array('id' => 'ID_PLACEHOLDER'))?>" class="btn btn-danger confirm-delete">Delete this item</a>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

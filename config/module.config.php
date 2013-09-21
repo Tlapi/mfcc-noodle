@@ -115,6 +115,16 @@ return array(
                 										)
                 								)
                 						),
+                						'delete' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/delete/:id',
+                										'defaults' => array(
+                												'action' => 'delete',
+                												'id'     => '[0-9]+'
+                										)
+                								)
+                						),
                 				)
                 		),
                 		/* MODULES MANAGER */
