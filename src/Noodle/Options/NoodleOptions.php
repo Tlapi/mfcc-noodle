@@ -7,6 +7,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class NoodleOptions implements ServiceLocatorAwareInterface{
 
 	private $configPath = 'config/autoload/noodle.local.php';
+	
+	private $loadedConfig;
 
 	public function getOptions()
 	{
@@ -40,39 +42,36 @@ class NoodleOptions implements ServiceLocatorAwareInterface{
 	public function setOption($index, $value)
 	{
 		$options = array();
-		if(is_file($this->configPath)) {
-			$options = include $this->configPath;
-			$options = $options['noodle'];
+		if(!$this->loadedConfig){
+			if(is_file($this->configPath)) {
+				$options = include $this->configPath;
+				$options = $options['noodle'];
+			}
+	
+			// Create config
+			$this->loadedConfig = new \Zend\Config\Config(array('noodle' => $options), true);
 		}
-
-		// Create config
-		$config = new \Zend\Config\Config(array('noodle' => $options), true);
 
 		$parts = explode('.', $index);
 
-		if(!isset($config->noodle)){
-			$config->noodle = array();
+		if(!isset($this->loadedConfig->noodle)){
+			$this->loadedConfig->noodle = array();
 		}
 
-		$currentConfigObject = $config->noodle;
-		$optionArrayPath = $options;
-		foreach($parts as $index => $part){
-			if($index == count($parts)-1){
-				$currentConfigObject->$part = $value;
-			} else {
-				if(!isset($optionArrayPath[$part])){
-					$currentConfigObject->$part = array();
-				}
+		if(count($parts)==1){
+			$key = $parts[0];
+			$this->loadedConfig->noodle->$key = $value;
+		} else {
+			$key1 = $parts[0];
+			$key2 = $parts[1];
+			if(!isset($this->loadedConfig->noodle->$key1)){
+				$this->loadedConfig->noodle->$key1 = array();
 			}
-
-			$optionArrayPath = $optionArrayPath[$part];
-			$currentConfigObject = $currentConfigObject->$part;
+			$this->loadedConfig->noodle->$key1->$key2 = $value;
 		}
-
-		//$config = $config->merge($this->getServiceLocator()->get('config'));
-
+		
 		$writer = new \Zend\Config\Writer\PhpArray();
-		$writer->toFile($this->configPath, $config);
+		$writer->toFile($this->configPath, $this->loadedConfig);
 	}
 
 	/**

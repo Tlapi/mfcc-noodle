@@ -36,15 +36,15 @@
 <!-- end upper main stats -->
             		        
 <div id="pad-wrapper">
-		
-	Widgets
-	<br />
+
 	Check writeable filebank_folder and _data and _cache
 		
 </div>
 
+<div id="pad-wrapper">
 <?php foreach($this->dashboardModules as $module){?>
 	<?php echo $this->$module()?>
 <?php }?>
+</div>
 		
 		

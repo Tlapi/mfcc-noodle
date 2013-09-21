@@ -24,6 +24,8 @@ class Repositories implements ServiceLocatorAwareInterface
 	public function getRepositories()
 	{
 		$builder = new AnnotationBuilder();
+		
+		$config = $this->getServiceLocator()->get('config');
 
 		if ($handle = opendir('module/Modules/src/Modules/Entity/Tables')) { // TODO this to config
 			while (false !== ($entry = readdir($handle))) {

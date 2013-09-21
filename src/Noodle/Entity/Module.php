@@ -37,9 +37,9 @@ class Module
 
 	/**
 	* @ORM\Column(type="string");
-	* @Annotation\Type("Zend\Form\Element\Select")
+	* @Annotation\Type("Zend\Form\Element\Text")
 	* @Annotation\Required(true)
-	* @Annotation\Options({"label":"Select text:", "listed":true})
+	* @Annotation\Options({"label":"Repository class:", "listed":true})
 	*/
 	private $entity;
 

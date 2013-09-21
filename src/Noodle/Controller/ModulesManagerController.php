@@ -26,7 +26,7 @@ class ModulesManagerController extends AbstractActionController
 	public function indexAction()
 	{
 		return new ViewModel(array(
-				'repositories' => $this->getServiceLocator()->get('repositoriesService')->getRepositories(),
+				//'repositories' => $this->getServiceLocator()->get('repositoriesService')->getRepositories(),
 		));
 	}
 
@@ -36,28 +36,12 @@ class ModulesManagerController extends AbstractActionController
 	 */
 	public function addAction()
 	{
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Modules\Entity\Module');
+		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Module');
 
 		$builder = new AnnotationBuilder();
 		$schema = new SchemaTool($this->getEntityManager());
 		$cmf = $this->getEntityManager()->getMetadataFactory();
 
-		// Get entities
-		$entityElement = $form->get('entity');
-		if ($handle = opendir('module/Modules/src/Modules/Entity/Tables')) { // TODO this to config
-			while (false !== ($entry = readdir($handle))) {
-				if($entry!="." && $entry!=".."){
-					$className = 'Modules\Entity\Tables\\'.str_replace('.php', '', $entry);
-					$entity = new $className;
-					$options[str_replace('Modules\Entity\Tables\\', '', get_class($entity))] = $builder->getFormSpecification($entity)['name'];
-
-					$classes[] = $cmf->getMetadataFor(get_class($entity));
-
-				}
-			}
-			closedir($handle);
-		}
-		$entityElement->setValueOptions($options);
 
 		//var_dump($schema->getCreateSchemaSql($classes));
 
@@ -68,7 +52,7 @@ class ModulesManagerController extends AbstractActionController
 			if ($form->isValid()) {
 
 				// map data to entity
-				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new \Modules\Entity\Module());
+				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new \Noodle\Entity\Module());
 
 				// persist entity
 				$this->getEntityManager()->persist($entity);
@@ -76,7 +60,7 @@ class ModulesManagerController extends AbstractActionController
 
 				// redirect
 				$this->flashMessenger()->addMessage('Module created!');
-				return $this->redirect()->toRoute('modules-manager');
+				return $this->redirect()->toRoute('noodle/modules-manager');
 			} else {
 				//die('invalid');
 				//var_dump($form->)

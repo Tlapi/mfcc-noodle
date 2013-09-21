@@ -35,7 +35,8 @@ class SettingsController extends AbstractActionController
 		// Get entity
 		$entity = $module->find(1);
 		
-		$form->bind($entity);
+		if($entity)
+			$form->bind($entity);
 		
 		// Process post request
 		if ($this->request->isPost()) {

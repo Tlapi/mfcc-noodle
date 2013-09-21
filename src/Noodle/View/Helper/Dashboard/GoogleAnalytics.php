@@ -36,7 +36,7 @@ class GoogleAnalytics extends AbstractHelper implements ServiceLocatorAwareInter
 
     	if(!$optionService->hasOption('ga_dashboard.oauth_token')) {
 
-    		echo '<a href="?requestGoogleAnalyticsAccess">Request Access</a>';
+    		echo '<h3>Google Analytics Widget</h3><br /><br /><a href="?requestGoogleAnalyticsAccess" class="btn btn-primary btn-sm">Request Access</a>';
 
     	} elseif(isset($_GET['ga_selected_account'])) {
 
