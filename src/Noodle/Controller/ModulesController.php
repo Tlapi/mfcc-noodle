@@ -323,7 +323,7 @@ class ModulesController extends AbstractActionController
 		// get inversed to rows
 		$cmf = $this->getEntityManager()->getMetadataFactory();
 		$inversedModulesData = array();
-		foreach($cmf->getMetadataFor('Noodle\Entity\Tables\\'.$name)->associationMappings as $inversedModule){
+		foreach($cmf->getMetadataFor($config['noodle']['entity_namespace'].'\\'.$name)->associationMappings as $inversedModule){
 			if(isset($inversedModule['joinTable']["inverseJoinColumns"])){
 				//echo $module['targetEntity'];
 				//$inversedModulesData[]

@@ -6,6 +6,15 @@
 	
 	<br /><br />
 	
+	<?php if(count($this->flashMessages)) : ?>
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?php foreach ($this->flashMessages as $msg) : ?>
+	    	<strong>Well done!</strong> <?php echo $msg; ?><br />
+	    <?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+	
 	<table class="table table-bordered">
 	
 		<thead>
@@ -17,17 +26,17 @@
 		<tbody>
 	
 			<?php foreach($this->moduleList()->getTableModules() as $module){?>
-			<tr>
+			<tr rel="<?php echo $module->id?>">
 				<td><?php echo $module->module_name?></td>
 				<td><a href="#" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
-				<td><a href="#myModal" class="btn btn-danger btn-mini" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+				<td><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 			</tr>
 			<?php }?>
 			<?php foreach($this->moduleList()->getVendorModules() as $module){?>
 			<tr>
 				<td><?php echo $module->module_name?></td>
 				<td><a href="#" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
-				<td><a href="#myModal" class="btn btn-danger btn-mini" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+				<td><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 			</tr>
 			<?php }?>
 	
@@ -48,7 +57,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <a href="" rel="#url" class="btn btn-danger confirm-delete">Delete this item</a>
+          <a href="" rel="<?php echo $this->url('noodle/modules-manager/delete', array('id' => 'ID_PLACEHOLDER'))?>" class="btn btn-danger confirm-delete">Delete this item</a>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -140,26 +140,15 @@ return array(
                 										)
                 								)
                 						),
-                						'add-repository' => array(
+                						'delete' => array(
                 								'type' => 'segment',
                 								'options' => array(
-                										'route' => '/add-repository',
+                										'route' => '/delete/:id',
                 										'constraints' => array(
+                												'id'     => '[0-9]+'
                 										),
                 										'defaults' => array(
-                												'action' => 'add-repository'
-                										)
-                								)
-                						),
-                						'edit-repository' => array(
-                								'type' => 'segment',
-                								'options' => array(
-                										'route' => '/edit-repository/:name',
-                										'constraints' => array(
-                												'name'     => '[a-zA-Z0-9_-]+'
-                										),
-                										'defaults' => array(
-                												'action' => 'edit-repository'
+                												'action' => 'delete'
                 										)
                 								)
                 						),

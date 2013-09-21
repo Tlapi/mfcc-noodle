@@ -27,6 +27,7 @@ class ModulesManagerController extends AbstractActionController
 	{
 		return new ViewModel(array(
 				//'repositories' => $this->getServiceLocator()->get('repositoriesService')->getRepositories(),
+				'flashMessages' => $this->flashMessenger()->getMessages()
 		));
 	}
 
@@ -71,116 +72,26 @@ class ModulesManagerController extends AbstractActionController
 
 
 		return new ViewModel(array(
-				'form' => $form,
+				'form' => $form
 		));
 	}
-
+	
 	/**
-	 * Add module action
+	 * Delete module action
 	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
 	 */
-	public function addRepositoryAction()
+	public function deleteAction()
 	{
-		$config = $this->getServiceLocator()->get('config');
-
-		if ($this->request->isPost()) {
-
-			$post = $this->request->getPost();
-
-			$generateEntity = $this->getServiceLocator()->get('entityGeneratorService')->generateEntity($post);
-
-			// Save $generateEntity
-
-			//echo $generateEntity;
-
-			// TODO change location of table entities ???
-
-			file_put_contents('module/Modules/src/Modules/Entity/Tables/'.ucfirst($post['table_name']).'.php', $generateEntity);
-
-			//$schema = new SchemaTool($this->getEntityManager());
-			//$cmf = $this->getEntityManager()->getMetadataFactory();
-			//var_dump($schema->getCreateSchemaSql(array($cmf->getMetadataFor('Modules/Entity/Tables/'.ucfirst($post['table_name'])))));
-
-		}
-
-		return new ViewModel(array(
-			'fieldTypes' => $config['noodle']['field_types']
-		));
-
-		/*
-		 * $table = $schema->createTable('customer_evernote');
-        $table->addOption('type', 'INNODB');
-        $table->addOption('charset', 'utf8');
-        $table->addOption('collate', 'utf8_unicode_ci');
-
-        // Columns.
-        $table->addColumn('customer_id', 'bigint', array(
-            'length'    => 20,
-            'notnull'   => true,
-            'autoincrement' => false));
-        $table->addColumn('integration_date', 'datetime', array('notnull' => true));
-        $table->addColumn('oauth_token', 'string', array(
-            'length'    => 255,
-            'notnull'   => true));
-        $table->addColumn('oauth_shard_id', 'string', array(
-            'length'    => 4,
-            'notnull'   => true,
-            'fixed'     => true));
-
-        $table->setPrimaryKey(array('customer_id'), 'pk_customer_id');
-        $table->addForeignKeyConstraint($schema->getTable('customer'), array('customer_id'), array('id'));
-
-        $schema->dropTable('customer_evernote');
-		 */
-	}
-
-	/**
-	 * Edit repository action
-	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
-	 */
-	public function editRepositoryAction()
-	{
-		$name = (string) $this->params()->fromRoute('name', 0);
-
-		$config = $this->getServiceLocator()->get('config');
-
-		$repositoryClassname = 'Modules\Entity\Tables\\'.$name;
-		$repository = new $repositoryClassname;
-
-		$builder = new AnnotationBuilder();
-		$entity = $builder->getFormSpecification($repository);
-
-		return new ViewModel(array(
-			'fieldTypes' => $config['noodle']['field_types'],
-			'entity' => $entity,
-			'metadata' => $this->getEntityManager()->getClassMetadata($repositoryClassname)
-		));
-
-		/*
-		 * $table = $schema->createTable('customer_evernote');
-        $table->addOption('type', 'INNODB');
-        $table->addOption('charset', 'utf8');
-        $table->addOption('collate', 'utf8_unicode_ci');
-
-        // Columns.
-        $table->addColumn('customer_id', 'bigint', array(
-            'length'    => 20,
-            'notnull'   => true,
-            'autoincrement' => false));
-        $table->addColumn('integration_date', 'datetime', array('notnull' => true));
-        $table->addColumn('oauth_token', 'string', array(
-            'length'    => 255,
-            'notnull'   => true));
-        $table->addColumn('oauth_shard_id', 'string', array(
-            'length'    => 4,
-            'notnull'   => true,
-            'fixed'     => true));
-
-        $table->setPrimaryKey(array('customer_id'), 'pk_customer_id');
-        $table->addForeignKeyConstraint($schema->getTable('customer'), array('customer_id'), array('id'));
-
-        $schema->dropTable('customer_evernote');
-		 */
+		$id = (string) $this->params()->fromRoute('id', 0);
+		
+		$modules = $this->getEntityManager()->getRepository('Noodle\Entity\Module');
+		$module = $modules->find($id);
+		$this->getEntityManager()->remove($module);
+		$this->getEntityManager()->flush();
+				
+		// redirect
+		$this->flashMessenger()->addMessage('Module deleted!');
+		return $this->redirect()->toRoute('noodle/modules-manager');
 	}
 
 	public function setEntityManager(EntityManager $em)
