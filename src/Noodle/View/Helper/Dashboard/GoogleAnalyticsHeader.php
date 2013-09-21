@@ -58,7 +58,7 @@ class GoogleAnalyticsHeader extends AbstractHelper implements ServiceLocatorAwar
                 </div>
 
     		<?php
-    		var_dump($data);
+    		//var_dump($data);
     	}
 
     	//die("");
