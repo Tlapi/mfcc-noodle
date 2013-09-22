@@ -7,18 +7,18 @@
 
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/jquery.dataTables.css')
-                        ->prependStylesheet($this->basePath() . '/css/tables.css')
-                        ->prependStylesheet($this->basePath() . '/css/index.css')
-                        ->prependStylesheet($this->basePath() . '/css/font-awesome.css')
-                        ->prependStylesheet($this->basePath() . '/css/icons.css')
-                        ->prependStylesheet($this->basePath() . '/css/elements.css')
-                        ->prependStylesheet($this->basePath() . '/css/layout.css')
-                        ->prependStylesheet($this->basePath() . '/css/form-showcase.css')
-                        ->prependStylesheet($this->basePath() . '/css/redactor.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-overrides.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.css') ?>
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/noodle/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/noodle/jquery.dataTables.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/tables.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/index.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/font-awesome.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/icons.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/elements.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/layout.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/form-showcase.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/redactor.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/bootstrap-overrides.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/bootstrap.css') ?>
 
         <!-- open sans font -->
     	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -27,16 +27,16 @@
     	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
     	
         <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/theme.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-sortable-min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.fileupload.js')
-                                      ->prependFile($this->basePath() . '/js/redactor.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/jquery.iframe-transport.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-file-upload/vendor/jquery.ui.widget.js')
-                                      ->prependFile($this->basePath() . '/js/noodle.js')
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/noodle/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/noodle/theme.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/jquery-sortable-min.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/jquery-file-upload/jquery.fileupload.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/redactor.min.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/jquery-file-upload/jquery.iframe-transport.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/jquery-file-upload/vendor/jquery.ui.widget.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/noodle.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/jquery.min.js') ?>
 
         <!--[if lt IE 9]>
       		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -54,7 +54,7 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="<?php echo $this->url('noodle') ?>"><img src="<?php echo $this->basePath()?>/img/noodle-logo.png"></a>
+	            <a class="navbar-brand" href="<?php echo $this->url('noodle') ?>"><img src="<?php echo $this->basePath()?>/img/noodle/noodle-logo.png"></a>
 	        </div>
 	        <ul class="nav navbar-nav pull-right hidden-xs">
 	            <li class="hidden-xs hidden-sm">
