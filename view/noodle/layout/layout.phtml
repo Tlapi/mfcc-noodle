@@ -143,8 +143,13 @@
 						</a>
 					</li>
 	      		<?php }?>
-				<?php foreach($this->moduleList()->getVendorModules() as $module){?>
-					<li>Vendor module</li>
+				<?php foreach($this->moduleList()->getVendorModules() as $key => $module){?>
+					<li>
+						<a href="<?php echo $this->url('noodle/vendor-modules/show', array('key' => $key))?>">
+							<i class="<?php echo $module->getIcon()?>"></i>
+							<span><?php echo $module->getName()?></span>
+						</a>
+					</li>
 	      		<?php }?>    
 	            <li>
 	                <a href="<?php echo $this->url('noodle/user/manage') ?>">

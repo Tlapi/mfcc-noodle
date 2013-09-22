@@ -35,7 +35,8 @@ class ModulesService implements ServiceLocatorAwareInterface, EventManagerAwareI
 
 	public function getVendorModules()
 	{
-		$this->getEventManager()->trigger('vendorModules.load', $this);
+		if(!$this->vendorModules)
+			$this->getEventManager()->trigger('vendorModules.load', $this);
 		return $this->vendorModules;
 	}
 

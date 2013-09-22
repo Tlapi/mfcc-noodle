@@ -20,6 +20,7 @@ return array(
 			'Noodle\Controller\Settings' => 'Noodle\Controller\SettingsController',
 			'Noodle\Controller\ModulesManager' => 'Noodle\Controller\ModulesManagerController',
 			'Noodle\Controller\Modules' => 'Noodle\Controller\ModulesController',
+			'Noodle\Controller\VendorModules' => 'Noodle\Controller\VendorModulesController',
 			'Noodle\Controller\User' => 'Noodle\Controller\UserController',
 			'Noodle\Controller\Filesystem' => 'Noodle\Controller\FilesystemController',
 		),
@@ -254,6 +255,32 @@ return array(
                 										)
                 								),
                 								'may_terminate' => true,
+                						),
+                				),
+                		),
+                		/* VENDOR MODULES CONTENT MANAGEMENT */
+                		'vendor-modules' => array(
+                				'type'    => 'literal',
+                				'options' => array(
+                						'route'    => '/vendor-modules',
+                						'defaults' => array(
+                								'controller' => 'Noodle\Controller\VendorModules',
+                								'action'     => 'index',
+                						),
+                				),
+                				'may_terminate' => true,
+                				'child_routes' => array(
+                						'show' => array(
+                								'type' => 'segment',
+                								'options' => array(
+                										'route' => '/show/[:key]',
+                										'constraints' => array(
+                												'key'     => '[0-9]+'
+                										),
+                										'defaults' => array(
+                												'action' => 'show'
+                										)
+                								)
                 						),
                 				),
                 		),
