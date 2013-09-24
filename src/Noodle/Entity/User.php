@@ -137,6 +137,16 @@ class User
     }
 
     /**
+     * Generate password
+     */
+    public function generatePassword()
+    {
+    	$newPassword = $this->randPasswd();
+    	$this->setPassword(md5($newPassword));
+    	return $newPassword;
+    }
+    
+    /**
      * Get password.
      *
      * @return string
@@ -200,6 +210,16 @@ class User
     public function addRole($role)
     {
     	$this->roles[] = $role;
+    }
+    
+    /**
+     * Generate password
+     * @param number $length
+     * @param string $chars
+     * @return string
+     */
+    public function randPasswd( $length = 12, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' ) {
+    	return substr( str_shuffle( $chars ), 0, $length );
     }
     
     public function getArrayCopy()

@@ -154,6 +154,7 @@ class Module
 		                }
     			),
     			'invokables' => array(
+    					'mailerService' => '\Noodle\Service\Mailer',
     					'modulesService' => '\Noodle\Service\ModulesService',
     					'formMapperService' => '\Noodle\Service\FormMapper',
     					'fileProcessingService' => '\Noodle\Service\FileProcessing',

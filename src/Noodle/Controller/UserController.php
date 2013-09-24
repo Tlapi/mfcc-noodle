@@ -167,6 +167,12 @@ class UserController extends AbstractActionController
 			
 			$form->setData($data);
 			if ($form->isValid()) {
+				
+				if(isset($data['generate']) && $data['generate']==1){
+					// Generate and mail user password
+					$this->getServiceLocator()->get('mailerService')->sendMail($data['email'], 'You have been added as a new admin', 'You have been added as a new administrator for your website. \n Your username is: '.$data['email'].' \n Your password is: '.$newAdmin->generatePassword().'\n You can login here: http://'.$_SERVER['HTTP_HOST'].$this->url()->fromRoute('noodle'));
+				}
+
 				$this->getEntityManager()->persist($newAdmin);
 				$this->getEntityManager()->flush();
 			
