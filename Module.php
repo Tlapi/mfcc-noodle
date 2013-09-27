@@ -52,7 +52,7 @@ class Module
 		$events = $moduleManager->getEventManager();
 		$events->attach('loadModules.post', array($this, 'modulesLoaded'));
 		$events->getSharedManager()->attach('Noodle\Controller\IndexController', 'dashboard', function ($e) {
-			$e->getTarget()->addDashboardModule('GoogleAnalytics');
+			//$e->getTarget()->addDashboardModule('GoogleAnalytics');
 		});
 	}
 

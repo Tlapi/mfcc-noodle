@@ -21,8 +21,9 @@
 		"smottt/wideimage" : "*@dev",
 		"zendframework/zendframework" : "2.2.4",
 		"evandotpro/edp-module-layouts": "*@dev",
-        "rwoverdijk/assetmanager": "1.3.4",
-        "bjyoungblood/bjy-authorize": "1.4.0"
+		"rwoverdijk/assetmanager": "1.3.4",
+		"bjyoungblood/bjy-authorize": "1.4.0",
+		"widop/google-analytics-bundle": "*"
     },
     "autoload": {
         "psr-0": {

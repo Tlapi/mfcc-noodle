@@ -66,8 +66,8 @@ $(function() {
 	// Redactor
 	$('textarea').attr('required', false);
 	$('textarea').redactor({
-		focus: true,
-		imageUpload: '../../filesystem/upload?redactor'
+		//focus: true,
+		imageUpload: basePath + '/filesystem/upload?redactor'
 	});
 
 });
