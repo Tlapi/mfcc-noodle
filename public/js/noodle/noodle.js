@@ -67,7 +67,7 @@ $(function() {
 	$('textarea').attr('required', false);
 	$('textarea').redactor({
 		//focus: true,
-		imageUpload: basePath + '/filesystem/upload?redactor'
+		imageUpload: basePath + '/noodle/filesystem/upload?redactor'
 	});
 
 });

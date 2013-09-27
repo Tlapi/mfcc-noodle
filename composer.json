@@ -23,7 +23,7 @@
 		"evandotpro/edp-module-layouts": "*@dev",
 		"rwoverdijk/assetmanager": "1.3.4",
 		"bjyoungblood/bjy-authorize": "1.4.0",
-		"widop/google-analytics-bundle": "*"
+		"widop/google-analytics": "*"
     },
     "autoload": {
         "psr-0": {
