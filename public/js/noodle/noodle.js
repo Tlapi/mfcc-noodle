@@ -68,6 +68,7 @@ $(function() {
 	$('textarea').attr('required', false);
 	$('textarea').redactor({
 		//focus: true,
+		minHeight: 200,
 		imageUpload: basePath + '/noodle/filesystem/upload?redactor'
 	});
 
