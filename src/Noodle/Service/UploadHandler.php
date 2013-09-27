@@ -971,7 +971,7 @@ class UploadHandler implements ServiceLocatorAwareInterface
         if(isset($_GET['redactor'])){
 
         	$array = array(
-        			'filelink' => '../../../_data/'.$this->filebankService->getFileById($files[0]->name)->getSavePath()
+        			'filelink' => $this->get_full_url().'/files/'.$this->filebankService->getFileById($files[0]->name)->getId()
         	);
 
         	echo stripslashes(json_encode($array));

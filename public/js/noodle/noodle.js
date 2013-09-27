@@ -9,7 +9,7 @@ $(function() {
 
 	// Picture element
 	$('.form_picture_container .remove').click(function(){
-		var currentInput = $(this).parent().find('input');
+		var currentInput = $(this).parent().parent().find('input');
 		$(this).parents('.form_picture_container').find('img').hide();
 		$(this).parents('.form_picture_container').find('a.remove').hide();
 		$(this).parents('.form_picture_container').find('h4').hide();
@@ -17,11 +17,12 @@ $(function() {
 		//$("<input type='file' />").attr({ name: currentInput.attr('name') }).insertBefore(currentInput);
 		//currentInput.remove();
 		currentInput.val('');
+		
 		return false;
 	});
 
 	// file uploader
-	$('#fileupload').fileupload({
+	$('#noodle_fileupload').fileupload({
         dataType: 'json',
         progressall: function (e, data) {
         	var progressBar = $(this).parents('.form_picture_container').find('.progress .bar');
