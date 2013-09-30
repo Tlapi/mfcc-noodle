@@ -71,5 +71,26 @@ $(function() {
 		minHeight: 200,
 		imageUpload: basePath + '/noodle/filesystem/upload?redactor'
 	});
+	
+	// Dropzone
+	var myDropzone = new Dropzone(".dropzone", { 
+		url: basePath + '/noodle/filesystem/upload',
+		addRemoveLinks: true,
+		acceptedFiles: 'image/*'
+	});
+	myDropzone.on("success", function(file, response) {
+	    /* Maybe display some more file information on your page */
+		console.log(file);
+		var input = $('<input>').attr({
+		    type: 'hidden',
+		    name: 'newfile[]',
+		    value: response.files[0].name
+		}).appendTo('.dropzone');
+		file.input = input;
+		//$('.dropzone').append('<input type="hidden" name="newfile[]" value="' + response.files[0].name + '" />');
+	});
+	myDropzone.on("removedfile", function(file) {
+		file.input.remove();
+	});
 
 });

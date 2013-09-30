@@ -36,6 +36,9 @@ class VendorModulesController extends AbstractActionController
 		$key = (int) $this->params()->fromRoute('key', 0);
 		$vendorModules = $this->getServiceLocator()->get('modulesService')->getVendorModules();
 		$module = $vendorModules[$key];
+		
+		$module->init();
+		
 		return new ViewModel(array(
 				'render' => $module->render()
 		));
