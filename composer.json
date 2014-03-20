@@ -19,7 +19,7 @@
 		"joacub/file-bank" : "*@dev",
 		"php" : ">=5.3.3",
 		"smottt/wideimage" : "*@dev",
-		"zendframework/zendframework" : "2.2.4",
+		"zendframework/zendframework" : "2.3.*",
 		"evandotpro/edp-module-layouts": "*@dev",
 		"rwoverdijk/assetmanager": "1.3.4",
 		"bjyoungblood/bjy-authorize": "1.4.0",
