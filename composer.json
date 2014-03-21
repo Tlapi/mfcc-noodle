@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-    	"doctrine/doctrine-orm-module" : "0.8.0",
+    	"doctrine/doctrine-orm-module" : "dev-master",
 		"webino/webino-image-thumb" : "1.*",
 		"joacub/file-bank" : "0.0.1.x-dev",
 		"php" : ">=5.3.3",
