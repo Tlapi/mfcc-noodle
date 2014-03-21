@@ -52,8 +52,17 @@
 								<td style="width: 10px;"><input type="checkbox" value="<?php echo $row->getId()?>" name="mass_checked[]" class="mass_checked" /></td>
 								<?php foreach($this->listed as $listed){?>
 									<td>
-										<?php //echo $row->$listed?>
-										<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }else{ echo $row->{$listed->getName()};}?>
+										<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }
+											  else{ 
+												$var = $row->{$listed->getName()};
+												if(is_object($var) && get_class($var) == 'DateTime')
+												{ echo $var->format($listed->getFormat());
+												}
+												else 
+												{ echo $var;
+												}
+											  }
+										?>
 									</td>
 								<?php }?>
 								<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-pencil"></i> Edit</a></td>
