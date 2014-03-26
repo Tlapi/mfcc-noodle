@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Noodle 2')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
@@ -61,9 +61,11 @@
 	            <a class="navbar-brand" href="<?php echo $this->url('noodle') ?>"><img src="<?php echo $this->basePath()?>/img/noodle/noodle-logo.png"></a>
 	        </div>
 	        <ul class="nav navbar-nav pull-right hidden-xs">
+                <!--
 	            <li class="hidden-xs hidden-sm">
 	                <input class="search" type="text" />
 	            </li>
+	            -->
 	            <!-- 
 	            <li class="notification-dropdown hidden-xs hidden-sm">
 	                <a href="#" class="trigger">
@@ -124,14 +126,16 @@
 	                     -->
 	                </ul>
 	            </li>
+                <!--
 	            <li class="settings hidden-xs hidden-sm">
 	                <a href="<?php echo $this->url('noodle/settings') ?>" role="button">
 	                    <i class="icon-cog"></i>
 	                </a>
 	            </li>
+	            -->
 	            <li class="settings hidden-xs hidden-sm">
 	                <a href="<?php echo $this->url('noodle/user/logout')?>" role="button">
-	                    <i class="icon-share-alt"></i>
+	                    <i class="icon-signout"></i>
 	                </a>
 	            </li>
 	        </ul>
