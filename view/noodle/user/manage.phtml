@@ -28,7 +28,7 @@
 		<thead>
 			<tr>
 				<th>User e-mail</th>
-				<!--<th>Roles</th>-->
+				<th>Roles</th>
 				
 				<th colspan="2"></th>
 			</tr>
@@ -38,13 +38,11 @@
 			<?php foreach($this->users as $user){?>
 				<tr rel="<?php echo $user->getId()?>">
 					<td><?php echo $user->getEmail()?></td>
-                    <!--
 					<td>
 						<?php foreach($user->getRoles() as $role){?>
 							<?php echo $role->getRoleId()?>
 						<?php }?>
 					</td>
-					-->
 					<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/user/edit', array('id' => $user->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-pencil"></i> Edit</a></td>
 					<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-sm list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 				</tr>

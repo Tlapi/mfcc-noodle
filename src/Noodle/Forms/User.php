@@ -47,6 +47,23 @@ class User extends Form
         ));
 
         $this->add(array(
+            'name' => 'role',
+            'options' => array(
+                'label' => 'Role',
+                'value_options' => array(
+                    1 => 'Administrator',
+                    2 => 'Moderator',
+                    3 => 'User',
+                    4 => 'Guest'
+                )
+            ),
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'multiple' => 'multiple',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'submit',
             'attributes' => array(
                 'value' => 'Add',

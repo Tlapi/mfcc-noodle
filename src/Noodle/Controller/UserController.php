@@ -173,6 +173,10 @@ class UserController extends AbstractActionController
 					$this->getServiceLocator()->get('mailerService')->sendMail($data['email'], 'You have been added as a new admin', 'You have been added as a new administrator for your website. \n Your username is: '.$data['email'].' \n Your password is: '.$newAdmin->generatePassword().'\n You can login here: http://'.$_SERVER['HTTP_HOST'].$this->url()->fromRoute('noodle'));
 				}
 
+                $roles = $this->getEntityManager()->getRepository('Noodle\Entity\Role')->findBy(array('id' => $data['role']));
+                foreach($roles as $role){
+                    $newAdmin->addRole($role);
+                }
 				$this->getEntityManager()->persist($newAdmin);
 				$this->getEntityManager()->flush();
 			
@@ -205,9 +209,16 @@ class UserController extends AbstractActionController
 		
 		$request = $this->getRequest();
 		if ($request->isPost()){
+
+            $data = $this->request->getPost();
 				
-			$form->setData($this->request->getPost());
+			$form->setData($data);
 			if ($form->isValid()) {
+                $user->resetRoles();
+                $roles = $this->getEntityManager()->getRepository('Noodle\Entity\Role')->findBy(array('id' => $data['role']));
+                foreach($roles as $role){
+                    $user->addRole($role);
+                }
 				$this->getEntityManager()->persist($user);
 				$this->getEntityManager()->flush();
 					

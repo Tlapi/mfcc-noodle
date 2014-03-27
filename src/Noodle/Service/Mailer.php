@@ -20,7 +20,7 @@ class Mailer implements ServiceLocatorAwareInterface
 	public function sendMail($to, $subject, $body){
 		$mail = new Mail\Message();
 		$mail->setBody($body);
-		$mail->setFrom('info@'., 'Admin');
+		$mail->setFrom('info@mfcc.cz', 'Noodle CMS');
 		$mail->addTo($to, $to);
 		$mail->setSubject($subject);
 		

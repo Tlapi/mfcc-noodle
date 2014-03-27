@@ -33,6 +33,13 @@
                                 <?php echo $this->formElementErrors($form->get('password'));?>
                             </div>                            
                         </div>
+                        <div class="field-box">
+                            <label><?php echo $form->get('role')->getLabel()?></label>
+                            <div class="col-md-8">
+                                <?php echo $this->formElement($form->get('role'))?>
+                                <?php echo $this->formElementErrors($form->get('role'));?>
+                            </div>
+                        </div>
                         
                         <br /><br />
 						<button type="submit" class="btn btn-primary btn-lg">Save</button>

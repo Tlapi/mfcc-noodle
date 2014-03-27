@@ -141,7 +141,8 @@
 	        </ul>
 	    </header>
 	    <!-- end navbar -->
-	    
+
+        <?php $roles = array(); $u_roles = $this->identity()->getRoles();foreach($u_roles as $role){$roles[] = $role->getRoleId();}?>
 	    <!-- sidebar -->
 	    <div id="sidebar-nav">
 	        <ul id="dashboard-menu">  
@@ -160,19 +161,23 @@
 							<span><?php echo $module->getName()?></span>
 						</a>
 					</li>
-	      		<?php }?>    
+	      		<?php }?>
+                <?php if(in_array('Administrator', $roles)){?>
 	            <li>
 	                <a href="<?php echo $this->url('noodle/user/manage') ?>">
 	                    <i class="icon-group"></i>
 	                    <span>Users</span>
 	                </a>
 	            </li>
+                <?php }?>
+                <?php if(in_array('Administrator', $roles)){?>
 	            <li>
 	                <a href="<?php echo $this->url('noodle/modules-manager') ?>">
 	                    <i class="icon-cog"></i>
 	                    <span>Module settings</span>
 	                </a>
 	            </li>
+                <?php }?>
 	        </ul>
 	    </div>
 	    <!-- end sidebar -->

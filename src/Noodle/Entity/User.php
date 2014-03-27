@@ -199,6 +199,16 @@ class User
     {
     	return $this->roles->getValues();
     }
+
+    /**
+     * Reset role.
+     *
+     * @return array
+     */
+    public function resetRoles()
+    {
+        return $this->roles = null;
+    }
     
     /**
      * Add a role to the user.
