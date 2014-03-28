@@ -33,7 +33,7 @@ class OrderId extends Text implements ServiceLocatorAwareInterface
 
 	public function getListedValue($row)
 	{
-		return '<span class="drag" style="cursor: move" data-curid="'.$row->getId().'" data-curindex="'.($this->getValue()?$this->getValue():$row->getId()).'"><i class="icon-move"></i></span>';
+		return '<span class="drag" style="cursor: move" data-curindex="'.($this->getValue()?$this->getValue():$row->getId()).'"><i class="icon-move"></i></span>';
 	}
 
 	public function getOrderTable()

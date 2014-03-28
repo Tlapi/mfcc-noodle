@@ -152,6 +152,14 @@ class ModulesController extends AbstractActionController
 				// map data to entity
 				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, $entity);
 
+                // Find datetime fields
+                foreach($form->getElements() as $element){
+                    if(get_class($element)=='Zend\Form\Element\Date'){
+                        $elementName = $element->getName();
+                        $entity->$elementName = new \DateTime($element->getValue());
+                    }
+                }
+                
 				// persist entity
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
@@ -273,6 +281,14 @@ class ModulesController extends AbstractActionController
 
 				// map data to entity
 				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new $entityClassname());
+
+                // Find datetime fields
+                foreach($form->getElements() as $element){
+                    if(get_class($element)=='Zend\Form\Element\Date'){
+                        $elementName = $element->getName();
+                        $entity->$elementName = new \DateTime($element->getValue());
+                    }
+                }
 
 				// persist entity
 				$this->getEntityManager()->persist($entity);
