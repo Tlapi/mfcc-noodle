@@ -159,7 +159,7 @@ class ModulesController extends AbstractActionController
                         $entity->$elementName = new \DateTime($element->getValue());
                     }
                 }
-                
+
 				// persist entity
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
@@ -372,6 +372,34 @@ class ModulesController extends AbstractActionController
 		$this->flashMessenger()->addMessage('Entity deleted!');
 		return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));
 	}
+
+    /**
+     * Save order action
+     * @see Zend\Mvc\Controller.AbstractActionController::saveOrderAction()
+     */
+    public function saveOrderAction()
+    {
+        $config = $this->getServiceLocator()->get('config');
+
+        $name = (string) $this->params()->fromRoute('name', 0);
+        $id = (string) $this->params()->fromRoute('id', 0);
+
+        // Get entity repository
+        $module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
+
+        foreach($_POST['json'] as $item){
+            var_dump($item);
+            $row = $module->find(intval($item['id']));
+            // TODO configurable
+            $row->order_id = $item['order'];
+            $this->getEntityManager()->persist($row);
+        }
+
+        $this->getEntityManager()->flush();
+
+        echo 'ok';
+        exit();
+    }
 
 	/**
 	 * Mass delete action

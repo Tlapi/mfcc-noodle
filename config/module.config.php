@@ -256,6 +256,18 @@ return array(
                 								),
                 								'may_terminate' => true,
                 						),
+                                        'save-order' => array(
+                                            'type' => 'segment',
+                                            'options' => array(
+                                                'route' => '/save-order/[:name]',
+                                                'constraints' => array(
+                                                    'name'     => '[a-zA-Z0-9_-]+'
+                                                ),
+                                                'defaults' => array(
+                                                    'action' => 'saveOrder'
+                                                )
+                                            )
+                                        ),
                 				),
                 		),
                 		/* VENDOR MODULES CONTENT MANAGEMENT */

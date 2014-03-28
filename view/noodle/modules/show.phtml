@@ -72,8 +72,8 @@
                         </tbody>
                     </table>
 
-                    <div>
-                        <a href="#" class="btn btn-primary btn-sm">Save New order</a>
+                    <div style="display: none" id="saveOrderBtn">
+                        <a href="<?php echo $this->url('noodle/modules/save-order', array('name' => $this->name))?>" class="btn btn-primary btn-sm save-order">Save New order</a>
                         <br /><br />
                     </div>
                     
@@ -142,11 +142,41 @@
 </form>
 
 <script>
-    $('.sortable').sortable({
-        containerSelector: 'table',
-        //itemPath: '> tbody',
-        itemSelector: 'tr',
-        handle: 'i.icon-move',
-        //placeholder: '<tr class="placeholder"/>'
-    })
+var currentOrderIds = new Array();
+$(".sortable tr").each(function( index ) {
+    var handle = $(this).find('.drag');
+    if(handle){
+        currentOrderIds.push(handle.data('curindex'));
+    }
+});
+//alert(currentOrderIds);
+$('.sortable').sortable({
+    containerSelector: 'table',
+    //itemPath: '> tbody',
+    itemSelector: 'tr',
+    handle: 'i.icon-move',
+    //placeholder: '<tr class="placeholder"/>'
+    onDrop: function($item, container, _super) {
+        $(".sortable tr").each(function( index ) {
+            var handle = $(this).find('.drag');
+            handle.data('curindex', currentOrderIds[index]);
+        });
+        $('#saveOrderBtn').show();
+    }
+});
+$('a.save-order').click(function(){
+    $('#saveOrderBtn').hide();
+    var args = [];
+    $(".sortable tr").each(function( index ) {
+        var handle = $(this).find('.drag');
+        args.push({id: handle.data('objid'), order: handle.data('curindex')});
+    });
+    //console.log(args);
+    $.post($(this).attr('href'), {
+        json: args
+    }, function(msg) {
+
+    });
+    return false;
+});
 </script>
