@@ -12,6 +12,8 @@ class OrderId extends Text implements ServiceLocatorAwareInterface
 
 	protected $serviceLocator;
 
+    public $isHidden = true;
+
 	public function init()
 	{
 		// Here, we have $this->serviceLocator !!
@@ -31,7 +33,7 @@ class OrderId extends Text implements ServiceLocatorAwareInterface
 
 	public function getListedValue($row)
 	{
-		return '<span class="drag" data-curid="'.$row->id.'" data-curindex="'.($this->getValue()?$this->getValue():$row->id).'">M</span>';
+		return '<span class="drag" style="cursor: move" data-curid="'.$row->getId().'" data-curindex="'.($this->getValue()?$this->getValue():$row->getId()).'"><i class="icon-move"></i></span>';
 	}
 
 	public function getOrderTable()

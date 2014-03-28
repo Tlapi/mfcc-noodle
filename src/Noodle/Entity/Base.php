@@ -10,6 +10,9 @@ use Zend\Form\Annotation;
 */
 class Base
 {
+
+    public $isHidden = false;
+
     /**
 	* @ORM\Id
 	* @ORM\Column(type="integer");

@@ -278,6 +278,16 @@ class ModulesController extends AbstractActionController
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
 
+                // Find order fields and set current id to that fields
+                foreach($form->getElements() as $element){
+                    if(get_class($element)=='Noodle\Form\Element\OrderId'){
+                        $elementName = $element->getName();
+                        $entity->$elementName = $entity->getId();
+                        $this->getEntityManager()->persist($entity);
+                        $this->getEntityManager()->flush();
+                    }
+                }
+
 				// redirect
 				$this->flashMessenger()->addMessage('Entity saved!');
 				return $this->redirect()->toRoute('noodle/modules/show', array('name' => $name));

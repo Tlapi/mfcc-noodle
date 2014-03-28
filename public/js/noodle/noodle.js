@@ -73,13 +73,14 @@ $(function() {
 	});
 	
 	// Dropzone
+    /*
 	var myDropzone = new Dropzone(".dropzone", { 
 		url: basePath + '/noodle/filesystem/upload',
 		addRemoveLinks: true,
 		acceptedFiles: 'image/*'
 	});
 	myDropzone.on("success", function(file, response) {
-	    /* Maybe display some more file information on your page */
+	    // Maybe display some more file information on your page
 		console.log(file);
 		var input = $('<input>').attr({
 		    type: 'hidden',
@@ -91,6 +92,6 @@ $(function() {
 	});
 	myDropzone.on("removedfile", function(file) {
 		file.input.remove();
-	});
+	});*/
 
 });
