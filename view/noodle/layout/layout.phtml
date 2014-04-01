@@ -149,7 +149,7 @@
 	            <?php foreach($this->moduleList()->getTableModules() as $module){?>
 					<li>
 						<a href="<?php echo $this->url('noodle/modules/show', array('name' => $module->entity))?>">
-							<i class="icon-edit"></i>
+							<i class="<?php echo $module->getIcon()?>"></i>
 							<span><?php echo $module->module_name?></span>
 						</a>
 					</li>

@@ -43,6 +43,14 @@ class Module
 	*/
 	private $entity;
 
+    /**
+     * @ORM\Column(type="string", nullable=true);
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Required(true)
+     * @Annotation\Options({"label":"Icon:", "listed":true})
+     */
+    private $icon;
+
 	/**
 	* Magic getter to expose protected properties.
 	*
@@ -64,5 +72,14 @@ class Module
 	{
 		$this->$property = $value;
 	}
+
+    public function getIcon()
+    {
+        if($this->icon) {
+            return $this->icon;
+        } else {
+            return 'icon-edit';
+        }
+    }
 
 }
