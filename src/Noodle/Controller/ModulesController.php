@@ -55,6 +55,8 @@ class ModulesController extends AbstractActionController
 
 		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
+        $formOptions = $form->getOptions();
+
 		$listed = array();
 
 		// Get listed fields
@@ -70,7 +72,10 @@ class ModulesController extends AbstractActionController
 		$orderDirection = (string)$this->params()->fromQuery('dir');
 		if($orderColumn){
 			$orderElement = $form->get($orderColumn);
-		}
+		} elseif(isset($formOptions['orderColumn'])) {
+            $orderElement = $form->get($formOptions['orderColumn']);
+            $orderDirection = $formOptions['orderDirection'];
+        }
 
 		// Set pagination
 		$adapter = new DoctrineAdapter(new ORMPaginator($module->findModuleItems($orderElement, $orderDirection)));

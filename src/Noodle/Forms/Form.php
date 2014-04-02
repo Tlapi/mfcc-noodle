@@ -43,7 +43,7 @@ class Form extends \Zend\Form\Factory
     		}
 
     	}
-    	$form->setOptions(array('sheets' => $sheets));
+    	$form->setOption('sheets', $sheets);
 
     	$form->setAttribute('enctype', 'multipart/form-data');
 
