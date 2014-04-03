@@ -80,11 +80,21 @@ class UserController extends AbstractActionController
 		$this->layout('noodle/layout/layout-login');
 		
 		// Check if user table is not empty, if so redirect to login page
-		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+        $em = $this->getEntityManager();
+		$users = $em->getRepository('Noodle\Entity\User');
 		if($users->findAll()){
 			$this->redirect()->toRoute('noodle/user/login');
 		}
-		
+
+        // Check if Administrator role is defined, if not, create it
+        $roles = $this->getEntityManager()->getRepository('Noodle\Entity\Role');
+        if(!$roles->findAll()) {
+            $role=new \Noodle\Entity\Role();
+            $role->setRoleId('Administrator');
+            $em->persist($role);
+            $em->flush();
+        }
+
 		$form = new \Noodle\Forms\User();
 		$form->prepareElements();
 		$form->setInputFilter(new \Noodle\Forms\UserFilter());
@@ -93,11 +103,13 @@ class UserController extends AbstractActionController
 		$request = $this->getRequest();
 		if ($request->isPost()){
 			$newAdmin = new \Noodle\Entity\User();
+            $newAdmin->addRole($roles->findOneById(1));
 			$form->bind($newAdmin);
 			$data = $request->getPost();
-		
+            $data->set('role',1);
+
 			$form->setData($data);
-			if ($form->isValid()) {
+            if ($form->isValid()) {
 				$this->getEntityManager()->persist($newAdmin);
 				$this->getEntityManager()->flush();
 		

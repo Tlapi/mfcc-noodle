@@ -172,6 +172,7 @@ class Module
     			'invokables' => array(
     					'formelement'       => 'Noodle\Form\View\Helper\FormElement',
     					'formPicture'     => 'Noodle\Form\View\Helper\FormPicture',
+                        'formDateTime'     => 'Noodle\Form\View\Helper\FormDateTime',
     					'moduleList'     => 'Noodle\View\Helper\ModuleList',
     					'noodlePicture'     => 'Noodle\View\Helper\NoodlePicture',
     					'GoogleAnalytics'     => 'Noodle\View\Helper\Dashboard\GoogleAnalytics',
