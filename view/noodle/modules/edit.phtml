@@ -22,11 +22,14 @@
                         </div>
                         <?php }?>
                         <?php }?>
-                        
+                    <?php
+                    $roles = array(); $u_roles = $this->identity()->getRoles();foreach($u_roles as $role){$roles[] = $role->getRoleId();}
+                    if(in_array('Administrator', $roles) || !$this->moduleName->change_protected){?>
                         <br /><br />
 						<button type="submit" class="btn btn-primary btn-lg">Save</button>
 						
 						<a href="#myModal" class="btn" role="button" data-toggle="modal">Delete</a>
+                    <?php }?>
                     <?php echo $this->form()->closeTag();?>
                 </div>
 
