@@ -27,8 +27,8 @@
 	
 			<?php foreach($this->moduleList()->getTableModules() as $module){?>
 			<tr rel="<?php echo $module->id?>">
-				<td><?php echo $module->module_name?></td>
-				<td><a href="#" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
+				<td><?php echo $module->module_name; if($module->getChangeProtected()) echo ' <i class="icon-lock"></i>'?></td>
+				<td><a href="<?php echo $this->url('noodle/modules-manager/edit', array('id' => $module->id))?>" class="btn btn-warning btn-mini"><i class="icon-pencil"></i> Edit</a></td>
 				<td><a href="#myModal" class="btn btn-danger btn-mini list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
 			</tr>
 			<?php }?>

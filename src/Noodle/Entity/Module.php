@@ -46,10 +46,16 @@ class Module
     /**
      * @ORM\Column(type="string", nullable=true);
      * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Required(true)
      * @Annotation\Options({"label":"Icon:", "listed":true})
      */
     private $icon;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true);
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Protected:", "listed":true})
+     */
+    private $change_protected;
 
 	/**
 	* Magic getter to expose protected properties.
@@ -57,9 +63,10 @@ class Module
 	* @param DateTime $property
 	* @return mixed
 	*/
+
 	public function __get($property)
 	{
-		return $this->$property;
+        return $this->$property;
 	}
 
 	/**
@@ -80,6 +87,31 @@ class Module
         } else {
             return 'icon-edit';
         }
+    }
+
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    public function getChangeProtected()
+    {
+        return $this->change_protected;
+    }
+
+    public function getArrayCopy()
+    {
+        $data = get_object_vars($this);
+        return $data;
+    }
+
+    public function populate($data = array())
+    {
+        foreach($data as $key => $val)
+        {  $this->$key = $data[$key];
+
+        }
+
     }
 
 }

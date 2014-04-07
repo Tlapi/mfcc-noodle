@@ -30,11 +30,16 @@
                         </div>
                         <input type="text" class="search">
                          -->
-                        <a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn-flat success new-product">+ Add item</a>
+                        <?php $roles = array(); $u_roles = $this->identity()->getRoles();foreach($u_roles as $role){$roles[] = $role->getRoleId();}
+                        if(in_array('Administrator', $roles) || !$this->moduleName->change_protected){?>
+                            <a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn-flat success new-product">+ Add item</a>
+                        <?php } else { ?>
+                            <i class="icon-lock icon-2x"></i>
+                        <?php } ?>
                     </div>
                 </div>
 
-                <div>
+                <div class="well" style="overflow: auto;">
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -65,8 +70,13 @@
 										?>
 									</td>
 								<?php }?>
-								<td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-pencil"></i> Edit</a></td>
+
+                                <?php if(!in_array('Administrator', $roles) && $this->moduleName->change_protected){?>
+                                    <td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-eye-open"></i> View</a></td>
+                                <?php } else { ?>
+                                <td style="width: 52px; padding-left:25px; padding-right:25px;"><a href="<?php echo $this->url('noodle/modules/edit', array('name' => $this->name, 'id' => $row->getId()))?>" class="btn btn-warning btn-sm"><i class="icon-pencil"></i> Edit</a></td>
 								<td style="width: 67px; padding-left:25px; padding-right:25px;"><a href="#myModal" class="btn btn-danger btn-sm list-delete" role="button" data-toggle="modal"><i class="icon-remove"></i> Delete</a></td>
+                                <?php } ?>
 							</tr>
 							<?php }?>
                         </tbody>

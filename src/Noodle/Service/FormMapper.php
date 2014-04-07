@@ -53,11 +53,13 @@ class FormMapper implements ServiceLocatorAwareInterface
 			if(method_exists($element, 'treatValueBeforeSave')){
 				$entity->$elementName = $element->treatValueBeforeSave();
 			} else {
-				$entity->$elementName = $element->getValue();
+
+                $entity->$elementName = $element->getValue();
+
 			}
 
 			// Default value
-			if(!$element->getValue()){
+			if(is_null($element->getValue())){
 				$entity->$elementName = $element->getOption('defaultValue');
 			}
 		}

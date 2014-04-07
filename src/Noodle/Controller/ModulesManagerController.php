@@ -32,42 +32,42 @@ class ModulesManagerController extends AbstractActionController
 	}
 
 	/**
-	 * Add module action
-	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
-	 */
-	public function addAction()
-	{
-		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Module');
+     * Add module action
+     * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
+     */
+        public function addAction()
+    {
+        $form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Module');
 
-		$builder = new AnnotationBuilder();
-		$schema = new SchemaTool($this->getEntityManager());
-		$cmf = $this->getEntityManager()->getMetadataFactory();
+        $builder = new AnnotationBuilder();
+        $schema = new SchemaTool($this->getEntityManager());
+        $cmf = $this->getEntityManager()->getMetadataFactory();
 
 
-		//var_dump($schema->getCreateSchemaSql($classes));
+        //var_dump($schema->getCreateSchemaSql($classes));
 
-		// process form
-		if ($this->request->isPost()) {
+        // process form
+        if ($this->request->isPost()) {
 
-			$form->setData($this->request->getPost());
-			if ($form->isValid()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
 
-				// map data to entity
-				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new \Noodle\Entity\Module());
+                // map data to entity
+                $entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new \Noodle\Entity\Module());
 
-				// persist entity
-				$this->getEntityManager()->persist($entity);
-				$this->getEntityManager()->flush();
+                // persist entity
+                $this->getEntityManager()->persist($entity);
+                $this->getEntityManager()->flush();
 
-				// redirect
-				$this->flashMessenger()->addMessage('Module created!');
-				return $this->redirect()->toRoute('noodle/modules-manager');
-			} else {
-				//die('invalid');
-				//var_dump($form->)
-			}
+                // redirect
+                $this->flashMessenger()->addMessage('Module created!');
+                return $this->redirect()->toRoute('noodle/modules-manager');
+            } else {
+                //die('invalid');
+                //var_dump($form->)
+            }
 
-		}
+        }
 
 
 
@@ -75,6 +75,64 @@ class ModulesManagerController extends AbstractActionController
 				'form' => $form
 		));
 	}
+
+    /**
+     * Edit module action
+     * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
+     */
+    public function editAction()
+    {
+        $id = (string) $this->params()->fromRoute('id', 0);
+
+        // Get entity repository
+        $modules = $this->getEntityManager()->getRepository('Noodle\Entity\Module');
+        // Get entity
+        $module = $modules->find($id);
+
+        $form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm('Noodle\Entity\Module');
+
+        $form->setData($module->getArrayCopy());
+       // var_dump($form);
+        //die();
+
+        //var_dump($schema->getCreateSchemaSql($classes));
+
+        // process form
+        if ($this->request->isPost()) {
+
+            foreach($this->request->getPost() as $key => $val)
+            {   $data[$key] = $val;
+
+            }
+            $data['entity']=$module->getEntity();
+
+            $form->setData($data);
+
+            if ($form->isValid()) {
+
+                //die('valid sad');
+                // map data to entity
+                $module->populate($form->getData());
+
+                // persist entity
+                $this->getEntityManager()->persist($module);
+                $this->getEntityManager()->flush();
+
+                // redirect
+                $this->flashMessenger()->addMessage('Module changed!');
+                return $this->redirect()->toRoute('noodle/modules-manager');
+            } else {
+                //die('invalid');
+
+            }
+
+        }
+
+        return new ViewModel(array(
+            'form' => $form,
+            'id' => $id
+        ));
+    }
 	
 	/**
 	 * Delete module action

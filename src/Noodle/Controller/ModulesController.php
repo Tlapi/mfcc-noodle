@@ -47,11 +47,12 @@ class ModulesController extends AbstractActionController
 
 		// Get module name
 		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
-		
-		$config = $this->getServiceLocator()->get('config');
+
+        $config = $this->getServiceLocator()->get('config');
 
 		// Get entity repository
 		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
+        // Get entity
 
 		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
@@ -101,7 +102,7 @@ class ModulesController extends AbstractActionController
 				'page' => $page,
 				'dir' => $orderDirection,
 				'moduleName' => $moduleName[0],
-				'flashMessages' => $this->flashMessenger()->getMessages()
+                'flashMessages' => $this->flashMessenger()->getMessages()
 		));
 
 	}
@@ -112,7 +113,7 @@ class ModulesController extends AbstractActionController
 	 */
 	public function editAction()
 	{
-		$name = (string) $this->params()->fromRoute('name', 0);
+        $name = (string) $this->params()->fromRoute('name', 0);
 		$id = (string) $this->params()->fromRoute('id', 0);
 		
 		$config = $this->getServiceLocator()->get('config');
@@ -148,6 +149,10 @@ class ModulesController extends AbstractActionController
 		// Process post request
 		if ($this->request->isPost()) {
 
+            $roles = array(); $u_roles = $this->identity()->getRoles();foreach($u_roles as $role){$roles[] = $role->getRoleId();}
+            if(!in_array('Administrator', $roles) && $moduleName[0]->getChangeProtected()){
+                die('Access Denied');
+            }
 			// process files first
 			//$post = $this->getServiceLocator()->get('fileProcessingService')->processFiles($this->request);
 
@@ -184,7 +189,8 @@ class ModulesController extends AbstractActionController
 		$this->layout()->moduleName = $name;
 
 		return new ViewModel(array(
-				'form' => $form,
+                'moduleName' => $moduleName[0],
+                'form' => $form,
 				'name' => $name,
 				'id' => $id,
 				'inversedModulesData' => $inversedModulesData
@@ -276,6 +282,8 @@ class ModulesController extends AbstractActionController
 		// Setup entity form
 		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
+        $form->setData((new $entityClassname())->getArrayCopy());
+
 		if ($this->request->isPost()) {
 
 			// process files first
@@ -295,7 +303,7 @@ class ModulesController extends AbstractActionController
                     }
                 }
 
-				// persist entity
+                // persist entity
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
 
