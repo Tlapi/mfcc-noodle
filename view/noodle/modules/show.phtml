@@ -59,7 +59,17 @@
 									<td>
 										<?php if(method_exists($listed, 'getListedValue')){ echo $listed->getListedValue($row); }
 											  else{ 
-												$var = $row->{$listed->getName()};
+												if(method_exists($listed,'getValueOptions')) {
+                                                    $opts = $listed->getValueOptions();
+                                                    $val = $row->{$listed->getName()};
+                                                    if(!isset($opts[$val]))
+                                                        $var = '!N/A ('.$val.')';
+                                                    else $var = $opts[$val]. ' ('.$val.')';
+                                                }
+                                                else
+                                                {
+                                                    $var = $row->{$listed->getName()};
+                                                }
 												if(is_object($var) && get_class($var) == 'DateTime')
 												{ echo $var->format($listed->getFormat());
 												}
