@@ -63,8 +63,8 @@
                                                     $opts = $listed->getValueOptions();
                                                     $val = $row->{$listed->getName()};
                                                     if(!isset($opts[$val]))
-                                                        $var = '!N/A ('.$val.')';
-                                                    else $var = $opts[$val]. ' ('.$val.')';
+                                                        $var = '<span data-toggle="tooltip" title="&quot;'.$val.'&quot;">undef</span>';
+                                                    else $var = '<span data-toggle="tooltip" title="&quot;'.$val.'&quot;">'.$opts[$val].'</span>';
                                                 }
                                                 else
                                                 {
