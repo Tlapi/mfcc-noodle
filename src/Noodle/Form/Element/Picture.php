@@ -35,7 +35,10 @@ class Picture extends Text implements ServiceLocatorAwareInterface
 
 		if($value){
 			$fileBank = $this->getServiceLocator()->get('FileBank');
-			return '<img src="'.$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($fileBank->getFileById($value), 50, 50, true).'" alt="" />';
+			if($basePath->__invoke())
+			    return '<img src="'.$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($fileBank->getFileById($value), 50, 50, true).'" alt="" />';
+            else
+			    return '<img src="'.str_replace('www_root', '', $thumbnailer->getThumbnailUrl($fileBank->getFileById($value), 50, 50, true)).'" alt="" />';
 		} else {
 			return null;
 		}

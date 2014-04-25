@@ -13,15 +13,14 @@ class FormPicture extends AbstractHelper implements ServiceLocatorAwareInterface
 	public function render(ElementInterface $element) {
 
 		if($element->getValue()){
-			$fileBank = $this->getServiceLocator()->get('FileBank');
+			$fileBank = $this->getServiceLocator()->getServiceLocator()->get('FileBank');
 			$thumbnailer = $this->getServiceLocator()->getServiceLocator()->get('thumbnailerService');
 			$basePath = $this->getServiceLocator()->get('basePath');
 
 			$file = $fileBank->getFileById($element->getValue());
-
 			return '<div class="form_picture_container media">
 						<a class="pull-left form_picture" href="#">
-							<img src="'.$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($file, 100, 100, true).'" alt="" />
+							<img src="'.($basePath->__invoke()?$basePath->__invoke().'/../'.$thumbnailer->getThumbnailUrl($file, 100, 100, true):str_replace('www_root', '', $thumbnailer->getThumbnailUrl($file, 100, 100, true))).'" alt="" />
 							<input type="hidden" name="'.$element->getName().'" value="'.$element->getValue().'" />
 						</a>
 						<div class="media-body">

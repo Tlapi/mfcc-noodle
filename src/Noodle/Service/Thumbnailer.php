@@ -17,9 +17,9 @@ class Thumbnailer implements ServiceLocatorAwareInterface
 	/**
 	 * Get image thumbnail
 	 */
-	public function getThumbnailUrl(\FileBank\Entity\File $file, $maxWidth = null, $maxHeight = null, $crop = false) {
+	public function getThumbnailUrl(\FileBank\Entity\File $file, $maxWidth = null, $maxHeight = null, $crop = false, $public = false) {
 
-		$name = $this->buildCacheName($file, $maxWidth, $maxHeight, $crop);
+		$name = $this->buildCacheName($file, $maxWidth, $maxHeight, $crop, $public);
 
 		if(!file_exists($name)){
 
@@ -48,9 +48,11 @@ class Thumbnailer implements ServiceLocatorAwareInterface
 	 * @param string $maxHeight
 	 * @param string $crop
 	 */
-	public function buildCacheName(\FileBank\Entity\File $file, $maxWidth = null, $maxHeight = null, $crop = false) {
+	public function buildCacheName(\FileBank\Entity\File $file, $maxWidth = null, $maxHeight = null, $crop = false, $public = false) {
 		$config = $this->getServiceLocator()->get('config');
-		$name = $config['noodle']['cache_folder'].'/'.$file->getId()."_".$maxWidth."_".$maxHeight;		
+		if($public)
+		    $config['noodle']['cache_folder'] = $config['noodle']['cache_folder_public'];
+        $name = $config['noodle']['cache_folder'].'/'.$file->getId()."_".$maxWidth."_".$maxHeight;				    
 
 		if($crop){
 			$name .= '_crop';
