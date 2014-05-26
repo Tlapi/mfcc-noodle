@@ -12,7 +12,24 @@ class FormDateTime extends AbstractHelper implements ServiceLocatorAwareInterfac
 
 	public function render(ElementInterface $element) {
 
-		return   '<input type="datetime" value="'.$element->getValue()->format('Y-M-D h:m:s').'" required="required" name="'.$element->getName().'">
+        $format = 'Y-m-d h:m:s';
+        $options = $element->getOptions();
+        if(isset($options["format"])) {
+            $format = $options["format"];
+        }
+        
+        $val = $element->getValue();
+        if(!is_object($val)) 
+        {   try {
+                $val=new \DateTime($val);
+            }
+            catch(\Exception $ex) {
+                $print = $val;
+            }
+            if(!isset($print)) $print = $val->format($format);
+        }
+        else $print = $val->format($format);
+		return   '<input type="datetime" value="'.$print.'" required="required" name="'.$element->getName().'">
                   ';
     }
 

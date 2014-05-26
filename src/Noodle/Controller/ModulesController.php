@@ -164,7 +164,7 @@ class ModulesController extends AbstractActionController
 
                 // Find datetime fields
                 foreach($form->getElements() as $element){
-                    if(get_class($element)=='Zend\Form\Element\Date'){
+                    if(get_class($element)=='Zend\Form\Element\Date' || get_class($element)=='Zend\Form\Element\DateTime'){
                         $elementName = $element->getName();
                         $entity->$elementName = new \DateTime($element->getValue());
                     }
@@ -297,7 +297,7 @@ class ModulesController extends AbstractActionController
 
                 // Find datetime fields
                 foreach($form->getElements() as $element){
-                    if(get_class($element)=='Zend\Form\Element\Date'){
+                    if(get_class($element)=='Zend\Form\Element\Date' || get_class($element)=='Zend\Form\Element\DateTime'){
                         $elementName = $element->getName();
                         $entity->$elementName = new \DateTime($element->getValue());
                     }
