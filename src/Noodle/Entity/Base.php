@@ -32,8 +32,23 @@ class Base
 	 * @Annotation\Exclude()
 	 */
 	private $parent_entity;
+    
+    /**
+     * @ORM\Column(type="boolean");
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Odstraněno" })
+     * @Annotation\Required(false)
+     * @Annotation\Exclude()
+     */
+    public $deleted;
 
-	/**
+    public function __construct($param = NULL) {
+        $this->deleted = 0;
+        //die('zlo');
+        //parent::__construct($param);
+    }
+    
+    /**
 	 * @ORM\PrePersist
 	 */
 	public function setOrderIdOnPrePersist()

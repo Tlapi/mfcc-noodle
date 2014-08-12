@@ -506,6 +506,10 @@ input.search {
   transition: width .2s;
 }
 
+.datetimepicker { max-width: 180px }
+.input-add-on { position: relative;}
+.input-add-on .add-on { position: absolute; right: 10px; top: 10px; }
+
 /* responsive */
 @media (max-width: 768px) {
   #pad-wrapper {

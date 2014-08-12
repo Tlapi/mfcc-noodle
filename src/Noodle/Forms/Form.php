@@ -44,6 +44,11 @@ class Form extends \Zend\Form\Factory
                 if(isset($options['regex-format'])) {
                     $regex = $options['regex-format'];
                 }
+                else if(isset($options['format']))
+                {   $regex = str_replace('.','\.',$options['format']);
+                    $regex = str_replace('Y','[0-9]{4}',$regex);
+                    $regex = str_replace(array('m','d','H','i','s'),'[0-9]{1,2}',$regex);
+                }
                 $va = new \Zend\Validator\Regex(array('pattern' => '/^'.$regex.'/'));
                 $vc = new \Zend\Validator\ValidatorChain();
                 $vc->attach($va);

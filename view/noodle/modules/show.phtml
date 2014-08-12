@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="filter-block">
+                <div class="filter-block clearfix">
                     <div class="pull-right">
                     	<!-- 
                         <div class="ui-select">
@@ -30,9 +30,38 @@
                         </div>
                         <input type="text" class="search">
                          -->
+                         <?php if(sizeof($filters)) { ?>
+                            <form class="filter" enctype="multipart/form-data" name="Filter" method="GET">
+                                <ul>
+                                <?php 
+                                    foreach($filters as $filter)
+                                    {   $element = $form->get($filter);
+                                        if($element->getAttributes()['type']=='datetime')
+                                        {   $vals = explode('-',$element->getValue());
+                                            $element->setValue(trim($vals[0]));
+                                            $element->setName($filter.'_noofrom');
+                                            echo '<li><label>'. $element->getLabel().'</label>';
+                                            echo '<div><label>From</label>';
+                                            echo $this->formElement($element).'</div>';
+                                            $element->setName($filter.'_nooto');
+                                            $element->setValue(trim($vals[1]));
+                                            echo '<div><label>To</label>';
+                                            echo $this->formElement($element).'</div></li>';
+                                            $element->setName($filter);
+                                        }
+                                        else
+                                        {   echo '<li><label>'. $element->getLabel().'</label>';
+                                            echo $this->formElement($element).'</li>';
+                                        }
+                                    }
+                                ?>
+                                <li><button class="btn btn-flat" type="submit">Filter</button></li>
+                                </ul>
+                            </form>
+                        <?php } ?>
                         <?php $roles = array(); $u_roles = $this->identity()->getRoles();foreach($u_roles as $role){$roles[] = $role->getRoleId();}
                         if(in_array('Administrator', $roles) || !$this->moduleName->change_protected){?>
-                            <a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn-flat success new-product">+ Add item</a>
+                            <a href="<?php echo $this->url('noodle/modules/add', array('name' => $this->name))?>" class="btn-flat success new-product pull-right">+ Add item</a>
                         <?php } else { ?>
                             <i class="icon-lock icon-2x"></i>
                         <?php } ?>
@@ -44,8 +73,8 @@
                         <thead>
                             <tr>
                             	<th></th>
-								<?php foreach($this->listed as $listed){?>
-									<th><a href="?page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
+                                <?php foreach($this->listed as $listed){?>
+									<th><a href="?<?php echo $this->queryPreserve?>page=<?php echo $this->page?>&order=<?php echo (method_exists($listed, 'getOrderColumn'))?$listed->getOrderColumn():$listed->getName()?>&dir=<?php echo ($this->dir=='ASC'?'DESC':'ASC')?>"><?php echo $listed->getLabel()?></a></th>
 								<?php }?>
 								<th colspan="2"></th>
                             </tr>
@@ -70,6 +99,7 @@
                                                 {
                                                     $var = $row->{$listed->getName()};
                                                 }
+                                                //var_dump($listed->getName());
 												if(is_object($var) && get_class($var) == 'DateTime')
 												{ echo $var->format($listed->getFormat());
 												}
@@ -97,18 +127,18 @@
                         <br /><br />
                     </div>
                     
-                    <div class="dataTables_info" id="example_info">Showing <?php echo ($this->page-1)*10+1?> to <?php echo ($this->page-1)*10+1+$this->paginator->count()?> of <?php echo $this->paginator->getTotalItemCount()?> entries</div>
+                    <div class="dataTables_info" id="example_info">Showing <?php echo ($this->page-1)*10+1?> to <?php echo ($this->page-1)*10+1+$this->paginator->getItemCountPerPage()?> of <?php echo $this->paginator->getTotalItemCount()?> entries</div>
 		            
 		            <div class="dataTables_paginate paging_full_numbers" id="example_paginate">
-		            	<a href="?page=1" tabindex="0" class="first paginate_button <?php if(1==$this->page){?>paginate_button_disabled<?php }?>" id="example_first">First</a>
+		            	<a href="?<?php echo $this->queryPreserve ?>page=1" tabindex="0" class="first paginate_button <?php if(1==$this->page){?>paginate_button_disabled<?php }?>" id="example_first">First</a>
 		            	<!-- <a tabindex="0" class="previous paginate_button paginate_button_disabled" id="example_previous">Previous</a> -->
 		            	<span>
 		            		<?php for($i=1; $i<=$this->paginator->count(); $i++){?>
-		            			<a href="?page=<?php echo $i?>" tabindex="0" <?php if($this->page==$i){?>class="paginate_active"<?php }?>><?php echo $i?></a>
+		            			<a href="?<?php echo $this->queryPreserve ?>page=<?php echo $i?>" tabindex="0" <?php if($this->page==$i){?>class="paginate_active"<?php }?>><?php echo $i?></a>
 		            		<?php }?>
 		            	</span>
 		            	<!-- <a tabindex="0" class="next paginate_button" id="example_next">Next</a> -->
-		            	<a href="?page=<?php echo $this->paginator->count()?>" tabindex="0" class="last paginate_button <?php if($this->paginator->count()==$this->page){?>paginate_button_disabled<?php }?>" id="example_last">Last</a>
+		            	<a href="?<?php echo $this->queryPreserve ?>page=<?php echo $this->paginator->count()?>" tabindex="0" class="last paginate_button <?php if($this->paginator->count()==$this->page){?>paginate_button_disabled<?php }?>" id="example_last">Last</a>
 		            </div>
 		            
                 </div>

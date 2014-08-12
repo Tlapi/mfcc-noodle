@@ -198,6 +198,12 @@
   margin-top: 35px;
 }
 
+
+.filter-block .filter ul { list-style: none; }
+.filter-block .filter li { display: inline-block; }
+.filter-block .filter li label { margin-right: 10px; margin-left: 20px;}
+.filter-block .filter li div { display: inline-block; }
+
 /* responsive */
 @media (max-width: 768px) {
   #main-stats {

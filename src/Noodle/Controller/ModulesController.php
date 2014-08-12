@@ -42,18 +42,18 @@ class ModulesController extends AbstractActionController
 	 */
 	public function showAction()
 	{
-		// Get name of entity
+        // Get name of entity
 		$name = (string) $this->params()->fromRoute('name', 0);
 
-		// Get module name
+		// Get module by name
 		$moduleName = $this->getServiceLocator()->get('modulesService')->getModule($name);
-
+        
         $config = $this->getServiceLocator()->get('config');
 
 		// Get entity repository
 		$module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
-        // Get entity
 
+        // Get entity form
 		$form = $this->getServiceLocator()->get('formMapperService')->setupEntityForm($config['noodle']['entity_namespace'].'\\'.$name);
 
         $formOptions = $form->getOptions();
@@ -67,6 +67,72 @@ class ModulesController extends AbstractActionController
 			}
 		}
 
+        // Get filtering parameters
+        $filterParams=array();
+        $filters = $moduleName[0]->filters;
+        if($filters)
+        {   $filters = explode(',',str_replace(' ','', $filters));
+            foreach($filters as $filter)
+            {   $element=$form->get($filter);
+                
+                //for filtering by date create two fields - From and To
+                if($element->getAttributes()['type']=='datetime')
+                {   //var_dump($filter);
+                    if($this->params()->fromQuery($filter.'_nooto')!==null && $this->params()->fromQuery($filter.'_nooto')!="")
+                    {   $date = new \DateTime($this->params()->fromQuery($filter.'_nooto'));
+                        $filterParams[]='u.'.$filter.' <= \''.mysql_escape_string($date->format('y-m-d')).'\'';
+                    }
+                    if($this->params()->fromQuery($filter.'_noofrom')!==null && $this->params()->fromQuery($filter.'_noofrom')!="")
+                    {   $date = new \DateTime($this->params()->fromQuery($filter.'_noofrom'));
+                        $filterParams[]='u.'.$filter.' >= \''.mysql_escape_string($date->format('y-m-d')).'\'';
+                    }
+                    $element->setValue($this->params()->fromQuery($filter.'_noofrom').' - '.$this->params()->fromQuery($filter.'_nooto'));
+                    $element->setOption('format','d.m.Y');
+                    $element->setOption('only-date','');
+                }
+                else
+                {   if($this->params()->fromQuery($filter)!==null && $this->params()->fromQuery($filter)!="")
+                    {   $filterParams[]='u.'.$filter.' = \''.mysql_escape_string($this->params()->fromQuery($filter)).'\'';
+                    }
+                    $element->setValue($this->params()->fromQuery($filter));
+                }
+                
+                
+                $element->setAttribute('required',false);
+                
+        
+            }
+        }
+        else $filters = array();
+        
+        //Preserve parts of query string
+        $queryPreserve="";
+        $queryPreserveVars=array();
+        $preserve = array_merge(array('page','order','dir'),$filters);
+        if(sizeof($preserve))
+        {   foreach($preserve as $filter)
+            {   try {
+                    $element=$form->get($filter);
+                }
+                catch (\Exception $e)
+                {   $element = null;
+                }
+                
+                // for datetime preserve from and to
+                if($element && $element->getAttributes()['type']=='datetime')
+                {   $queryPreserveVars[]=$filter."_nooto=".$this->params()->fromQuery($filter."_nooto");
+                    $queryPreserveVars[]=$filter."_noofrom=".$this->params()->fromQuery($filter."_noofrom");
+                }
+                // for other types preserve only one value
+                else
+                {   $queryPreserveVars[]=$filter."=".$this->params()->fromQuery($filter);
+                }
+            }
+            $queryPreserve = implode('&',$queryPreserveVars);
+        }
+        if($queryPreserve!="") $queryPreserve.='&';
+        
+        
 		// Set ordering
 		$orderElement = null;
 		$orderColumn = (string)$this->params()->fromQuery('order');
@@ -79,7 +145,8 @@ class ModulesController extends AbstractActionController
         }
 
 		// Set pagination
-		$adapter = new DoctrineAdapter(new ORMPaginator($module->findModuleItems($orderElement, $orderDirection)));
+        //var_dump($filterParams);
+		$adapter = new DoctrineAdapter(new ORMPaginator($module->findModuleItems($orderElement, $orderDirection, implode(' AND ',$filterParams))));
 		$paginator = new Paginator($adapter);
 		$paginator->setDefaultItemCountPerPage(10);
 
@@ -102,7 +169,9 @@ class ModulesController extends AbstractActionController
 				'page' => $page,
 				'dir' => $orderDirection,
 				'moduleName' => $moduleName[0],
-                'flashMessages' => $this->flashMessenger()->getMessages()
+                'filters' => $filters,
+                'flashMessages' => $this->flashMessenger()->getMessages(),
+                'queryPreserve' => $queryPreserve
 		));
 
 	}
@@ -293,7 +362,9 @@ class ModulesController extends AbstractActionController
 			if ($form->isValid()) {
 
 				// map data to entity
-				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, new $entityClassname());
+                $entity = new $entityClassname();
+                
+				$entity = $this->getServiceLocator()->get('formMapperService')->mapFormDataToEntity($form, $entity);
 
                 // Find datetime fields
                 foreach($form->getElements() as $element){
@@ -302,7 +373,9 @@ class ModulesController extends AbstractActionController
                         $entity->$elementName = new \DateTime($element->getValue());
                     }
                 }
-
+                
+                //var_dump($entity);
+                //die();
                 // persist entity
 				$this->getEntityManager()->persist($entity);
 				$this->getEntityManager()->flush();
@@ -355,7 +428,9 @@ class ModulesController extends AbstractActionController
 		$entity = $module->find($id);
 
 		// delete
-		$this->getEntityManager()->remove($entity);
+		// $this->getEntityManager()->remove($entity);
+        $entity->deleted=1;
+        $this->getEntityManager()->persist($entity);
 
 		// Handle related entities
 		$post = $this->request->getPost();
@@ -373,7 +448,9 @@ class ModulesController extends AbstractActionController
 						$row->{$inversedModule['joinTable']["inverseJoinColumns"][0]['referencedColumnName']} = null;
 					}
 					if($post['relationHandle']=='delete'){
-						$this->getEntityManager()->remove($row);
+						//$this->getEntityManager()->remove($row);
+                        $row->deleted=1;
+                        $this->getEntityManager()->persist($row);
 					}
 				}
 			}
@@ -401,7 +478,6 @@ class ModulesController extends AbstractActionController
         $module = $this->getEntityManager()->getRepository($config['noodle']['entity_namespace'].'\\'.$name);
 
         foreach($_POST['json'] as $item){
-            var_dump($item);
             $row = $module->find(intval($item['id']));
             // TODO configurable
             $row->order_id = $item['order'];

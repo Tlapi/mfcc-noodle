@@ -6,8 +6,7 @@ use Zend\Form\ElementInterface;
 
 class FormElement extends BaseFormElement
 {
-
-	public function render(ElementInterface $element)
+    public function render(ElementInterface $element)
 	{
 		$renderer = $this->getView();
 
@@ -20,7 +19,12 @@ class FormElement extends BaseFormElement
 			$helper = $renderer->plugin('formPicture');
 			return $helper($element);
 		}
-
+        
+        /*if ($element instanceof \Noodle\Form\Element\Relation) {
+        
+            return "error in ".$element->getName();
+        }*/
+        
         if(is_object($element->getValue()) && get_class($element->getValue()) == "DateTime")
         {   //var_dump($element);
             $helper = $renderer->plugin('formDateTime');
@@ -29,8 +33,13 @@ class FormElement extends BaseFormElement
             //return "date time";
             return $helper($element);
         }
-
-		return parent::render($element);
+        
+        if(is_object($element->getValue()) && $element->getAttribute('type')===NULL)
+        {   return "ERROR in Noodle\Form\View\Helper\FormElement. Trying to print ".get_class($element->getValue())." (value of ".$element->getName().") without apropriate helper!";
+        }
+        
+        return parent::render($element);
+        
 	}
-
+    
 }

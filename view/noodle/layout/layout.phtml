@@ -17,6 +17,7 @@
                         ->prependStylesheet($this->basePath() . '/css/noodle/layout.css')
                         ->prependStylesheet($this->basePath() . '/css/noodle/form-showcase.css')
                         ->prependStylesheet($this->basePath() . '/css/noodle/redactor.css')
+                        ->prependStylesheet($this->basePath() . '/css/noodle/bootstrap-datetimepicker.min.css')
                         ->prependStylesheet($this->basePath() . '/css/noodle/bootstrap-overrides.css')
                         ->prependStylesheet($this->basePath() . '/css/noodle/bootstrap.css') ?>
 
@@ -39,6 +40,9 @@
                                       ->prependFile($this->basePath() . '/js/noodle/jquery-file-upload/jquery.iframe-transport.js')
                                       ->prependFile($this->basePath() . '/js/noodle/jquery-file-upload/vendor/jquery.ui.widget.js')
                                       ->prependFile($this->basePath() . '/js/noodle/noodle.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/bootstrap-datetimepicker.cs.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/bootstrap-datetimepicker.min.js')
+                                      ->prependFile($this->basePath() . '/js/noodle/moment.min.js')
                                       ->prependFile($this->basePath() . '/js/noodle/bootstrap.min.js')
                                       ->prependFile($this->basePath() . '/js/noodle/jquery.min.js') ?>
 
@@ -249,11 +253,26 @@
 				</div>
 			</div>
 			<hr/>
+
 			<footer>
 				 <p>&copy; 2005 - <?php echo date('Y') ?> by Massimo Filippi <?php echo $this->translate('All rights reserved.') ?></p>
 			</footer>
 		</div>
 		 -->
         <?php echo $this->inlineScript() ?>
+        <script>
+
+            $(function() {
+                $('.datetimepicker').datetimepicker({
+                    language: 'cs',
+                    icons : {
+                        time: 'icon-time',
+                        date: 'icon-calendar',
+                        up:   'icon-chevron-up',
+                        down: 'icon-chevron-down'
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

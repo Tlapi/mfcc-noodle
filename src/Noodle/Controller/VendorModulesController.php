@@ -40,7 +40,7 @@ class VendorModulesController extends AbstractActionController
 		$module->init();
 		
 		return new ViewModel(array(
-				'render' => $module->render()
+				'render' => $module->render($this)
 		));
 	}
 
