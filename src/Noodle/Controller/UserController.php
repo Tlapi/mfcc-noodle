@@ -43,8 +43,7 @@ class UserController extends AbstractActionController
 		
 		// Check if user table is not empty, if so create new admin user
 		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
-		if(!$users->findAll()){
-			//die('No admins found!');
+		if (!$users->findAll()) {
 			return $this->redirect()->toRoute('noodle/user/create-admin');
 		}
 		
@@ -71,28 +70,33 @@ class UserController extends AbstractActionController
 		));
 	}
 
-	/**
-	 * Create user action
-	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
-	 */
-	public function createAdminAction()
+    /**
+     * Create admin action
+     *
+     * @return ViewModel
+     */
+    public function createAdminAction()
 	{
 		$this->layout('noodle/layout/layout-login');
 		
 		// Check if user table is not empty, if so redirect to login page
         $em = $this->getEntityManager();
 		$users = $em->getRepository('Noodle\Entity\User');
-		if($users->findAll()){
+		if ($users->findAll()) {
 			$this->redirect()->toRoute('noodle/user/login');
 		}
 
         // Check if Administrator role is defined, if not, create it
         $roles = $this->getEntityManager()->getRepository('Noodle\Entity\Role');
-        if(!$roles->findAll()) {
-            $role=new \Noodle\Entity\Role();
+        if (!$roles->findAll()) {
+            $role = new \Noodle\Entity\Role();
             $role->setRoleId('Administrator');
             $em->persist($role);
             $em->flush();
+        } else {
+            $role = $roles->findOneBy(
+                array('roleId' => 'Administrator')
+            );
         }
 
 		$form = new \Noodle\Forms\User();
@@ -103,14 +107,14 @@ class UserController extends AbstractActionController
 		$request = $this->getRequest();
 		if ($request->isPost()){
 			$newAdmin = new \Noodle\Entity\User();
-            $newAdmin->addRole($roles->findOneById(1));
+            $newAdmin->addRole($role);
 			$form->bind($newAdmin);
 			$data = $request->getPost();
-            $data->set('role',1);
+            $data->set('role', $role->getId());
 
 			$form->setData($data);
             if ($form->isValid()) {
-				$this->getEntityManager()->persist($newAdmin);
+                $this->getEntityManager()->persist($newAdmin);
 				$this->getEntityManager()->flush();
 		
 				$this->redirect()->toRoute('noodle/user/login');
@@ -119,10 +123,12 @@ class UserController extends AbstractActionController
 			}
 		}
 		
-		return new ViewModel(array(
+		return new ViewModel(
+            array(
 				'form' => $form,
 				'messages' => $messages,
-		));
+            )
+        );
 	}
 	
 	/**

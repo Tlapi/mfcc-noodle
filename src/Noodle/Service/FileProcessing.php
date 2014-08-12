@@ -6,63 +6,79 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Zend\Form\Annotation\AnnotationBuilder;
 
+/**
+ * Class FileProcessing
+ * @package Noodle\Service
+ */
 class FileProcessing implements ServiceLocatorAwareInterface
 {
-
-	protected $serviceLocator;
+    protected $serviceLocator;
 
 	/**
-	 * @var Doctrine\ORM\EntityManager
+	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
 
-	public function __construct()
-	{
-		// construct
-	}
-
-	/**
-	 * Process files posted by form
-	 */
-	public function processFiles($request) {
+    /**
+     * Process files posted by form
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function processFiles($request) {
 
 		$post = $request->getPost();
-
 		$fileBank = $this->getServiceLocator()->get('FileBank');
 		foreach($request->getFiles() as $key => $file){
-			if($file['tmp_name']){
+			if (isset($file[0]['tmp_name']) and !empty($file[0]['tmp_name'])) {
 				$fileEntity = $fileBank->save($file['tmp_name']);
 				$post->$key = $fileEntity->getId();
 			} else {
 				$post->$key = null;
 			}
 		}
-
 		return $post;
 	}
 
-	/**
-	 * Interface methods
-	 * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()
-	 */
-	public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    /**
+     * setServiceLocator
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
 		$this->serviceLocator = $serviceLocator;
 	}
 
-	public function getServiceLocator() {
+    /**
+     * getServiceLocator
+     *
+     * @return ServiceLocatorInterface
+     */
+    public function getServiceLocator() {
 		return $this->serviceLocator;
 	}
 
-	public function setEntityManager(EntityManager $em)
+    /**
+     * setEntityManager
+     *
+     * @param EntityManager $em
+     */
+    public function setEntityManager(EntityManager $em)
 	{
 		$this->em = $em;
 	}
-	public function getEntityManager()
+
+    /**
+     * getEntityManager
+     *
+     * @return array|\Doctrine\ORM\EntityManager|object
+     */
+    public function getEntityManager()
 	{
 		if (null === $this->em) {
 			$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 		}
 		return $this->em;
 	}
-
 }
