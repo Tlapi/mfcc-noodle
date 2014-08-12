@@ -10,7 +10,7 @@
 			
 				    <?php echo $this->form()->openTag($form);?>
 				    	<?php foreach ($form as $element) {?>
-                        <?php if(!isset($element->isHidden) || !$element->isHidden) {?>
+                        <?php if((!isset($element->isHidden) || !$element->isHidden) && !$element->getOption('hidden')) {?>
                         <div class="field-box">
                             <label><?php echo $element->getLabel()?></label>
                             <?php if($element->getOption('blockHelp')){?>

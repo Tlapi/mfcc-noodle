@@ -56,6 +56,13 @@ class Module
      * @Annotation\Options({"label":"Protected:", "listed":true})
      */
     private $change_protected;
+    
+    /**
+     * @ORM\Column(type="string", nullable=true);
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Options({"label":"Filters:", "listed":false})
+     */
+    private $filters;
 
 	/**
 	* Magic getter to expose protected properties.
@@ -65,8 +72,7 @@ class Module
 	*/
 
 	public function __get($property)
-	{
-        return $this->$property;
+	{   return $this->$property;
 	}
 
 	/**

@@ -5,10 +5,18 @@ use Doctrine\ORM\EntityRepository;
 
 class Base extends EntityRepository
 {
-
-	function findModuleItems($orderElement = null, $orderDirection = null, $where = null)
+    function findBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    {   return parent::findBy(array_merge(array('deleted'=>0),$criteria), $orderBy, $limit, $offset);
+    }
+    
+    function find($id)
+    {   return $this->findBy(array('id'=>$id))[0];
+    }
+    
+    function findModuleItems($orderElement = null, $orderDirection = null, $where = null)
 	{
-		$qb = $this->_em->createQueryBuilder();
+        //die($where);
+        $qb = $this->_em->createQueryBuilder();
 
 		$qb->select('u')
 		->from($this->getEntityName(), 'u');
@@ -32,7 +40,7 @@ class Base extends EntityRepository
 		}
 
 		//echo $qb->getQuery()->getSQL();
-
+        $qb->andWhere('u.deleted = 0');
 		return $qb->getQuery();
 	}
 

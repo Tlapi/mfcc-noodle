@@ -12,8 +12,44 @@ class FormDateTime extends AbstractHelper implements ServiceLocatorAwareInterfac
 
 	public function render(ElementInterface $element) {
 
-		return   '<input type="datetime" value="'.$element->getValue()->format('Y-M-D h:m:s').'" required="required" name="'.$element->getName().'">
-                  ';
+        $format = 'd.m.Y h:i:s';
+        $options = $element->getOptions();
+        
+        $attributes = $element->getAttributes();
+        
+        //var_dump($options);
+        if(isset($options["format"])) {
+            $format = $options["format"];
+        }
+        
+        $val = $element->getValue();
+        if(!is_object($val) && $val!="" && $val!=null) 
+        {   try {
+               $val=new \DateTime($val);
+            }
+            catch(\Exception $ex) {
+                $print = $val;
+            }
+            if(!isset($print)) $print = $val->format($format);
+        }
+        elseif($val==null || $val=="")
+        {   $print = "";
+        }
+        else
+        {   $print = $val->format($format);}
+        
+        $attributes = $element->getAttributes();
+        //var_dump($attributes);
+        if(!$attributes['required']) unset($attributes['required']);
+        
+        $attrs = array();
+        foreach($attributes as $attr=>$val)
+        {   $attrs[]=$attr.'="'.$val.'"'; }
+        $attrs = implode(' ',$attrs);
+		return   '<div class="datetimepicker input-add-on"><input value="'.$print.'" '.$attrs.' name="'.$element->getName().'">
+		<span class="add-on">
+            <i class="fa fa-calendar icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></i>
+        </span></div>';
     }
 
 	public function __invoke(ElementInterface $element = null) {
