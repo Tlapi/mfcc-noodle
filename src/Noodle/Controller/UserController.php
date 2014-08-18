@@ -1,17 +1,20 @@
 <?php
-// module/Settings/src/Settings/Controller/SettingsController.php:
+
 namespace Noodle\Controller;
+
+use Doctrine\ORM\EntityManager;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-//use Zend\View\Model\JsonModel;
-use Doctrine\ORM\EntityManager;
 
+/**
+ * Class UserController
+ * @package Noodle\Controller
+ */
 class UserController extends AbstractActionController
 {
-
 	/**
-	 * @var Doctrine\ORM\EntityManager
+	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
 
@@ -149,31 +152,32 @@ class UserController extends AbstractActionController
 		return $this->redirect()->toRoute('noodle/user/login');
 	}
 
-	/**
-	 * Manage users
-	 * @see Zend\Mvc\Controller.AbstractActionController::indexAction()
-	 */
-	public function manageAction()
+    /**
+     * manageAction
+     *
+     * @return ViewModel
+     */
+    public function manageAction()
 	{
-		// Get entity repository
-		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
-		
-		return new ViewModel(array(
-				'users' => $users->findAll(),
-				'flashMessages' => $this->flashMessenger()->getMessages()
-		));
+        $users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+        return new ViewModel(
+            array(
+                'users' => $users->findAll(),
+                'flashMessages' => $this->flashMessenger()->getMessages()
+            )
+        );
 	}
-	
-	/**
-	 * Add user
-	 * @see Zend\Mvc\Controller.AbstractActionController::editAction()
-	 */
-	public function addAction()
+
+    /**
+     * addAction
+     *
+     * @return ViewModel
+     */
+    public function addAction()
 	{
-		// Get entity repository
-		$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
-		
-		$form = new \Noodle\Forms\User();
+        //$users = $this->getEntityManager()->getRepository('Noodle\Entity\User');
+
+        $form = new \Noodle\Forms\User();
 		$form->prepareElements();
 		$form->addGenerateAndSendPasswordField();
 		
@@ -204,9 +208,11 @@ class UserController extends AbstractActionController
 			}
 		}
 		
-		return new ViewModel(array(
-				'form' => $form
-		));
+		return new ViewModel(
+            array(
+                'form' => $form
+            )
+        );
 	}
 	
 	/**
@@ -271,16 +277,26 @@ class UserController extends AbstractActionController
 		return $this->redirect()->toRoute('noodle/user/manage');
 	}
 
-	public function setEntityManager(EntityManager $em)
+    /**
+     * setEntityManager
+     *
+     * @param EntityManager $em
+     */
+    public function setEntityManager(EntityManager $em)
 	{
 		$this->em = $em;
 	}
-	public function getEntityManager()
+
+    /**
+     * getEntityManager
+     *
+     * @return array|EntityManager|object
+     */
+    public function getEntityManager()
 	{
 		if (null === $this->em) {
 			$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 		}
 		return $this->em;
 	}
-
 }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Noodle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A student
+ * User
  *
  * @ORM\Entity()
  * @ORM\Table(name="user")
